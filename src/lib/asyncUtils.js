@@ -1,8 +1,8 @@
 import produce from 'immer';
-import { dispatch, Actions } from 'store/actionCreators';
+import { dispatch } from 'store/actionCreators';
 import { AlertFn } from 'lib/library';
-import _ from 'lodash'
-import { call } from 'redux-saga/effects'
+import _ from 'lodash';
+import { call } from 'redux-saga/effects';
 
 // SECTION: Redux Saga, Actions
 export function SpreadSagas(config) {
@@ -21,13 +21,13 @@ export function SpreadSagas(config) {
 
       const setPartial = (fn, draft, payload, state, type) => {
         let targetState = notation(customState, draft);
-        const intialState = notation(customState, defaultState);
+        const initialState = notation(customState, defaultState);
 
         const { pending, success, failure } = targetState;
         if ([pending, success, failure].every(item => item === undefined)) return;
 
         if (type === 'init') {
-          _.forEach(intialState, (value, key, obj) => {
+          _.forEach(initialState, (value, key, obj) => {
             targetState[key] = value;
           });
         } else {
@@ -63,8 +63,6 @@ export function SpreadSagas(config) {
     }
   };
 }
-
-
 
 /**
  * Actions Name
@@ -142,9 +140,9 @@ export function makeAsyncCreateActions(actions) {
 export const createPromiseSaga = ({
   type,
   tag,
-  pending = () => { },
-  success = () => { },
-  failure = () => { },
+  pending = () => {},
+  success = () => {},
+  failure = () => {},
 }) => {
   return function* saga(action) {
     let currentState = null;
@@ -169,6 +167,7 @@ export const createPromiseSaga = ({
       console.log(` %cResponse Data :\n`, 'color:red;padding:5px;font-weight:bold', data);
       console.groupEnd();
 
+      // NOTE: 사용 X
       if (cancel) {
         type.pending({ type: 'cancel' });
         return;

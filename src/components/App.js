@@ -1,7 +1,7 @@
 import React from 'react';
+import Core from 'containers/base/Core';
 import { Home } from '../pages';
 import { Route, Switch } from 'react-router-dom';
-import Core from 'containers/base/Core';
 
 function App() {
   return (

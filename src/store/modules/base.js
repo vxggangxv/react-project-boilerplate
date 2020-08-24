@@ -1,28 +1,31 @@
 import { handleActions } from 'redux-actions';
-import { SpreadSagas } from 'lib/utils';
-import produce from 'immer';
+import { SpreadSagas } from 'lib/asyncUtils';
 import * as actions from 'store/actions';
 
-const intialState = {
-  landing: {
+const initialState = {
+  landing: true,
+  test: {
     pending: null,
     success: null,
-    failure: null
-  }
-}
+    failure: null,
+  },
+};
 
-const SpreadReducer = SpreadSagas({ state: intialState });
+const SpreadReducer = SpreadSagas({ state: initialState });
 
-export default handleActions({
-  // NOTE: test
-  ...new SpreadReducer(null, actions.BASE_EXIT_LANDING, {
-    callback: (draft, { payload: diff }, state) => {
-      draft.landing.success = true;
-    }
-  }),
-  ...new SpreadReducer('landing', actions.BASE_LANDING, {
-    success: (draft, { payload: diff }, state) => {
-      console.log(diff, 'success boiler')
-    }
-  })
-}, intialState)
+export default handleActions(
+  {
+    // NOTE: test
+    ...new SpreadReducer(null, actions.BASE_EXIT_LANDING, {
+      callback: (draft, { payload: diff }, state) => {
+        draft.landing = false;
+      },
+    }),
+    ...new SpreadReducer('landing', actions.BASE_TEST, {
+      success: (draft, { payload: diff }, state) => {
+        console.log(diff, 'success boiler');
+      },
+    }),
+  },
+  initialState,
+);

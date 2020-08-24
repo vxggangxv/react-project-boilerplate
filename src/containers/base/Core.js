@@ -1,9 +1,10 @@
 import React, { useEffect } from 'react';
-import { useSelector } from 'react-redux';
+import { withRouter } from 'react-router-dom';
+import { connect, useSelector, shallowEqual } from 'react-redux';
 import { Actions } from 'store/actionCreators';
 
 
-const Core = () => {
+function Core() {
   const base = useSelector(state => state);
   console.log(base, 'base');
 
@@ -16,7 +17,11 @@ const Core = () => {
     initialize();
   }, [])
 
-  return null;
-};
+  return <><div></div></>;
+}
 
-export default Core;
+// export default Core;
+
+export default connect(({ base }) => ({
+  landing: base.landing,
+}))(withRouter(Core));

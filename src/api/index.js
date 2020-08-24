@@ -1,5 +1,6 @@
 import { axs, setHeader } from './config/axiosConfig';
-import endPoint from './endPoint';
+import axios from 'axios';
+import * as endPoint from './config/endPoint';
 
 // NOTE: posts
 export function postFetchPost(id, data) {
@@ -10,9 +11,13 @@ export function postFetchPost(id, data) {
   return axs(axiosConf);
 }
 
-export function fetchPosts() {
-  let axiosConf = { url: `${endPoint.posts}`, method: 'get' };
-  return axs(axiosConf);
+export function fetchPosts(id) {
+  // return axs({ url: `https://jsonplaceholder.typicode.com/todos/${id}`, method: 'get' });
+  return axs(endPoint.posts.get(id));
+  // return axs(endPoint.posts.get());
+  // return endPoint.posts.get(id);
+  // const apiAddress = 'https://jsonplaceholder.typicode.com/todos/1';
+  // return axios.get(apiAddress);
 }
 
 export function fetchPostById(id) {

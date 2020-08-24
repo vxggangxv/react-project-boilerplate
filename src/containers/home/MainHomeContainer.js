@@ -1,38 +1,35 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
-import axios from 'axios';
 import { useImmer } from 'use-immer';
-// import { BASE_LANDING_SAGA } from 'store/actions';
+import { BASE_TEST_SAGAS } from 'store/actions';
 
 const MainHomeContainer = () => {
   const { base } = useSelector(state => state);
 
-  return (
-    <div>
-      {base.landing.success === null ? "loading..." : <Test />}
-    </div>
-  );
+  console.log(base, 'base');
+  return <div>{base.landing === true ? 'loading...' : <Test />}</div>;
 };
 
 const TestState = {
-  data: null
-}
+  data: null,
+};
 
 function Test() {
   const [values, setValues] = useImmer(TestState);
 
   const handleClick = config => {
     const { type } = config;
-    if (type === "data") {
-      // BASE_LANDING_SAGA({ test: "hello" })
+    if (type === 'data') {
+      BASE_TEST_SAGAS(1);
     }
-  }
+  };
 
-  console.log(values.data, 'state')
-  return <>
-
-    <button onClick={() => handleClick({ type: "data" })}>Click</button>
-    <h2>{values.data?.title}</h2>
-  </>
+  console.log(values.data, 'state');
+  return (
+    <>
+      <button onClick={() => handleClick({ type: 'data' })}>Click</button>
+      <h2>{values.data?.title}</h2>
+    </>
+  );
 }
 export default MainHomeContainer;

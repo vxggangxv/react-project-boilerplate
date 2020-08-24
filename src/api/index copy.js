@@ -13,13 +13,13 @@ export const moviesApi = {
   nowPlaying: () => instance.get('movie/now_playing'),
   upcoming: () => instance.get('movie/upcoming'),
   popular: () => instance.get('movie/popular'),
-  movieDetail: (id) =>
+  movieDetail: id =>
     instance.get(`movie/${id}`, {
       params: {
         append_to_response: 'videos',
       },
     }),
-  search: (term) =>
+  search: term =>
     instance.get('search/movie', {
       params: {
         query: encodeURIComponent(term),
@@ -31,16 +31,35 @@ export const tvApi = {
   topRated: () => instance.get('tv/top_rated'),
   popular: () => instance.get('tv/popular'),
   airingToday: () => instance.get('tv/airing_today'),
-  showDetail: (id) =>
+  showDetail: id =>
     instance.get(`tv/${id}`, {
       params: {
         append_to_response: 'videos',
       },
     }),
-  search: (term) =>
+  search: term =>
     instance.get('search/tv', {
       params: {
         query: encodeURIComponent(term),
       },
     }),
 };
+
+// const curryAxs = props => {
+//   return () => {
+//     return {
+//       get() {
+//         return axios.get(props.api)
+//       },
+//       post(data) {
+//         return axios.post({
+//           url: props.api,
+//           ...data
+//         })
+//       }
+//     }
+//   }
+// }
+// const axs = curryAxs({
+//   api: "http:127.test/"
+// });

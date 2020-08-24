@@ -1,5 +1,6 @@
 import _ from 'lodash';
 import axios from 'axios';
+import { ENV_MODE_DEV, ENV_MODE_PROD } from 'lib/setting';
 
 /**
  *
@@ -9,84 +10,57 @@ import axios from 'axios';
  * {header:false} 라고 할 시 header 체크를 하지 않습니다.
  */
 /**
- * 
-   "result": 1,
-   "headers": {
-       "loginUserCode": "",
-       "x-access-token": null
-   }
-     "result": 1,
-   "headers": {
-       "loginUserCode": "",
-       "x-access-token": null
-   }
+ *
+  "result": 1,
+    "headers": {
+      "loginUserCode": "",
+      "x-access-token": null
+    }
+  }
  */
+
+// NOTE: 취소 토큰
 const { CancelToken } = axios;
 const source = CancelToken.source();
 
 export function axs(axiosConf, config = {}) {
-  const defaultConfig = { header: true };
-  const mergeConfig = _.merge(defaultConfig, config);
-  const hasData = axiosConf.data;
   axiosConf.cancelToken = source.token;
+  console.log(axiosConf.data);
+
+  // NOTE: axiosConf data check
+  const hasData = axiosConf.data;
   if (hasData) {
     axiosConf.data.url = axiosConf.url;
   }
-  if (mergeConfig && mergeConfig.header) {
-    if (axiosConf.timeout !== false) axiosConf.timeout = 10000;
 
-    return axios(axiosConf)
-      .catch(err => ({ error: err }))
-      .then(res => {
-        const { data, error } = res;
-        // NOTE: 완료되지 않음
-        if (axios.isCancel(error)) {
-          console.log('Request canceled', error.message);
-          return { cancel: true };
-        }
-        try {
-          if (data) {
-            // Actions.base_network_connect({ value: data.headers?.onlineState });
-            // Actions.base_message_get({ value: data.headers?.notReadMessage });
-            // if (data.result === 5 && ENV_MODE_PROD) Actions.base_result_status(5);
-          }
-        } catch (err) {
-          // 오류 처리
-          console.log(err, 'error');
-          console.error('Response Data is undefined');
-          const errorConf = {
-            // url:"http://localhost:9999/errortest",
-            url: endPoint.post_error_meesage,
-            method: 'post',
-            data: {
-              url: axiosConf.url,
-              payload: axiosConf,
-              statusCode: err.statusCode,
-              message: err.message,
-              stack: err.stack,
-            },
-          };
+  // NOTE: 기본 타임아웃: 10초
+  if (axiosConf.timeout !== false) axiosConf.timeout = 10000;
 
-          axios(errorConf).catch(err => ({ error: err, payload: axiosConf.data }));
-          // NOTE: isAuthenticated false로 로그인화면으로 이동
-          // Popup({
-          //   title: '오류',
-          //   content: '인증기간이 만료되었습니다.',
-          //   isOpen: true,
-          // });
-          // AUTH_LOGOUT_SAGAS();
-        }
-        res.data.payload = axiosConf.data;
-        return res;
-      });
-  }
-  return axios(axiosConf).catch(err => ({ error: err, payload: axiosConf.data }));
+  return axios(axiosConf)
+    .then(response => {
+      const { data, error } = response;
+      response.data.payload = axiosConf.data;
+      return response;
+    })
+    .catch(error => {
+      if (error.response) {
+        console.log(error.response.data);
+        console.log(error.response.status);
+        console.log(error.response.headers);
+      } else if (error.resquest) {
+        console.log(error.request);
+      } else {
+        console.log('Error', error.message);
+      }
+      return { error, payload: axiosConf.data };
+    });
 }
 
 // export function axiosCancel() {
 //   source.cancel('Operation canceled');
 // }
 
+// NOTE: 개별 수정
 /**
  * Test Server Set Header
  * @param {} axiosConf

@@ -1,10 +1,9 @@
 import React, { useEffect } from 'react';
 import App from './components/App';
-
-// import CustomProvider from '';
-import { HashRouter as Router } from 'react-router-dom';
 import { Provider } from 'react-redux';
+import { HashRouter as Router } from 'react-router-dom';
 import store from 'store';
+// import CustomProvider from '';
 
 function Root(props) {
   return (
