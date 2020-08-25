@@ -20,7 +20,7 @@ function Test() {
   const handleClick = config => {
     const { type } = config;
     if (type === 'data') {
-      BASE_TEST_SAGAS(1);
+      BASE_TEST_SAGAS();
     }
   };
 

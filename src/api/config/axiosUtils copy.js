@@ -38,7 +38,7 @@ class Request {
   }
 }
 
-class Axs extends Request {
+class acx extends Request {
   constructor(props) {
     super({
       url: props.url,
@@ -46,3 +46,5 @@ class Axs extends Request {
   }
   syncResultCheck() {}
 }
+
+export default acx;

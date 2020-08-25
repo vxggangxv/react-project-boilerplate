@@ -28,11 +28,13 @@ export function axs(axiosConf, config = {}) {
 
   const defaultConfig = { header: true };
   const mergeConfig = _.merge(defaultConfig, config);
+
   // NOTE: axiosConf data check
   const hasData = axiosConf.data;
   if (hasData) {
     axiosConf.data.url = axiosConf.url;
   }
+
   if (mergeConfig && mergeConfig.header) {
     // NOTE: 기본 타임아웃: 10초
     if (axiosConf.timeout !== false) axiosConf.timeout = 10000;

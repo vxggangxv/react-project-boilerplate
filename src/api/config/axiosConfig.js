@@ -23,44 +23,52 @@ import { ENV_MODE_DEV, ENV_MODE_PROD } from 'lib/setting';
 const { CancelToken } = axios;
 const source = CancelToken.source();
 
-export function axs(axiosConf, config = {}) {
+export function acx(axiosConf, config = {}) {
   axiosConf.cancelToken = source.token;
-  console.log(axiosConf.data);
 
-  // NOTE: axiosConf data check
+  // NOTE: 기본 타임아웃: 10초
+  if (axiosConf.timeout !== false) axiosConf.timeout = 10000;
+
+  // NOTE: 보낸 데이터 payload data 확인용
   const hasData = axiosConf.data;
   if (hasData) {
     axiosConf.data.url = axiosConf.url;
   }
 
-  // NOTE: 기본 타임아웃: 10초
-  if (axiosConf.timeout !== false) axiosConf.timeout = 10000;
-
   return axios(axiosConf)
     .then(response => {
-      const { data, error } = response;
+      // console.log(response.data);
+      // console.log(response.status);
+      // console.log(response.statusText);
+      // console.log(response.headers);
+      // console.log(response.config);
+      // NOTE: 보낸 데이터 payload data 확인용
       response.data.payload = axiosConf.data;
       return response;
     })
     .catch(error => {
       if (error.response) {
+        // 요청이 이루어졌으며 서버가 2xx의 범위를 벗어나는 상태 코드로 응답했습니다.
         console.log(error.response.data);
         console.log(error.response.status);
         console.log(error.response.headers);
+        // NOTE: 차후 auth에 대한 에러처리
+        // const { status } = response;
+        // if (status === Unauthorized) return onUnauthorized();
+        // throw Error(response);
       } else if (error.resquest) {
-        console.log(error.request);
+        // 요청이 이루어 졌으나 응답을 받지 못했습니다.
+        console.log('Error request', error.request);
       } else {
-        console.log('Error', error.message);
+        // 오류를 발생시킨 요청을 설정하는 중에 문제가 발생했습니다.
+        console.log('Error message', error.message);
       }
+      // NOTE: 보낸 데이터 payload data 확인용
       return { error, payload: axiosConf.data };
     });
 }
 
-// export function axiosCancel() {
-//   source.cancel('Operation canceled');
-// }
-
-// NOTE: 개별 수정
+// NOTE: DOFSync 사용
 /**
  * Test Server Set Header
  * @param {} axiosConf

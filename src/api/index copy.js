@@ -45,7 +45,7 @@ export const tvApi = {
     }),
 };
 
-// const curryAxs = props => {
+// const curryacx = props => {
 //   return () => {
 //     return {
 //       get() {
@@ -60,6 +60,6 @@ export const tvApi = {
 //     }
 //   }
 // }
-// const axs = curryAxs({
+// const acx = curryacx({
 //   api: "http:127.test/"
 // });

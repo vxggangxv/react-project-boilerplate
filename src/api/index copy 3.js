@@ -95,3 +95,21 @@ export const card = {
     return request.delete(`/cards/${id}`);
   },
 };
+
+export function postFetchPost(id, data) {
+  let axiosConf = { url: `${endPoints.posts}`, method: 'get', data };
+  if (id) {
+    axiosConf = { url: `${endPoints.posts}/${id}`, method: 'get', data };
+  }
+  return acx(axiosConf);
+}
+
+export function postGetPartner(payload) {
+  const axiosConf = {
+    url: endPoints.post_info_partner,
+    method: 'post',
+    data: payload,
+  };
+  setHeader(axiosConf);
+  return Acx(axiosConf);
+}
