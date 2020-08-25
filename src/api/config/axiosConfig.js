@@ -30,10 +30,14 @@ export function acx(axiosConf, config = {}) {
   if (axiosConf.timeout !== false) axiosConf.timeout = 10000;
 
   // NOTE: 보낸 데이터 payload data 확인용
-  const hasData = axiosConf.data;
-  if (hasData) {
+  if (axiosConf.data) {
     axiosConf.data.url = axiosConf.url;
+  } else {
+    axiosConf.data = {
+      url: axiosConf.url,
+    };
   }
+  axiosConf.data.method = axiosConf.method;
 
   return axios(axiosConf)
     .then(response => {

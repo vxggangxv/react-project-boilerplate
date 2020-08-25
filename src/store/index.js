@@ -1,5 +1,7 @@
 import { createStore, applyMiddleware, compose } from 'redux';
+import { composeWithDevTools } from 'redux-devtools-extension';
 import createSagaMiddleware from 'redux-saga';
+import logger from 'redux-logger';
 import modules from 'store/modules';
 import rootSaga from 'store/sagas';
 
@@ -8,17 +10,20 @@ const customMiddleware = store => next => action => {
   return result;
 };
 
-const configure = () => {
-  const sagaMiddleware = createSagaMiddleware();
-  const middleware = [customMiddleware, sagaMiddleware];
-  const REDUX_DEVTOOLS = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__;
-  const composeEnhancers =
-    typeof window === 'object' && REDUX_DEVTOOLS
-      ? REDUX_DEVTOOLS({ trace: true, traceLimit: 25 })
-      : compose;
-  const store = createStore(modules, composeEnhancers(applyMiddleware(...middleware)));
-  sagaMiddleware.run(rootSaga);
-  return store;
-};
+const sagaMiddleware = createSagaMiddleware();
+const composeEnhancers = composeWithDevTools({ trace: true, traceLimit: 25 });
 
-export default configure();
+const store = createStore(
+  modules,
+  composeEnhancers(
+    applyMiddleware(
+      sagaMiddleware,
+      customMiddleware,
+      // logger,
+    ),
+  ),
+);
+
+sagaMiddleware.run(rootSaga);
+
+export default store;
