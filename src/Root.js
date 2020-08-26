@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import App from './components/App';
 import { Provider } from 'react-redux';
 import { HashRouter as Router } from 'react-router-dom';
@@ -19,20 +19,18 @@ function Root(props) {
 
 export default Root;
 
-
 // export const configure = () =>{
 
 //   sagaBind.run(connectStore,NotificationContainer,PopupContainer,ErrorContainer)
 // }
 // //  ContextAPI // 독립적인 리듀서
-// function CustomProvider(props){ 
+// function CustomProvider(props){
 //   const {store,sagaBind} = props;
 //   //특정값이 옵저버블하게 배교해서
 
-
 //   useEffect(()=>{
 //     // ContextAPI 요청, 컨텍스를 생성
-//     // 
+//     //
 //   },[store.base.popup])
 
 //   return <>

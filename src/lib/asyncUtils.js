@@ -167,22 +167,26 @@ export const createPromiseSaga = ({
       console.log(` %cResponse Data :\n`, 'color:red;padding:5px;font-weight:bold', data);
       console.groupEnd();
 
-      // NOTE: 사용 X
+      // NOTE: 차후 추가개발
       if (cancel) {
         type.pending({ type: 'cancel' });
         return;
       }
 
+      // if (data && !error) {
+      //   if (data.result === 1) {
+      //     currentState = 'success';
+      //     type.success(data);
+      //     success(data, payload);
+      //   } else {
+      //     currentState = 'failure';
+      //     type.failure(data);
+      //     failure(data);
+      //   }
       if (data && !error) {
-        if (data.result === 1) {
-          currentState = 'success';
-          type.success(data);
-          success(data, payload);
-        } else {
-          currentState = 'failure';
-          type.failure(data);
-          failure(data);
-        }
+        currentState = 'success';
+        type.success(data);
+        success(data, payload);
       } else {
         currentState = 'failure';
         type.failure(data);

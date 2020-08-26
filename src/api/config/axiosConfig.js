@@ -23,8 +23,10 @@ import { ENV_MODE_DEV, ENV_MODE_PROD } from 'lib/setting';
 const { CancelToken } = axios;
 const source = CancelToken.source();
 
-export function acx(axiosConf, config = {}) {
-  axiosConf.cancelToken = source.token;
+export function acx(axiosConf) {
+  // axiosConf.cancelToken = source.token;
+  // NOTE: 차후 cancel 필요시 추가 개발
+  // if (axiosConf.cancel) source.cancel('Operation canceled');
 
   // NOTE: 기본 타임아웃: 10초
   if (axiosConf.timeout !== false) axiosConf.timeout = 10000;
