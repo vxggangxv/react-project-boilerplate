@@ -1,67 +1,15 @@
 import produce from 'immer';
-import { dispatch } from 'store/actionCreators';
-import { AlertFn } from 'lib/library';
 import _ from 'lodash';
+import { dispatch } from 'store/actionCreators';
 import { call } from 'redux-saga/effects';
 
-// SECTION: Redux Saga, Actions
-export function SpreadSagas(config) {
-  const { state: defaultState } = config;
-
-  return function (customState, types, config = {}) {
-    const { init, pending, success, failure, callback } = config;
-    const notation = (str, obj) => str.split('.').reduce((a, c) => a[c], obj);
-
-    try {
-      // single
-      if (customState === null) {
-        this[types] = (state, payload) => produce(state, draft => callback(draft, payload, state));
-        return;
-      }
-
-      const setPartial = (fn, draft, payload, state, type) => {
-        let targetState = notation(customState, draft);
-        const initialState = notation(customState, defaultState);
-
-        const { pending, success, failure } = targetState;
-        if ([pending, success, failure].every(item => item === undefined)) return;
-
-        if (type === 'init') {
-          _.forEach(initialState, (value, key, obj) => {
-            targetState[key] = value;
-          });
-        } else {
-          targetState.pending = false;
-          targetState.success = false;
-          targetState.failure = false;
-          targetState[type] = true;
-        }
-        if (typeof fn === 'function') {
-          fn(draft, payload, state);
-        }
-      };
-
-      // types
-      this[types.INIT] = (state, payload) =>
-        produce(state, draft => {
-          setPartial.apply(this, [init, draft, payload, state, 'init']);
-        });
-      this[types.PENDING] = (state, payload) =>
-        produce(state, draft => {
-          setPartial.apply(this, [pending, draft, payload, state, 'pending']);
-        });
-      this[types.SUCCESS] = (state, payload) =>
-        produce(state, draft => {
-          setPartial.apply(this, [success, draft, payload, state, 'success']);
-        });
-      this[types.FAILURE] = (state, payload) =>
-        produce(state, draft => {
-          setPartial.apply(this, [failure, draft, payload, state, 'failure']);
-        });
-    } catch (e) {
-      console.log('SpreadSagas error', e);
-    }
-  };
+/**
+ * makeActionCreator
+ * @param {*} actionType
+ * @param {*} payload
+ */
+export function makeActionCreator(actionType, payload) {
+  return dispatch({ type: actionType, payload: payload });
 }
 
 /**
@@ -82,18 +30,10 @@ export function makeAsyncActions(actionName) {
   for (const item in prefixObj) {
     prefixObj[item] = prefix + `_${item}`;
   }
+  // NOTE: 초기화 SAGA.init() 생성 ActionsFunction.init 에 연결됨
   const init = payload => makeActionCreator(prefixObj.INIT, payload);
   prefixObj.init = init;
   return prefixObj;
-}
-
-/**
- * makeActionCreator
- * @param {*} actionType
- * @param {*} payload
- */
-export function makeActionCreator(actionType, payload) {
-  return dispatch({ type: actionType, payload: payload });
 }
 
 /**
@@ -101,25 +41,27 @@ export function makeActionCreator(actionType, payload) {
  * @param {*} actions Object
  */
 export function makeAsyncCreateActions(actions) {
+  // NOTE: createPromiseSaga type에 .index와 연결 takeEvery에 적용
   const ActionsFunction = payload => makeActionCreator(actions.INDEX, payload);
+
   return api => {
     if (typeof api !== 'function') new Error('api must be Function');
 
     const request = data => api(data);
     const init = payload => {
-      console.log(`${actions.INIT} INIT -`);
+      console.log(`${actions.INIT}`);
       makeActionCreator(actions.INIT, payload);
     };
     const pending = payload => {
-      console.log(`${actions.PENDING} PENDING -`);
+      console.log(`${actions.PENDING}`);
       makeActionCreator(actions.PENDING, payload);
     };
     const success = payload => {
-      console.log(`${actions.SUCCESS} SUCCESS -`);
+      console.log(`${actions.SUCCESS}`);
       makeActionCreator(actions.SUCCESS, payload);
     };
     const failure = payload => {
-      console.log(`${actions.FAILURE} FAILURE -`);
+      console.log(`${actions.FAILURE}`);
       makeActionCreator(actions.FAILURE, payload);
     };
     ActionsFunction.index = actions.INDEX;
@@ -147,11 +89,18 @@ export const createPromiseSaga = ({
   return function* saga(action) {
     let currentState = null;
     let payload = null;
-    AlertFn(tag);
+
+    console.log(`
+    ==========================
+    >>> *${tag}
+    ==========================
+    `);
+
     if (!type) {
       console.warn(`createPromiseSaga Need type`);
       return null;
     }
+
     try {
       payload = action.payload;
 
@@ -162,7 +111,7 @@ export const createPromiseSaga = ({
       const viewPayload = error ? error.payload : data.payload;
 
       data.payload = viewPayload || {};
-      console.group('-- Redux saga');
+      console.group(`--- ${tag} Redux saga`);
       console.log(` %cRequest Data :\n`, 'color:red;padding:5px;font-weight:bold', viewPayload);
       console.log(` %cResponse Data :\n`, 'color:red;padding:5px;font-weight:bold', data);
       console.groupEnd();
@@ -202,3 +151,63 @@ export const createPromiseSaga = ({
     }
   };
 };
+
+// SECTION: Redux Saga, Actions
+export function SpreadSagas(config) {
+  const { state: defaultState } = config;
+
+  return function (customState, types, config = {}) {
+    const { init, pending, success, failure, callback } = config;
+    const notation = (str, obj) => str.split('.').reduce((a, c) => a[c], obj);
+
+    try {
+      // single
+      if (customState === null) {
+        this[types] = (state, payload) => produce(state, draft => callback(draft, payload, state));
+        return;
+      }
+
+      const setPartial = (fn, draft, payload, state, type) => {
+        let targetState = notation(customState, draft);
+        const initialState = notation(customState, defaultState);
+        const { pending, success, failure } = targetState;
+        if ([pending, success, failure].every(item => item === undefined)) return;
+
+        if (type === 'init') {
+          _.forEach(initialState, (value, key, obj) => {
+            targetState[key] = value;
+          });
+        } else {
+          targetState.pending = false;
+          targetState.success = false;
+          targetState.failure = false;
+          targetState[type] = true;
+        }
+
+        if (typeof fn === 'function') {
+          fn(draft, payload, state);
+        }
+      };
+
+      // types
+      this[types.INIT] = (state, payload) =>
+        produce(state, draft => {
+          setPartial.apply(this, [init, draft, payload, state, 'init']);
+        });
+      this[types.PENDING] = (state, payload) =>
+        produce(state, draft => {
+          setPartial.apply(this, [pending, draft, payload, state, 'pending']);
+        });
+      this[types.SUCCESS] = (state, payload) =>
+        produce(state, draft => {
+          setPartial.apply(this, [success, draft, payload, state, 'success']);
+        });
+      this[types.FAILURE] = (state, payload) =>
+        produce(state, draft => {
+          setPartial.apply(this, [failure, draft, payload, state, 'failure']);
+        });
+    } catch (e) {
+      console.log('SpreadSagas error', e);
+    }
+  };
+}

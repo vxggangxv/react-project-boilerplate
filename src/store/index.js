@@ -6,9 +6,7 @@ import modules from 'store/modules';
 import rootSaga from 'store/sagas';
 
 const customMiddleware = () => next => action => {
-  // console.log(action);
   const result = next(action);
-  // console.log('\t', store.getState());
   return result;
 };
 

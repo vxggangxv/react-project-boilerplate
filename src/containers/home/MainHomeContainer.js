@@ -1,13 +1,17 @@
 import React from 'react';
-import { useSelector } from 'react-redux';
 import { useImmer } from 'use-immer';
 import { BASE_TEST_SAGAS } from 'store/actions';
+import { useShallowSelector } from 'lib/utils';
 
 const MainHomeContainer = () => {
-  const { base } = useSelector(state => state);
+  const { landing, apiCalling } = useShallowSelector(state => ({
+    landing: state.base,
+    apiCalling: state.apiCalling,
+  }));
 
-  console.log(base, 'base');
-  return <div>{base.landing === true ? 'loading...' : <Test />}</div>;
+  console.log(landing, 'landing');
+  // return <div>{landing === false ? 'loading...' : <Test />}</div>;
+  return <Test />;
 };
 
 const TestState = {
@@ -24,11 +28,10 @@ function Test() {
     }
   };
 
-  console.log(values.data, 'state');
   return (
     <>
       <button onClick={() => handleClick({ type: 'data' })}>Click</button>
-      <h2>{values.data?.title}</h2>
+      {/* <h2>{values.data?.title}</h2> */}
     </>
   );
 }

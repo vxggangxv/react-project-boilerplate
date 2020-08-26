@@ -14,14 +14,8 @@ export default handleActions(
   {
     // NOTE: SET_API_CALLING_STATUS
     ...new SpreadReducer(null, actions.SET_API_CALLING_STATUS, {
-      callback: draft => {
-        draft.apiCalling = true;
-      },
-    }),
-    // NOTE: CLEAR_API_CALLING_STATUS
-    ...new SpreadReducer(null, actions.CLEAR_API_CALLING_STATUS, {
-      callback: draft => {
-        draft.apiCalling = false;
+      callback: (draft, { payload: diff }, state) => {
+        draft.apiCalling = diff;
       },
     }),
   },

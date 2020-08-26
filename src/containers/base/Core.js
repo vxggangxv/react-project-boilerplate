@@ -3,21 +3,18 @@ import { withRouter } from 'react-router-dom';
 import { connect, useSelector, shallowEqual } from 'react-redux';
 import { Actions } from 'store/actionCreators';
 
-
 function Core() {
   const base = useSelector(state => state);
-  console.log(base, 'base');
 
   const initialize = async () => {
-    Actions.base_exit_landing();
-
+    return Actions.base_exit_landing();
   };
 
   useEffect(() => {
     initialize();
-  }, [])
+  }, []);
 
-  return <><div></div></>;
+  return <>로딩중...</>;
 }
 
 // export default Core;

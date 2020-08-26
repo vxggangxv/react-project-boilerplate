@@ -15,15 +15,16 @@ const SpreadReducer = SpreadSagas({ state: initialState });
 
 export default handleActions(
   {
-    // NOTE: test
     ...new SpreadReducer(null, actions.BASE_EXIT_LANDING, {
       callback: (draft, { payload: diff }, state) => {
         draft.landing = false;
       },
     }),
-    ...new SpreadReducer('landing', actions.BASE_TEST, {
+    ...new SpreadReducer('test', actions.BASE_TEST, {
       success: (draft, { payload: diff }, state) => {
-        console.log(diff, 'success boiler');
+        console.log(state, 'state');
+        console.log(initialState, 'initialState');
+        console.log('success boiler');
       },
     }),
   },
