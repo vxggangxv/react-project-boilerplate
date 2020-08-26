@@ -7,14 +7,19 @@ function Core() {
   const base = useSelector(state => state);
 
   const initialize = async () => {
-    return Actions.base_exit_landing();
+    Actions.base_exit_landing();
   };
 
   useEffect(() => {
     initialize();
   }, []);
 
-  return <>로딩중...</>;
+  return (
+    <>
+      {/* FullScreenLoading */}
+      {/* Notifications */}
+    </>
+  );
 }
 
 // export default Core;
