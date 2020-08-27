@@ -52,7 +52,7 @@ export const meteriallist = Array(26)
  * @param {string} value
  */
 export function checkSpace(value) {
-  return value && value.search(/\s/) != -1;
+  return value && value.search(/\s/) !== -1;
 }
 
 /**
@@ -96,6 +96,7 @@ export function regName(value) {
   return regExp.test(value);
 }
 
+// eslint-disable-next-line no-useless-escape
 export const reqProjectInput = /[\/\?\*\:\<\>\|\"\n]/g;
 export const reqRemoveTag = /(<([^>]+)>)/gi;
 
@@ -412,7 +413,7 @@ export function setFormData(data) {
 export function extractFileName(name) {
   const index = name.lastIndexOf('.');
   let fileName = name;
-  if (index != -1) {
+  if (index !== -1) {
     fileName = name.substring(0, index);
   }
   return fileName;
@@ -437,7 +438,7 @@ export function getExtensionOfFilename(filename) {
 export function disableF5(e) {
   const keycode = e.keyCode;
   console.log(keycode, 'keycode');
-  if ((e.ctrlKey == true && (keycode == 78 || keycode == 82)) || (e.which || keycode) == 116) {
+  if ((e.ctrlKey === true && (keycode === 78 || keycode === 82)) || (e.which || keycode) === 116) {
     e.preventDefault();
   }
 }
@@ -520,8 +521,9 @@ export const makeCaseID = config => {
  * @param {*} config
  */
 export function replaceCamelCase(config) {
+  // eslint-disable-next-line no-unused-vars
   const { str, replace = '-' } = config;
-  const regConvert = new RegExp(`/${replace}([a-z])/g`);
+  // const regConvert = new RegExp(`/${replace}([a-z])/g`);
   return str.replace(/[:-]([a-z])/g, function (g) {
     return g[1].toUpperCase();
   });
@@ -917,17 +919,19 @@ export function unixStringToMoment(string) {
  * @param {*} config
  */
 function settingTeethElementFn(config) {
+  // eslint-disable-next-line no-unused-vars
   const { findTag, findAttr, changeId } = config;
   return function (conf) {
     const { teeth = [], list = [] } = conf;
     const hasTeethIndexList = teeth.map(item => item.number);
+    // eslint-disable-next-line array-callback-return
     list.map(item => {
       const number = Number(item.number);
       // const findGtag = Array.from(
       //   document.querySelectorAll(`${findTag}[${findAttr}${item.number}"]`),
       // )[0];
       const findGtag = item.groupElement;
-      if (!findGtag) return;
+      if (!findGtag) return null;
       const findFillPath = findGtag.querySelector('path[fill^="url"]');
       const getOriginAttrFill = findGtag.getAttribute('data-origin-url');
       // NOTE: path url swap 부분
@@ -974,6 +978,7 @@ export function setMergeSortTeethElement(config) {
   // NOTE: 배열을 순회하면서 치아를 4분면으로 나눠 배열로 소팅함
   const sortNewMap = newMap
     .sort((a, b) => a.number - b.number)
+    // eslint-disable-next-line array-callback-return
     .sort((prev, next) => {
       const a = prev.number;
       const b = next.number;
@@ -986,6 +991,8 @@ export function setMergeSortTeethElement(config) {
           return -39 + a;
         case 4:
           return -41 + b;
+        default:
+          return null;
       }
     })
     .reduce(

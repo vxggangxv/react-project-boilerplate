@@ -52,6 +52,7 @@ export function useDidUpdateEffect(fn, inputs) {
     } else {
       didMountRef.current = true;
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, inputs);
 }
 
@@ -83,6 +84,7 @@ export function useForceUpdate() {
  *
  * @param {*} f
  */
+// eslint-disable-next-line react-hooks/exhaustive-deps
 export const useDidMount = f => useEffect(() => f && f(), []);
 
 /**
@@ -181,6 +183,7 @@ export function useKeyPress(targetKey) {
       document.removeEventListener('keydown', downHandler);
       document.removeEventListener('keyup', upHandler);
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []); // Empty array ensures that effect is only run on mount and unmount
 
   return keyPressed;
@@ -205,6 +208,7 @@ export function useMultiKeyPress(keyCombine = []) {
       document.removeEventListener('keydown', downHandler);
       document.removeEventListener('keyup', upHandler);
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []); // Empty array ensures that effect is only run on mount and unmount
 
   return keysPressed;

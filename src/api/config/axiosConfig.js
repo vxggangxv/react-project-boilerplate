@@ -55,9 +55,9 @@ export function acx(axiosConf) {
     .catch(error => {
       if (error.response) {
         // 요청이 이루어졌으며 서버가 2xx의 범위를 벗어나는 상태 코드로 응답했습니다.
-        console.log(error.response.data);
-        console.log(error.response.status);
-        console.log(error.response.headers);
+        console.log('Error response', error.response.data);
+        console.log('Error response', error.response.status);
+        console.log('Error response', error.response.headers);
         // NOTE: 차후 auth에 대한 에러처리
         // const { status } = response;
         // if (status === Unauthorized) return onUnauthorized();

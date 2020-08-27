@@ -17,7 +17,7 @@ function Core() {
 
   return (
     <>
-      <FullScreenLoading />
+      {/* <FullScreenLoading /> */}
       {/* Notifications */}
     </>
   );
