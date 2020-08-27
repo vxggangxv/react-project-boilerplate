@@ -1,5 +1,6 @@
 import React from 'react';
 import { Helmet } from 'react-helmet';
+import { Header } from 'components/base/header';
 
 const mapper = {
   brand: {

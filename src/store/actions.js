@@ -15,4 +15,21 @@ export const base_exit_landing = createAction(BASE_EXIT_LANDING);
 // Sagas
 export const BASE_TEST = makeAsyncActions('base/BASE_TEST');
 export const BASE_TEST_SAGAS = makeAsyncCreateActions(BASE_TEST)(api.fetchPosts);
+
+// reduxFounder
+// export const BASE_TEST1_SAGAS = makeAsyncCombinerAction('base/BASE_TEST',api.fetchPosts)
+// BASE_TEST1_SAGAS.action
+// BASE_TEST1_SAGAS.request({
+// })
+
+// BASE_TEST1_SAGAS({
+// })
+
+// function makeAsyncCombinerAction(type,api){
+//   return {
+//     action:makeAsyncActions(type),
+//     request:makeAsyncCreateActions(type)(api),
+//     saga:
+//   }
+// }
 // export const BASE_TEST_SAGAS = makeAsyncCreateActions(BASE_TEST)(API.testApi);

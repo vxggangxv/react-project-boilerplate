@@ -23,7 +23,7 @@ export default Root;
 
 //   sagaBind.run(connectStore,NotificationContainer,PopupContainer,ErrorContainer)
 // }
-// //  ContextAPI // 독립적인 리듀서
+//  ContextAPI // 독립적인 리듀서
 // function CustomProvider(props){
 //   const {store,sagaBind} = props;
 //   //특정값이 옵저버블하게 배교해서
