@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import { withRouter } from 'react-router-dom';
 import { connect, useSelector, shallowEqual } from 'react-redux';
 import { Actions } from 'store/actionCreators';
+import { FullScreenLoading } from 'components/base/loading';
 
 function Core() {
   const base = useSelector(state => state);
@@ -16,7 +17,7 @@ function Core() {
 
   return (
     <>
-      {/* FullScreenLoading */}
+      <FullScreenLoading />
       {/* Notifications */}
     </>
   );
