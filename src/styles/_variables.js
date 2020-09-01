@@ -4,6 +4,7 @@ const purpleBgGradient = `linear-gradient(180deg, #EBEFFF 0%, #FFFFFF 48.96%, #E
 const scannerBgGradient = `linear-gradient(0deg, rgba(255, 255, 255, 0) 11.49%, rgba(255, 254, 250, 0.0128372) 12.05%, rgba(65, 244, 255, 0.1372) 17.48%, rgba(65, 244, 255, 0.26) 23.07%, rgba(65, 244, 255, 0.4) 28.76%, rgba(65, 244, 255, 0.5) 34.55%, rgba(65, 244, 255, 0.66) 40.51%, rgba(65, 244, 255, 0.85) 46.73%, #41F4FF 127.1%);`;
 const timeLineBgGradient = `linear-gradient(90deg, #00A6E2 0%, #5B86E5 100%);`;
 
+// NOTE: 새로 작업시 재설정
 const _color = {
   red: `#D20000`,
   white: `#ffffff`,

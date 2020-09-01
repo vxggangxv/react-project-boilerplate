@@ -1,13 +1,23 @@
 import { css } from 'styled-components';
-import reset from 'styled-reset';
-import { _color, _deviceSize, _font, _sizes } from 'styles/common';
-import { ENV_MODE_PROD } from 'lib/setting';
+import { _color, _font, _sizes, _deviceSize } from 'styles/_variables';
 
 export const fontFamily = css`
   font-family: ${_font.mulish}, ${_font.notoSans};
 `;
 export const color = _color;
 export const device = _deviceSize;
+
+export const font = (size = 14, color = 'black') => {
+  return css`
+    color: ${color};
+    font-size: ${size}px;
+    ${fontFamily};
+    & :hover {
+      color: $clr;
+    }
+    /* @content; */
+  `;
+};
 
 export const floatClear = css`
   &:after {
@@ -42,18 +52,6 @@ export const positionWide = css`
   width: 100%;
   height: 100%;
 `;
-
-export const font = (size = 14, color = 'black') => {
-  return css`
-    color: ${color};
-    font-size: ${size}px;
-    ${fontFamily};
-    & :hover {
-      color: $clr;
-    }
-    /* @content; */
-  `;
-};
 
 export const buttonBlue = css`
   background: ${color.blue};
@@ -222,41 +220,3 @@ export const animationMoveInfinite = config => {
     }
   `;
 };
-
-export const globalStyle = css`
-  ${reset};
-  a {
-    text-decoration: none;
-    color: inherit;
-  }
-  .hidden {
-    display: none;
-  }
-  input,
-  textarea,
-  select,
-  a,
-  button {
-    outline: none;
-    box-shadow: none;
-  }
-  * {
-    box-sizing: border-box !important;
-    ${ENV_MODE_PROD && disableDrag}
-  }
-  body {
-    ${fontFamily}
-    font-size: 14px;
-    color: #333;
-    min-width: 1900px;
-  }
-  .hidden {
-    display: none !important;
-  }
-  .padding-none {
-    padding: 0 !important;
-  }
-  .margin-none {
-    margin: 0 !important;
-  }
-`;

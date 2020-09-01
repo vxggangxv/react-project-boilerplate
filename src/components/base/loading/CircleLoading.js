@@ -49,7 +49,7 @@ function FacebookProgress(props) {
   );
 }
 
-export default function LoadingCircle(props) {
+export default function CircleLoading(props) {
   const { className, size, theme } = props;
 
   return <FacebookProgress className={className} size={size} theme={theme} />;

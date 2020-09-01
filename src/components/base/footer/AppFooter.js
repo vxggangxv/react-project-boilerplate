@@ -4,8 +4,18 @@ import { NavLink } from 'react-router-dom';
 
 function AppFooter(props) {
   return (
-    <Styled.AppFooter>
-      <footer>푸터</footer>
+    <Styled.AppFooter data-component-name="AppFooter">
+      <footer className="footer">
+        <address className="footer__address">
+          {/* <p className="footer__text">
+            (주) []
+            <br />
+            대표자 : []
+            <br />
+          </p> */}
+        </address>
+        <small className="footer__copyright"></small>
+      </footer>
     </Styled.AppFooter>
   );
 }
@@ -13,17 +23,7 @@ function AppFooter(props) {
 const Styled = {
   AppFooter: styled.div`
     position: relative;
-    &,
-    .header {
-      width: 100%;
-      height: 100px;
-      background-color: #fff;
-      border-bottom: 1px solid #ddd;
-    }
-    .header {
-      position: fixed;
-      top: 0;
-      left: 0;
+    .footer {
       text-align: center;
     }
   `,

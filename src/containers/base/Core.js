@@ -4,6 +4,7 @@ import { connect, useSelector, shallowEqual } from 'react-redux';
 import { Actions } from 'store/actionCreators';
 import { FullScreenLoading } from 'components/base/loading';
 
+// NOTE: 초기 landing, error, notifications, popup 등록
 function Core() {
   const base = useSelector(state => state);
 

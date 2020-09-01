@@ -1,15 +1,13 @@
 import React from 'react';
 import MainHomeContainer from 'containers/home/MainHomeContainer';
 import { AppTemplate } from 'components/base/template';
-import { Header } from 'components/base/header';
-import { Page } from 'pages';
 
-function Home(props) {
+function HomePage(props) {
   return (
-    <AppTemplate title={'Page - Home'}>
+    <AppTemplate title={'Home'}>
       <MainHomeContainer />
     </AppTemplate>
   );
 }
 
-export default Home;
+export default HomePage;

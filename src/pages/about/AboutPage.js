@@ -1,10 +1,13 @@
 import React from 'react';
+import AboutContainer from 'containers/about/AboutContainer';
 import { AppTemplate } from 'components/base/template';
-import { AppHeader } from 'components/base/header';
-import { Page } from 'pages';
 
-function About(props) {
-  return <AppTemplate header={<AppHeader />}>About</AppTemplate>;
+function AboutPage(props) {
+  return (
+    <AppTemplate title={'Home'}>
+      <AboutContainer />
+    </AppTemplate>
+  );
 }
 
-export default About;
+export default AboutPage;

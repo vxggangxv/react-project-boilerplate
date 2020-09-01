@@ -1,0 +1,14 @@
+pending:
+  ❍ PrivateRoute연결
+  ❍ Core(landing, Error, Notificions, Popup)
+  ❍ api통신 및 reducer, sagas 연결 테스트 컴포넌트 개발
+  ❍ redux-persist 모듈 적용 및 테스트
+  ❍ convention (App structure, Design Pattern정리 및 gitlab upload)
+Todo:
+  ❍ base FullScreenLoading, CustonCircleLoading 개발
+  ❍ Telplate구조 추가 개선(Header, Nav, Main, leftSide, rightSide, footer)
+  ❍ Code splitting Page연동(lodable-component, Suspense)
+  ❍ ErrorPage 연결(차후에 reducer와 serverError 연동)
+Done: 
+  ✔ Header 제작 @done(20-09-01 18:14)
+  ✔ Template 추가 @done(20-09-01 18:14)

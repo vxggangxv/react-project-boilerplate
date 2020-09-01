@@ -7,60 +7,67 @@ import { AppFooter } from 'components/base/footer';
 
 function AppTemplate(props) {
   const {
-    title,
+    title = '',
     nav,
     children,
     childrenTitle,
     leftSide,
     rightSide,
-    templateStyleConf,
-    childStyleConf,
+    templateStyle,
+    childrenStyle,
+    headerHide = false,
+    footerHide = false,
   } = props;
-  // NOTE: 기본 값이 잆을 경우
-  const header = props.header || <AppHeader />;
-  const footer = props.footer || <AppFooter />;
+
+  // NOTE: 기본 값이 있을 경우
+  const header = (props.header && !headerHide) || <AppHeader />;
+  const footer = (props.footer && !footerHide) || <AppFooter />;
 
   return (
     <>
       <AppMeta title={title} />
-      <Styled.AppTemplate className="wrapper" templateStyleConf={templateStyleConf}>
-        {header && <div className={cx('AppTemplate__header')} children={header} />}
+      <Styled.AppTemplate data-component-name="AppTemplate" style={templateStyle}>
+        {header && <div className={cx('appTemplate__header')} children={header} />}
 
-        {nav && <div className={cx('AppTemplate__nav')} children={nav} />}
+        {/* NOTE: header와 nav가 분리되어있을 경우 */}
+        {nav && <div className={cx('appTemplate__nav')} children={nav} />}
 
         {children && (
-          <main className={cx('AppTemplate__main', { main_title: childrenTitle })}>
-            {childrenTitle && <h1 className="AppTemplate__main_title">{childrenTitle}</h1>}
+          <div className="appTemplate__main_container">
+            {leftSide && <div className={cx('appTemplate__leftSide')} children={leftSide} />}
+            <main className={cx('appTemplate__main', { main_title: childrenTitle })}>
+              {childrenTitle && <h1 className="appTemplate__main_title">{childrenTitle}</h1>}
 
-            {children && (
-              <div childStyleConf={childStyleConf} className={cx('AppTemplate__main_children')}>
-                {children}
-              </div>
-            )}
-          </main>
+              {children && (
+                <div style={childrenStyle} className={cx('appTemplate__main_children')}>
+                  {children}
+                </div>
+              )}
+            </main>
+            {rightSide && <div className={cx('appTemplate__rightSide')} children={rightSide} />}
+          </div>
         )}
 
-        {footer && <div className={cx('AppTemplate__footer')} children={footer} />}
-
-        {leftSide && <div className={cx('AppTemplate__leftSide')} children={leftSide} />}
-
-        {rightSide && <div className={cx('AppTemplate__rightSide')} children={rightSide} />}
+        {footer && <div className={cx('appTemplate__footer')} children={footer} />}
       </Styled.AppTemplate>
     </>
   );
 }
 
 const Styled = {
-  AppTemplate: styled.main`
-    width: 1200px;
-    margin: auto;
+  AppTemplate: styled.div`
+    position: relative;
+    .appTemplate__main_container {
+      position: relative;
+      width: 1200px;
+      margin: auto;
 
-    @media screen and (max-width: 1200px) {
-      width: 100%;
-      padding: 15px;
+      @media screen and (max-width: 1200px) {
+        width: 100%;
+        padding: 15px;
+      }
     }
   `,
 };
-// sreen
 
 export default AppTemplate;
