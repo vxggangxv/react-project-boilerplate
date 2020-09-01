@@ -30,7 +30,7 @@ function Test() {
 
   return (
     <>
-      <section>
+      {/* <section>
         <h2>Online Dof Brdige Servive</h2>
       </section>
       <section>
@@ -42,9 +42,9 @@ function Test() {
       <section>
         <h3>AnyTime, AnyWhere</h3>
       </section>
-      <section>Slide2</section>
+      <section>Slide2</section> */}
 
-      {/* <button onClick={() => handleClick({ type: 'data' })}>Click</button> */}
+      <button onClick={() => handleClick({ type: 'data' })}>Click</button>
       {/* <h2>{values.data?.title}</h2> */}
     </>
   );

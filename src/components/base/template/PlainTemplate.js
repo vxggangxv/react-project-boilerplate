@@ -1,15 +1,20 @@
 import React from 'react';
 import styled from 'styled-components';
+import Helmet from 'react-helmet';
 
 function PlainTemplate(props) {
-  const { header, main, children } = props;
+  const { header, main, children, title } = props;
+  const pageName = title || 'React';
   return (
-    <Styled.PlainTemplate>
-      <main className="main">
-        <section>{header}</section>
-        <section>{main || children}</section>
-      </main>
-    </Styled.PlainTemplate>
+    <>
+      <Helmet title={pageName} />
+      <Styled.PlainTemplate>
+        <main className="main">
+          <section>{header}</section>
+          <section>{main || children}</section>
+        </main>
+      </Styled.PlainTemplate>
+    </>
   );
 }
 

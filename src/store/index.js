@@ -1,8 +1,8 @@
 import { createStore, applyMiddleware } from 'redux';
-import { composeWithDevTools } from 'redux-devtools-extension';
+import { composeWithDevTools } from 'redux-devtools-extension/developmentOnly';
 import createSagaMiddleware from 'redux-saga';
 // import logger from 'redux-logger';
-import modules from 'store/modules';
+import rootReducer from 'store/modules';
 import rootSaga from 'store/sagas';
 
 const customMiddleware = () => next => action => {
@@ -10,20 +10,16 @@ const customMiddleware = () => next => action => {
   return result;
 };
 
-const sagaMiddleware = createSagaMiddleware();
-const composeEnhancers = composeWithDevTools({ trace: true, traceLimit: 25 });
+function configureStore() {
+  const sagaMiddleware = createSagaMiddleware();
+  const middlewares = [sagaMiddleware, customMiddleware];
+  const composeEnhancers = composeWithDevTools({ trace: true, traceLimit: 25 });
+  const enhancers = composeEnhancers(applyMiddleware(...middlewares));
 
-const store = createStore(
-  modules,
-  composeEnhancers(
-    applyMiddleware(
-      sagaMiddleware,
-      customMiddleware,
-      // logger,
-    ),
-  ),
-);
+  const store = createStore(rootReducer, enhancers);
+  sagaMiddleware.run(rootSaga);
 
-sagaMiddleware.run(rootSaga);
+  return store;
+}
 
-export default store;
+export default configureStore();

@@ -90,11 +90,11 @@ export const createPromiseSaga = ({
     let currentState = null;
     let payload = null;
 
-    console.log(`
-    ==========================
-    >>> *${tag}
-    ==========================
-    `);
+    // console.log(`
+    // ==========================
+    // >>> *${tag}
+    // ==========================
+    // `);
 
     if (!type) {
       console.warn(`createPromiseSaga Need type`);
@@ -143,7 +143,7 @@ export const createPromiseSaga = ({
       }
     } catch (err) {
       console.log('\n');
-      console.group(currentState + ' error');
+      console.group(`${tag} ${currentState}` + ' error');
       console.log(payload, 'payload');
       console.log(err);
       console.groupEnd();

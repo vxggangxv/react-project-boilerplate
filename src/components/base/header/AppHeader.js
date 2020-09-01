@@ -2,14 +2,15 @@ import React from 'react';
 import styled from 'styled-components';
 import { NavLink } from 'react-router-dom';
 
-function Header(props) {
+function AppHeader(props) {
   return (
-    <Styled.Header>
+    <Styled.AppHeader>
       <header className="header">
+        <h1>해더</h1>
         <NavMenu to="/" text="Home" />
         <NavMenu to="/about" text="About" />
       </header>
-    </Styled.Header>
+    </Styled.AppHeader>
   );
 }
 
@@ -19,7 +20,7 @@ function NavMenu(props) {
 }
 
 const Styled = {
-  Header: styled.div`
+  AppHeader: styled.div`
     position: relative;
     &,
     .header {
@@ -37,4 +38,4 @@ const Styled = {
   `,
 };
 
-export default Header;
+export default AppHeader;
