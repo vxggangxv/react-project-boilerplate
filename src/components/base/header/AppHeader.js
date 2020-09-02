@@ -1,20 +1,26 @@
 import React from 'react';
 import styled from 'styled-components';
-import { NavLink, Link } from 'react-router-dom';
+import cx from 'classnames';
+import { NavLink, Link, withRouter } from 'react-router-dom';
 import { logo } from 'components/base/images';
 
+// TODO: 차후 mapper로 이동
 const navigation = [
   {
-    path: '/',
+    path: '/home',
     text: 'Home',
   },
   {
     path: '/about',
     text: 'About',
   },
+  {
+    path: '/test/list',
+    text: 'Test',
+  },
 ];
 
-function AppHeader() {
+function AppHeader({ location: { pathname } }) {
   return (
     <Styled.AppHeader data-component-name="AppHeader">
       <header className="header">
@@ -26,11 +32,15 @@ function AppHeader() {
         </h1>
         <nav className="header__nav">
           <h1 className="sr-only">메인 메뉴</h1>
-          {navigation.map((item, idx) => (
-            <NavLink to={item.path} key={idx} className="header__link">
-              {item.text}
-            </NavLink>
-          ))}
+          <ul className="header__nav_list">
+            {navigation.map((item, idx) => (
+              <li key={idx} className={cx('header__nav_item', { active: pathname === item.path })}>
+                <NavLink to={item.path} className="header__link">
+                  {item.text}
+                </NavLink>
+              </li>
+            ))}
+          </ul>
         </nav>
       </header>
     </Styled.AppHeader>
@@ -61,12 +71,20 @@ const Styled = {
     .header__nav {
       position: relative;
     }
-    .header__link {
+    .header__nav_list {
+      display: flex;
+    }
+    .header__nav_item {
       &:not(:first-of-type) {
         margin-left: 10px;
+      }
+      &.active {
+        text-decoration: underline;
+      }
+      .header__link {
       }
     }
   `,
 };
 
-export default AppHeader;
+export default withRouter(AppHeader);

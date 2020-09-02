@@ -1,30 +1,26 @@
 import React, { Suspense } from 'react';
 import Core from 'containers/base/Core';
 import { Route, Switch, Redirect } from 'react-router-dom';
-import { lazy } from '@loadable/component';
-import { baseStyle } from 'styles/base';
-import { HomePage, AboutPage, ErrorPage } from 'pages';
+import GlobalStyle from 'styles/base';
+import { Error, Home, About, Test, TestList, TestDetail } from 'pages';
 import { FullScreenLoading } from 'components/base/loading';
 
 function App() {
   return (
     <>
-      <Styled.GlobalStyle />
+      <GlobalStyle />
       <Core />
-      <Suspense fallback={<FullScreenLoading />}>
-        <Switch>
-          <Route exact path="/" component={HomePage} />
-          <Route path="/about" component={AboutPage} />
-          <Route path="/error" component={ErrorPage} />
-          <Route component={() => <Redirect to="/error/404" />} />
-        </Switch>
-      </Suspense>
+
+      <Switch>
+        <Redirect exact path="/" to="/home" />
+        <Route path="/home" component={Home} />
+        <Route path="/error" component={Error} />
+        <Route path="/about" component={About} />
+        <Route path="/test" component={Test} />
+        <Route component={() => <Redirect to="/error/404" />} />
+      </Switch>
     </>
   );
 }
-
-const Styled = {
-  GlobalStyle: baseStyle,
-};
 
 export default App;

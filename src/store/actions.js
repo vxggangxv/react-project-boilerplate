@@ -12,9 +12,11 @@ export const clear_api_calling_status = createAction(CLEAR_API_CALLING_STATUS);
 export const BASE_EXIT_LANDING = 'base/BASE_EXIT_LANDING';
 export const base_exit_landing = createAction(BASE_EXIT_LANDING);
 
-export const BASE_RESULT_STATUS = 'base/BASE_RESULT_STATUS';
-export const base_result_status = createAction(BASE_RESULT_STATUS);
+export const BASE_RESPONSE_STATUS = 'base/BASE_RESPONSE_STATUS';
+export const base_response_status = createAction(BASE_RESPONSE_STATUS);
 
 // Sagas
-export const BASE_TEST = makeAsyncActions('base/BASE_TEST');
-export const BASE_TEST_SAGAS = makeAsyncCreateActions(BASE_TEST)(api.fetchPosts);
+export const TEST_DATA_LIST = makeAsyncActions('base/TEST_DATA_LIST');
+export const TEST_DATA_LIST_SAGA = makeAsyncCreateActions(TEST_DATA_LIST)(api.fetchPosts);
+export const TEST_DATA = makeAsyncActions('base/TEST_DATA');
+export const TEST_DATA_SAGA = makeAsyncCreateActions(TEST_DATA)(api.fetchPosts);

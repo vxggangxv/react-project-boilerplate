@@ -3,18 +3,14 @@ import { SpreadSagas } from 'lib/asyncUtils';
 import * as actions from 'store/actions';
 
 const initialState = {
+  // NOTE: 초기 랜딩 false일 경우 화면 랜딩 실행
   landing: true,
   // NOTE: router에 error 연결(e.g serverError : 5)
-  resultStatus: null,
-  // TODO: 차후 error toasty와 연결 예정
+  responseStatus: null,
+  // TODO: 차후 error toasty또는 popup과 연결 예정
   error: {
     isShow: false,
     message: null,
-  },
-  test: {
-    pending: null,
-    success: null,
-    failure: null,
   },
 };
 
@@ -27,16 +23,9 @@ export default handleActions(
         draft.landing = false;
       },
     }),
-    ...new SpreadReducer(null, actions.BASE_RESULT_STATUS, {
+    ...new SpreadReducer(null, actions.BASE_RESPONSE_STATUS, {
       callback: (draft, { payload: diff }) => {
-        draft.resultStatus = diff;
-      },
-    }),
-    ...new SpreadReducer('test', actions.BASE_TEST, {
-      success: (draft, { payload: diff }, state) => {
-        console.log(state, 'state');
-        console.log(initialState, 'initialState');
-        console.log('success boiler');
+        draft.responseStatus = diff;
       },
     }),
   },

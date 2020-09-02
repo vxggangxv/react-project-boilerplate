@@ -13,6 +13,7 @@ function FullScreenLoading({ visible, size }) {
 
 const Styled = {
   FullScreenLoading: styled.div`
+    z-index: 100;
     background: transparent;
     position: fixed;
     left: 0;

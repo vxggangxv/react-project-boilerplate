@@ -2,10 +2,10 @@ import { put, takeEvery, all } from 'redux-saga/effects';
 import { SET_API_CALLING_STATUS, CLEAR_API_CALLING_STATUS } from 'store/actions';
 import { isString } from 'util';
 
-function* handleSetApiCalling(action) {
+function* handleSetApiCalling() {
   yield put({ type: SET_API_CALLING_STATUS, payload: true });
 }
-function* handleClearApiCalling(action) {
+function* handleClearApiCalling() {
   yield put({ type: CLEAR_API_CALLING_STATUS, payload: false });
 }
 

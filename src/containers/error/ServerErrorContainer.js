@@ -4,12 +4,12 @@ import { useSelector } from 'react-redux';
 import { ErrorForm } from 'components/base/error';
 
 function ServerErrorContainer(props) {
-  const { resultStatus } = useSelector(state => ({
-    resultStatus: state.base.resultStatus,
+  const { responseStatus } = useSelector(state => ({
+    responseStatus: state.base.responseStatus,
   }));
 
   useEffect(() => {
-    if (resultStatus !== null) {
+    if (responseStatus !== null) {
       // window.location.reload();
     }
   }, []);

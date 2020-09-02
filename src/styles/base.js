@@ -3,7 +3,7 @@ import reset from 'styled-reset';
 import { fontFamily, disableDrag } from 'styles/utils';
 import { ENV_MODE_PROD } from 'lib/setting';
 
-export const baseStyle = createGlobalStyle`
+const globalStyle = createGlobalStyle`
   ${reset};
   * {
     box-sizing: border-box !important;
@@ -47,3 +47,5 @@ export const baseStyle = createGlobalStyle`
     margin: 0 !important;
   }
 `;
+
+export default globalStyle;

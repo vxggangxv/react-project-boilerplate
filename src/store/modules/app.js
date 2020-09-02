@@ -18,6 +18,11 @@ export default handleActions(
         draft.apiCalling = diff;
       },
     }),
+    ...new SpreadReducer(null, actions.CLEAR_API_CALLING_STATUS, {
+      callback: (draft, { payload: diff }, state) => {
+        draft.apiCalling = diff;
+      },
+    }),
   },
   initialState,
 );
