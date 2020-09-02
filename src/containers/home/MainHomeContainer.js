@@ -1,15 +1,17 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useImmer } from 'use-immer';
 import { BASE_TEST_SAGAS } from 'store/actions';
 import { useShallowSelector } from 'lib/utils';
+import { Actions } from 'store/actionCreators';
 
 const MainHomeContainer = () => {
-  const { landing, apiCalling } = useShallowSelector(state => ({
-    landing: state.base,
-    apiCalling: state.apiCalling,
+  const { landing, apiCalling, resultStatus } = useShallowSelector(state => ({
+    landing: state.base.landing,
+    apiCalling: state.app.apiCalling,
+    resultStatus: state.base.resultStatus,
   }));
 
-  console.log(landing, 'landing');
+  // console.log(landing, 'landing');
   // return <div>{landing === false ? 'loading...' : <Test />}</div>;
   return <Test />;
 };
