@@ -1,12 +1,12 @@
 import { put, takeEvery, all } from 'redux-saga/effects';
-import { SET_API_CALLING_STATUS, CLEAR_API_CALLING_STATUS } from 'store/actions';
+import * as actions from 'store/actions';
 import { isString } from 'util';
 
 function* handleSetApiCalling() {
-  yield put({ type: SET_API_CALLING_STATUS, payload: true });
+  yield put({ type: actions.SET_API_CALLING_STATUS, payload: true });
 }
 function* handleClearApiCalling() {
-  yield put({ type: CLEAR_API_CALLING_STATUS, payload: false });
+  yield put({ type: actions.CLEAR_API_CALLING_STATUS, payload: false });
 }
 
 export default function* appSaga() {

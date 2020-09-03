@@ -3,7 +3,7 @@ import _ from 'lodash';
 import { convertObjectToQueryString } from 'lib/library';
 import { dispatch } from 'store/actionCreators';
 import { useHistory } from 'react-router-dom';
-import { Actions } from 'store/actionCreators';
+import { DispatchActions } from 'store/actionCreators';
 import { useSelector, shallowEqual } from 'react-redux';
 
 /**
@@ -307,7 +307,7 @@ export function useHistoryPush() {
 }
 
 // NOTE: Popup
-export const Popup = config => Actions.base_popup(config);
+export const Popup = config => DispatchActions.base_popup(config);
 
 // NOTE: useInterval
 export function useInterval(callback, delay) {

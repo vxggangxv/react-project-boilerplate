@@ -17,6 +17,7 @@ function TestList({ match }) {
   }));
 
   // console.log(match, 'match');
+  // console.log(testListData, 'testListData');
   useEffect(() => {
     TEST_DATA_LIST_SAGA();
   }, []);

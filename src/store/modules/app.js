@@ -12,7 +12,6 @@ const SpreadReducer = SpreadSagas({ state: initialState });
 
 export default handleActions(
   {
-    // NOTE: SET_API_CALLING_STATUS
     ...new SpreadReducer(null, actions.SET_API_CALLING_STATUS, {
       callback: (draft, { payload: diff }, state) => {
         draft.apiCalling = diff;

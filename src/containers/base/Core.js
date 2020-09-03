@@ -1,9 +1,10 @@
 import React, { useEffect } from 'react';
 import { useImmer } from 'use-immer';
-import { Actions } from 'store/actionCreators';
+import { DispatchActions } from 'store/actionCreators';
 import { FullScreenLoading } from 'components/base/loading';
 import ErrorContainer from 'containers/base/ErrorContainer';
 import { useShallowSelector, useDidUpdateEffect } from 'lib/utils';
+import { isAuthenticatedSelector } from 'store/modules/auth.selectors';
 
 const CoreState = {
   visible: false,
@@ -11,15 +12,20 @@ const CoreState = {
 
 // NOTE: 초기 landing, error, notifications, popup 등록
 function Core() {
-  // const base = useSelector(state => state);
-  const { apiCalling } = useShallowSelector(state => ({
+  const { apiCalling, isAuthenticated, landing } = useShallowSelector(state => ({
     apiCalling: state.app.apiCalling,
+    isAuthenticated: isAuthenticatedSelector(state),
+    landing: state.base.landing,
   }));
   const [values, setValues] = useImmer(CoreState);
   const valuesVisible = values.visible;
 
+  // console.log(apiCalling, 'apiCalling');
+  // console.log(isAuthenticated, 'isAuthenticated');
+  // console.log(landing, 'landing');
+
   const initialize = async () => {
-    Actions.base_exit_landing();
+    DispatchActions.base_exit_landing();
   };
 
   useEffect(() => {
@@ -33,6 +39,7 @@ function Core() {
     });
   }, [apiCalling]);
 
+  if (landing) return null;
   return (
     <>
       <FullScreenLoading visible={valuesVisible} />

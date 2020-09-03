@@ -4,6 +4,7 @@ import { Route, Switch, Redirect } from 'react-router-dom';
 import GlobalStyle from 'styles/base';
 import { Error, Home, About, Test, TestList, TestDetail } from 'pages';
 import { FullScreenLoading } from 'components/base/loading';
+import { PrivateRoute } from 'components/base/route';
 
 function App() {
   return (
@@ -15,6 +16,7 @@ function App() {
         <Redirect exact path="/" to="/home" />
         <Route path="/home" component={Home} />
         <Route path="/error" component={Error} />
+        {/* <PrivateRoute path="/about" component={About} /> */}
         <Route path="/about" component={About} />
         <Route path="/test" component={Test} />
         <Route component={() => <Redirect to="/error/404" />} />

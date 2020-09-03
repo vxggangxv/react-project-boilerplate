@@ -13,9 +13,11 @@ const customMiddleware = () => next => action => {
 };
 
 const persistConfig = {
-  key: 'root',
+  key: '__persist__',
   storage,
+  blacklist: ['auth', 'base'],
 };
+
 const persistedReducer = persistReducer(persistConfig, rootReducer);
 
 const sagaMiddleware = createSagaMiddleware();
@@ -23,6 +25,7 @@ const middlewares = [sagaMiddleware, customMiddleware];
 const composeEnhancers = composeWithDevTools({ trace: true, traceLimit: 25 });
 const enhancers = composeEnhancers(applyMiddleware(...middlewares));
 
+// const store = createStore(rootReducer, enhancers);
 const store = createStore(persistedReducer, enhancers);
 export const persistor = persistStore(store);
 sagaMiddleware.run(rootSaga);

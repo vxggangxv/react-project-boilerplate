@@ -4,7 +4,7 @@ import { useSelector } from 'react-redux';
 import { Link, useHistory } from 'react-router-dom';
 import { useDidUpdateEffect, useShallowSelector } from 'lib/utils';
 import { ErrorForm } from 'components/base/error';
-import { Actions } from 'store/actionCreators';
+import { DispatchActions } from 'store/actionCreators';
 
 function ErrorContainer(props) {
   const { responseStatus } = useShallowSelector(state => ({
@@ -15,7 +15,7 @@ function ErrorContainer(props) {
   // NOTE: 500에러발생시 replace
   useDidUpdateEffect(() => {
     if (responseStatus === 500) history.replace('/error/500');
-    Actions.base_result_status(false);
+    DispatchActions.base_result_status(false);
   }, [responseStatus]);
 
   return null;

@@ -112,7 +112,7 @@ export const createPromiseSaga = ({
       const viewPayload = error ? error.payload : data.payload;
 
       data.payload = viewPayload || {};
-      console.group(`--- ${tag} Redux saga`);
+      console.group(`-- ${tag} Redux saga`);
       console.log(` %cRequest Data :\n`, 'color:red;padding:5px;font-weight:bold', viewPayload);
       console.log(` %cResponse Data :\n`, 'color:red;padding:5px;font-weight:bold', data);
       console.groupEnd();

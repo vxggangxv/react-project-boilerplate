@@ -1,20 +1,21 @@
 import { all, takeEvery } from 'redux-saga/effects';
 import { createPromiseSaga } from 'lib/asyncUtils';
-import { TEST_DATA_SAGA, TEST_DATA_LIST_SAGA } from 'store/actions';
+import * as actions from 'store/actions';
+// import { TEST_DATA_SAGA, TEST_DATA_LIST_SAGA } from 'store/actions';
 
-const handleTestDataList = createPromiseSaga({
-  type: TEST_DATA_LIST_SAGA,
-  tag: 'handleTestDataList',
+const handleDataList = createPromiseSaga({
+  type: actions.TEST_DATA_LIST_SAGA,
+  tag: 'handleDataList',
 });
 
-const handleTestData = createPromiseSaga({
-  type: TEST_DATA_SAGA,
-  tag: 'handleTestData',
+const handleData = createPromiseSaga({
+  type: actions.TEST_DATA_SAGA,
+  tag: 'handleData',
 });
 
 export default function* baseSaga() {
   yield all([
-    takeEvery(TEST_DATA_LIST_SAGA.index, handleTestDataList),
-    takeEvery(TEST_DATA_SAGA.index, handleTestData),
+    takeEvery(actions.TEST_DATA_LIST_SAGA.index, handleDataList),
+    takeEvery(actions.TEST_DATA_SAGA.index, handleData),
   ]);
 }

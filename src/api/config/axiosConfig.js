@@ -59,9 +59,8 @@ export function acx(axiosConf) {
         console.log('Error response', error.response.status);
         console.log('Error response', error.response.headers);
         // NOTE: 차후 auth에 대한 에러처리
-        // const { status } = response;
-        // if (status === Unauthorized) return onUnauthorized();
-        // throw Error(response);
+        // const { status } = error.response;
+        // if (status === 401) return onUnauthorized();
       } else if (error.resquest) {
         // 요청이 이루어 졌으나 응답을 받지 못했습니다.
         console.log('Error request', error.request);

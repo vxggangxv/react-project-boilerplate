@@ -3,7 +3,7 @@ import { SpreadSagas } from 'lib/asyncUtils';
 import * as actions from 'store/actions';
 
 const initialState = {
-  // NOTE: 초기 랜딩 false일 경우 화면 랜딩 실행
+  // NOTE: 초기 랜딩중일 경우 true, false일 경우 화면 랜딩 완료
   landing: true,
   // NOTE: router에 error 연결(e.g serverError : 500)
   responseStatus: null,
@@ -23,11 +23,11 @@ export default handleActions(
         draft.landing = false;
       },
     }),
-    ...new SpreadReducer(null, actions.BASE_RESPONSE_STATUS, {
-      callback: (draft, { payload: diff }) => {
-        draft.responseStatus = diff;
-      },
-    }),
+    // ...new SpreadReducer(null, actions.BASE_RESPONSE_STATUS, {
+    //   callback: (draft, { payload: diff }) => {
+    //     draft.responseStatus = diff;
+    //   },
+    // }),
   },
   initialState,
 );

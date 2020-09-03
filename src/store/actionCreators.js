@@ -4,4 +4,4 @@ import store from 'store';
 
 // console.log(store, 'store');
 export const { dispatch } = store;
-export const Actions = bindActionCreators(actions, dispatch);
+export const DispatchActions = bindActionCreators(actions, dispatch);
