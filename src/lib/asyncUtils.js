@@ -1,19 +1,11 @@
 import produce from 'immer';
 import _ from 'lodash';
+import { createActinos } from 'redux-actions';
 import { dispatch } from 'store/actionCreators';
 import { call } from 'redux-saga/effects';
 
 /**
- * makeActionCreator
- * @param {*} actionType
- * @param {*} payload
- */
-export function makeActionCreator(actionType, payload) {
-  return dispatch({ type: actionType, payload: payload });
-}
-
-/**
- * Actions Name
+ * makeAsyncActions: 액션 타입 생성
  * @param {*} actionName string
  */
 export function makeAsyncActions(actionName) {
@@ -37,7 +29,7 @@ export function makeAsyncActions(actionName) {
 }
 
 /**
- * makeAsyncActions
+ * makeAsyncCreateActions: 액션 타입과 dispatch 연결
  * @param {*} actions Object
  */
 export function makeAsyncCreateActions(actions) {
@@ -75,7 +67,16 @@ export function makeAsyncCreateActions(actions) {
 }
 
 /**
- *
+ * makeActionCreator: dispatch 연결
+ * @param {*} actionType
+ * @param {*} payload
+ */
+export function makeActionCreator(actionType, payload) {
+  return dispatch({ type: actionType, payload: payload });
+}
+
+/**
+ * createPromiseSaga: saga의 api 연결
  * @param {*} type
  * @param {*} promiseCreator
  */
@@ -152,7 +153,10 @@ export const createPromiseSaga = ({
   };
 };
 
-// SECTION: Redux Saga, Actions
+/**
+ * SpreadSagas: reducer 연결
+ * @param {*} config
+ */
 export function SpreadSagas(config) {
   const { state: defaultState } = config;
 

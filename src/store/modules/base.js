@@ -5,7 +5,7 @@ import * as actions from 'store/actions';
 const initialState = {
   // NOTE: 초기 랜딩 false일 경우 화면 랜딩 실행
   landing: true,
-  // NOTE: router에 error 연결(e.g serverError : 5)
+  // NOTE: router에 error 연결(e.g serverError : 500)
   responseStatus: null,
   // TODO: 차후 error toasty또는 popup과 연결 예정
   error: {
