@@ -6,6 +6,7 @@ import { persistStore, persistReducer } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
 import rootReducer from 'store/modules';
 import rootSaga from 'store/sagas';
+import * as mapper from 'lib/mapper';
 
 const customMiddleware = () => next => action => {
   const result = next(action);
@@ -13,9 +14,9 @@ const customMiddleware = () => next => action => {
 };
 
 const persistConfig = {
-  key: '__persist__',
+  key: mapper.storage.persist,
   storage,
-  blacklist: ['auth', 'base'],
+  blacklist: ['app', 'auth', 'base', 'user'],
 };
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);

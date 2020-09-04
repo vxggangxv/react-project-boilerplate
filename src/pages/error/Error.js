@@ -4,7 +4,7 @@ import * as mapper from 'lib/mapper';
 import { ServerErrorContainer } from 'containers/error';
 import { NotFound, ServerError } from 'components/base/error';
 
-function ErrorPage(props) {
+function Error(props) {
   return (
     <>
       <Switch>
@@ -16,4 +16,4 @@ function ErrorPage(props) {
   );
 }
 
-export default ErrorPage;
+export default Error;

@@ -8,9 +8,10 @@ const initialState = {
   // NOTE: router에 error 연결(e.g serverError : 500)
   responseStatus: null,
   // TODO: 차후 error toasty또는 popup과 연결 예정
-  error: {
+  responseError: {
     isShow: false,
     message: null,
+    data: null,
   },
 };
 
@@ -23,11 +24,19 @@ export default handleActions(
         draft.landing = false;
       },
     }),
-    // ...new SpreadReducer(null, actions.BASE_RESPONSE_STATUS, {
-    //   callback: (draft, { payload: diff }) => {
-    //     draft.responseStatus = diff;
-    //   },
-    // }),
+    ...new SpreadReducer(null, actions.BASE_RESPONSE_STATUS, {
+      callback: (draft, { payload: diff }) => {
+        // TEST: 필요
+        draft.responseStatus = diff;
+      },
+    }),
+    ...new SpreadReducer(null, actions.BASE_RESPONSE_ERROR, {
+      callback: (draft, { payload: diff }) => {
+        // TEST: 필요
+        draft.responseError.message = diff.message;
+        draft.responseError.data = diff;
+      },
+    }),
   },
   initialState,
 );

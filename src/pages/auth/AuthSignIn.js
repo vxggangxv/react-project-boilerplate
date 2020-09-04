@@ -2,31 +2,38 @@ import React from 'react';
 import { useHistory, useLocation } from 'react-router-dom';
 import { useShallowSelector, useDidUpdateEffect } from 'lib/utils';
 import { DispatchActions } from 'store/actionCreators';
+import { AppTemplate } from 'components/base/template';
+import { onUnauthorized } from 'api/config/axiosUtils';
+import { isAuthenticatedSelector } from 'store/modules/auth.selectors';
 
 function AuthSignIn(props) {
-  const { accessToken } = useShallowSelector(state => ({
-    accessToken: state.auth.accessToken,
+  const { isAuthenticated } = useShallowSelector(state => ({
+    isAuthenticated: isAuthenticatedSelector(state),
   }));
   let history = useHistory();
   let location = useLocation();
   let { from } = location.state || { from: { pathname: '/' } };
 
   let login = () => {
-    DispatchActions.auth_accesstoken();
+    DispatchActions.auth_token({ token: 'token', user: 'user' });
   };
 
+  // console.log(location.state, 'location.state');
+  // console.log(from, 'from');
+
   useDidUpdateEffect(() => {
-    // if (accessToken) return history.push('/test');
-    if (accessToken) return history.replace(from);
-  }, [accessToken]);
+    if (isAuthenticated) return history.replace(from);
+  }, [isAuthenticated]);
 
   return (
-    <div>
+    <AppTemplate title={'Auth'}>
+      <br />
       <br />
       <p>You must log in to view the page at {from.pathname}</p>
+      <br />
       <button onClick={login}>Log in</button>
       <br />
-    </div>
+    </AppTemplate>
   );
 }
 

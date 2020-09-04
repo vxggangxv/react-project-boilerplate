@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { ENV_MODE_DEV, ENV_MODE_PROD } from 'lib/setting';
+import { useHistory } from 'react-router-dom';
 
 // const domain = ENV_MODE_DEV ? 'http://localhost:3000' : 'http://localhost:3000';
 const domain = 'https://jsonplaceholder.typicode.com';
@@ -25,6 +26,13 @@ export function request({ path = '', config = {} }) {
 
 export const setAuthInHeader = token => {
   axios.defaults.headers.common['Authorization'] = token ? `Bearer ${token}` : null;
+};
+
+export const onUnauthorized = () => {
+  const history = useHistory();
+  // history.push(`/auth/login?returnPath=${encodeURIComponent(location.pathname)}`);
+  history.push(`/home`);
+  // return null;
 };
 
 // NOTE: login, logut process

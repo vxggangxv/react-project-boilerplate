@@ -41,11 +41,25 @@ export const navigation = [
     text: 'Login',
   },
   {
+    path: '/auth/logout',
+    text: 'Logout',
+  },
+  {
     path: '/about',
     text: 'About',
+  },
+  {
+    path: '/user',
+    text: 'User',
   },
   {
     path: '/test',
     text: 'Test',
   },
 ];
+
+export const storage = {
+  persist: '__reapro_persist__',
+  user: '__reapro_user__',
+  token: '__reapro_token__',
+};

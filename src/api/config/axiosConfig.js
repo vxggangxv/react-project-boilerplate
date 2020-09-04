@@ -1,6 +1,7 @@
 import _ from 'lodash';
 import axios from 'axios';
 import { ENV_MODE_DEV, ENV_MODE_PROD } from 'lib/setting';
+import { DispatchActions } from 'store/actionCreators';
 
 /**
  *
@@ -53,20 +54,25 @@ export function acx(axiosConf) {
       return response;
     })
     .catch(error => {
-      if (error.response) {
+      const { response = {}, resquest = '', message = '' } = error;
+      if (response) {
+        const { data = {}, status = 0, headers = {} } = response;
         // 요청이 이루어졌으며 서버가 2xx의 범위를 벗어나는 상태 코드로 응답했습니다.
-        console.log('Error response', error.response.data);
-        console.log('Error response', error.response.status);
-        console.log('Error response', error.response.headers);
+        console.log('Error response', response.data);
+        console.log('Error response', response.status);
+        console.log('Error response', response.headers);
+        // NOTE: 에러 상태에 대한 처리
+        if (data) DispatchActions.base_response_error(data);
+        if (status) DispatchActions.base_response_status(status);
         // NOTE: 차후 auth에 대한 에러처리
-        // const { status } = error.response;
+        // const { status } = response;
         // if (status === 401) return onUnauthorized();
-      } else if (error.resquest) {
+      } else if (resquest) {
         // 요청이 이루어 졌으나 응답을 받지 못했습니다.
-        console.log('Error request', error.request);
+        console.log('Error request', request);
       } else {
         // 오류를 발생시킨 요청을 설정하는 중에 문제가 발생했습니다.
-        console.log('Error message', error.message);
+        console.log('Error message', message);
       }
       // NOTE: 보낸 데이터 payload data 확인용
       return { error, payload: axiosConf.data };

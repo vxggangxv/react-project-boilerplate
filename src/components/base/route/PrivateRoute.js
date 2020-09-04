@@ -1,15 +1,18 @@
 import React from 'react';
-import { Route, Redirect } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+import { Route, Redirect, useLocation } from 'react-router-dom';
 import * as mapper from 'lib/mapper';
 import { isAuthenticatedSelector } from 'store/modules/auth.selectors';
+import { useShallowSelector } from 'lib/utils';
 
 // 사용법: <PrivateRoute path="/project" component={Project} to="/auth/signup"/>
 function PrivateRoute({ component: Component, ...rest }) {
-  const { isAuthenticated } = useSelector(state => ({
+  const { isAuthenticated } = useShallowSelector(state => ({
     isAuthenticated: isAuthenticatedSelector(state),
   }));
   const isRedirect = rest.redirect;
+
+  const location = useLocation();
+  // console.log(location, 'location');
 
   return (
     <Route
@@ -19,7 +22,7 @@ function PrivateRoute({ component: Component, ...rest }) {
           return (
             <Redirect
               to={{
-                pathname: mapper.pageUrl.index,
+                pathname: mapper.pageUrl.signIn,
                 state: { from: location },
               }}
             />

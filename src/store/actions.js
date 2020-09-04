@@ -22,9 +22,21 @@ export const base_exit_landing = createAction(BASE_EXIT_LANDING);
 export const BASE_RESPONSE_STATUS = 'base/BASE_RESPONSE_STATUS';
 export const base_response_status = createAction(BASE_RESPONSE_STATUS);
 
+export const BASE_RESPONSE_ERROR = 'base/BASE_RESPONSE_ERROR';
+export const base_response_error = createAction(BASE_RESPONSE_ERROR);
+
 // auth
-export const AUTH_ACCESSTOKEN = 'auth/AUTH_ACCESSTOKEN';
-export const auth_accesstoken = createAction(AUTH_ACCESSTOKEN);
+export const SET_TOKEN = 'auth/SET_TOKEN';
+export const set_token = createAction(SET_TOKEN);
+// TEMP: test용
+export const AUTH_TOKEN = 'auth/AUTH_TOKEN';
+export const auth_token = createAction(AUTH_TOKEN);
+
+// user
+export const SET_USER = 'auth/SET_USER';
+export const set_user = createAction(SET_USER);
+
+// user
 
 /**
  * NOTE: Saga 사용법

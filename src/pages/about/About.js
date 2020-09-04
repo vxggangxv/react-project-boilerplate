@@ -2,12 +2,12 @@ import React from 'react';
 import AboutContainer from 'containers/about/AboutContainer';
 import { AppTemplate } from 'components/base/template';
 
-function AboutPage(props) {
+function About(props) {
   return (
-    <AppTemplate title={'Home'}>
+    <AppTemplate title={'About'}>
       <AboutContainer />
     </AppTemplate>
   );
 }
 
-export default AboutPage;
+export default About;

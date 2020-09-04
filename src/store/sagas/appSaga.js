@@ -6,7 +6,7 @@ function* handleSetApiCalling() {
   yield put({ type: actions.SET_API_CALLING_STATUS, payload: true });
 }
 function* handleClearApiCalling() {
-  yield put({ type: actions.CLEAR_API_CALLING_STATUS, payload: false });
+  yield put({ type: actions.SET_API_CALLING_STATUS, payload: false });
 }
 
 export default function* appSaga() {
