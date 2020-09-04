@@ -22,6 +22,10 @@ export const base_exit_landing = createAction(BASE_EXIT_LANDING);
 export const BASE_RESPONSE_STATUS = 'base/BASE_RESPONSE_STATUS';
 export const base_response_status = createAction(BASE_RESPONSE_STATUS);
 
+// auth
+export const AUTH_ACCESSTOKEN = 'auth/AUTH_ACCESSTOKEN';
+export const auth_accesstoken = createAction(AUTH_ACCESSTOKEN);
+
 /**
  * NOTE: Saga 사용법
  * import * as actions from 'store/actions';

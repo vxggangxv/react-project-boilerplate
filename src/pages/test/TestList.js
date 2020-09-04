@@ -4,7 +4,7 @@ import { useImmer } from 'use-immer';
 import { AppTemplate } from 'components/base/template';
 import { useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { TEST_DATA_LIST_SAGA } from 'store/actions';
+import * as actions from 'store/actions';
 
 const TestListState = {
   data: null,
@@ -19,7 +19,7 @@ function TestList({ match }) {
   // console.log(match, 'match');
   // console.log(testListData, 'testListData');
   useEffect(() => {
-    TEST_DATA_LIST_SAGA();
+    actions.TEST_DATA_LIST_SAGA();
   }, []);
 
   const data = testListData?.slice(0, 10);
@@ -28,7 +28,7 @@ function TestList({ match }) {
     const { type = '' } = config;
 
     if (type === 'data') {
-      TEST_DATA_LIST_SAGA();
+      actions.TEST_DATA_LIST_SAGA();
 
       return;
     }
@@ -41,7 +41,7 @@ function TestList({ match }) {
       <ul>
         {data?.map(item => (
           <li key={item.id}>
-            {item.id} <Link to={`/test/detail/${item.id}`}>{item.title}</Link>
+            {item.id} <Link to={`${match.url}/${item.id}`}>{item.title}</Link>
           </li>
         ))}
       </ul>

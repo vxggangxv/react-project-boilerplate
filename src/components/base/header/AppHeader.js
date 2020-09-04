@@ -3,22 +3,7 @@ import styled from 'styled-components';
 import cx from 'classnames';
 import { NavLink, Link, withRouter } from 'react-router-dom';
 import { logo } from 'components/base/images';
-
-// TODO: 차후 mapper로 이동
-const navigation = [
-  {
-    path: '/home',
-    text: 'Home',
-  },
-  {
-    path: '/about',
-    text: 'About',
-  },
-  {
-    path: '/test/list',
-    text: 'Test',
-  },
-];
+import * as mapper from 'lib/mapper';
 
 function AppHeader({ location: { pathname } }) {
   return (
@@ -33,7 +18,7 @@ function AppHeader({ location: { pathname } }) {
         <nav className="header__nav">
           <h1 className="sr-only">메인 메뉴</h1>
           <ul className="header__nav_list">
-            {navigation.map((item, idx) => (
+            {mapper.navigation.map((item, idx) => (
               <li key={idx} className={cx('header__nav_item', { active: pathname === item.path })}>
                 <NavLink to={item.path} className="header__link">
                   {item.text}

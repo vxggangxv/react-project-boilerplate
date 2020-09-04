@@ -1,7 +1,7 @@
 import React from 'react';
 import { Route, Redirect } from 'react-router-dom';
 import { useSelector } from 'react-redux';
-import { pageUrl } from 'lib/pageMapper';
+import * as mapper from 'lib/mapper';
 import { isAuthenticatedSelector } from 'store/modules/auth.selectors';
 
 // 사용법: <PrivateRoute path="/project" component={Project} to="/auth/signup"/>
@@ -19,7 +19,7 @@ function PrivateRoute({ component: Component, ...rest }) {
           return (
             <Redirect
               to={{
-                pathname: pageUrl.index,
+                pathname: mapper.pageUrl.index,
                 state: { from: location },
               }}
             />

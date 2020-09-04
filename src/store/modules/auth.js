@@ -25,10 +25,19 @@ const SpreadReducer = SpreadSagas({ state: initialState });
 export default handleActions(
   {
     ...new SpreadReducer('signUp', actions.AUTH_SIGNUP, {}),
+    // TEST: auth test용
+    ...new SpreadReducer(null, actions.AUTH_ACCESSTOKEN, {
+      callback: draft => {
+        draft.accessToken = 'token';
+      },
+    }),
     ...new SpreadReducer('signIn', actions.AUTH_SIGNIN, {
       success: (draft, { payload: diff }, state) => {
-        // draft.isAuthenticated = true;
-        // draft.
+        // TODO: 실제 주는 토큰
+        //        storage.set 을 넣어준후
+        //        accessToken에 넣어준다
+        // TEST: actions.AUTH_ACCESSTOKEN 로 setToken 가능한지 테스트
+        draft.accessToken = 'token';
       },
     }),
   },

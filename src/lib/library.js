@@ -2,15 +2,15 @@ import moment from 'moment';
 import { ENV_MODE_DEV } from 'lib/setting';
 import _ from 'lodash';
 import reactAttrconvert from 'react-attr-converter';
-import { numbering_config } from 'lib/teethMapper';
-import { mapper } from 'lib/mapper';
+import * as teethMapper from 'lib/teethMapper';
+import * as mapper from 'lib/mapper';
 
-export const NOTATION_CONFIG = mapper.model.teeth.config;
-export const FDI_TEETH_NUM = numbering_config.fdi;
-export const UNIVERSAL_TEETH_NUM = numbering_config.universal;
-export const PALMER_TEETH_NUM = numbering_config.palmer;
-export const BRIDGE_NUMBERING = numbering_config.bridge;
-export const NUMBERING_CONFIG = numbering_config;
+export const NOTATION_CONFIG = teethMapper.NOTATION_CONFIG;
+export const FDI_TEETH_NUM = teethMapper.numbering_config.fdi;
+export const UNIVERSAL_TEETH_NUM = teethMapper.numbering_config.universal;
+export const PALMER_TEETH_NUM = teethMapper.numbering_config.palmer;
+export const BRIDGE_NUMBERING = teethMapper.numbering_config.bridge;
+export const NUMBERING_CONFIG = teethMapper.numbering_config;
 
 export function getIndexForTeethFDI(num) {
   return NOTATION_CONFIG.fdi.list.indexOf(num);

@@ -1,8 +1,8 @@
 import React, { useEffect } from 'react';
-import { TEST_DATA_SAGA } from 'store/actions';
 import { useShallowSelector } from 'lib/utils';
 import { useImmer } from 'use-immer';
 import { AppTemplate } from 'components/base/template';
+import * as actions from 'store/actions';
 
 const TestDetailState = {
   data: null,
@@ -10,13 +10,14 @@ const TestDetailState = {
 
 function TestDetail({ match }) {
   const id = Number(match.params.id);
+  console.log(id, 'id');
   const { testDetailData, testDetailPending } = useShallowSelector(state => ({
     testDetailData: state.test.obj.detail.data,
     testDetailPending: state.test.obj.detail.pending,
   }));
 
   useEffect(() => {
-    TEST_DATA_SAGA(id);
+    actions.TEST_DATA_SAGA(id);
   }, []);
 
   // NOTE: 기존 데이터를 보여줘도 되는 경우

@@ -7,10 +7,11 @@ function Test({ match }) {
   // NOTE: match.url 또는 mapper.pageUrl 설정후 path 연결
   return (
     <Switch>
-      <Route path={`${match.url}/list`} component={TestList} />
-      <Route path={`${match.url}/detail/:id`} component={TestDetail} />
-      <Route path={`${match.url}/`} component={() => <Redirect to="/test/list" />} />
+      <Route exact path={`${match.url}`} component={TestList} />
+      <Route exact path={`${match.url}/:id`} component={TestDetail} />
+      {/* <Route path={`${match.url}/`} component={() => <Redirect to="/test" />} /> */}
       {/* <Route path={`${match.url}/`} component={() => <div>해당값이 없습니다</div>} /> */}
+      <Route component={NotFound} />
     </Switch>
   );
 }
