@@ -307,7 +307,7 @@ export function useHistoryPush() {
 }
 
 // NOTE: Popup
-export const Popup = config => DispatchActions.base_popup(config);
+export const Popup = config => DispatchActions.popup(config);
 
 // NOTE: useInterval
 export function useInterval(callback, delay) {

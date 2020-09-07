@@ -10,7 +10,7 @@ const TestDetailState = {
 
 function TestDetail({ match }) {
   const id = Number(match.params.id);
-  console.log(id, 'id');
+  // console.log(id, 'id');
   const { testDetailData, testDetailPending } = useShallowSelector(state => ({
     testDetailData: state.test.obj.detail.data,
     testDetailPending: state.test.obj.detail.pending,

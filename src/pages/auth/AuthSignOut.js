@@ -10,7 +10,7 @@ function AuthSignOut(props) {
   // let location = useLocation();
 
   let loginOut = () => {
-    DispatchActions.auth_sign_out();
+    DispatchActions.sign_out();
   };
 
   return (

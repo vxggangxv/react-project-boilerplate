@@ -50,9 +50,9 @@ export function axs(axiosConf, config = {}) {
         try {
           // NOTE: data.headers 로 actinos 처리
           if (data) {
-            // Actions.base_network_connect({ value: data.headers?.onlineState });
-            // Actions.base_message_get({ value: data.headers?.notReadMessage });
-            // if (data.result === 5 && ENV_MODE_PROD) Actions.base_result_status(5);
+            // Actions.network_connect({ value: data.headers?.onlineState });
+            // Actions.message_get({ value: data.headers?.notReadMessage });
+            // if (data.result === 5 && ENV_MODE_PROD) Actions.result_status(5);
           }
         } catch (error) {
           // NOTE: try 에러 로그
@@ -78,7 +78,7 @@ export function axs(axiosConf, config = {}) {
           //   content: '인증기간이 만료되었습니다.',
           //   isOpen: true,
           // });
-          // AUTH_LOGOUT_SAGAS();
+          // LOGOUT_SAGAS();
         }
         // NOTE: 전송된 paylod check
         response.data.payload = axiosConf.data;

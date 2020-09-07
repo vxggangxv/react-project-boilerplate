@@ -23,6 +23,18 @@ const SpreadReducer = SpreadSagas({ state: initialState });
 
 export default handleActions(
   {
+    /**
+     * 사용법
+     * @params {string, null} name: initialState의 state 이름
+     * ...new SpreadReducer(name, actions.TEST_DATA_LIST, {
+     * (name: null 일 경우)
+     *  callback: (draft => {})
+     * (obj: string 일 경우)
+     *  pending:(draft, { payload: diff }, state) => {}),
+     *  success:(draft, { payload: diff }, state) => {}),
+     *  failure:(draft, { payload: diff }, state) => {}),
+     * }),
+     */
     ...new SpreadReducer('obj.list', actions.TEST_DATA_LIST, {
       success: (draft, { payload: diff }, state) => {
         console.log(diff, 'diff');

@@ -1,12 +1,30 @@
-import { all, takeEvery } from 'redux-saga/effects';
-import { createPromiseSaga } from 'lib/asyncUtils';
+import { put, takeEvery, all } from 'redux-saga/effects';
 import * as actions from 'store/actions';
+import { isString } from 'util';
 
-// const handleTestList = createPromiseSaga({
-//   type: TEST_DATA_LIST_SAGA,
-//   tag: 'handleTest',
-// });
+function* handleSetApiCalling() {
+  yield put({ type: actions.SET_API_CALLING_STATUS, payload: true });
+}
+function* handleClearApiCalling() {
+  yield put({ type: actions.SET_API_CALLING_STATUS, payload: false });
+}
 
-export default function* baseSaga() {
-  yield all([]);
+export default function* appSaga() {
+  yield all([
+    takeEvery(action => {
+      if (isString(action.type)) {
+        return action.type.endsWith('_PENDING');
+      }
+    }, handleSetApiCalling),
+    takeEvery(action => {
+      if (isString(action.type)) {
+        return action.type.endsWith('_SUCCESS') || action.type.endsWith('_FAILURE');
+      }
+    }, handleClearApiCalling),
+    // yield takeEvery((action) => {
+    //   if (isString(action.type)) {
+    //     return action.type.endsWith('_FAILURE');
+    //   }
+    // }, handleFailure)
+  ]);
 }

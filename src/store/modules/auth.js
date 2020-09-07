@@ -28,7 +28,6 @@ const initialState = {
 const SpreadReducer = SpreadSagas({ state: initialState });
 export default handleActions(
   {
-    ...new SpreadReducer('signUp', actions.AUTH_SIGN_UP, {}),
     ...new SpreadReducer(null, actions.SET_TOKEN, {
       callback: (draft, { payload: diff }) => {
         // console.log(diff, 'diff SET_TOKEN');
@@ -36,7 +35,8 @@ export default handleActions(
         setAuthInHeader(diff);
       },
     }),
-    ...new SpreadReducer(null, actions.AUTH_SIGN_IN, {
+    ...new SpreadReducer('signUp', actions.SIGN_UP, {}),
+    ...new SpreadReducer(null, actions.SIGN_IN, {
       callback: (draft, { payload: diff }, state) => {
         // DEBUG: 백엔드 연결 후 테스트 필요
         console.log(diff, 'diff signIn');
@@ -47,7 +47,7 @@ export default handleActions(
         storage.set(keys.user, user);
       },
     }),
-    ...new SpreadReducer(null, actions.AUTH_SIGN_OUT, {
+    ...new SpreadReducer(null, actions.SIGN_OUT, {
       callback: (draft, { payload: diff }, state) => {
         // DEBUG: 백엔드 연결 후 테스트 필요
         draft.accessToken = null;

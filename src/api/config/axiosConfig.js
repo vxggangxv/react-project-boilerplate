@@ -62,8 +62,8 @@ export function acx(axiosConf) {
         console.log('Error response', response.status);
         console.log('Error response', response.headers);
         // NOTE: 에러 상태에 대한 처리
-        if (data) DispatchActions.base_response_error(data);
-        if (status) DispatchActions.base_response_status(status);
+        if (data) DispatchActions.response_error(data);
+        if (status) DispatchActions.response_status(status);
         // NOTE: 차후 auth에 대한 에러처리
         // const { status } = response;
         // if (status === 401) return onUnauthorized();

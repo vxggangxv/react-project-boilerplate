@@ -43,9 +43,9 @@ const Styled = {
       border-bottom: 1px solid #ddd;
     }
     .header {
-      position: fixed;
+      /* position: fixed;
       top: 0;
-      left: 0;
+      left: 0; */
       text-align: center;
       display: flex;
       align-items: center;
