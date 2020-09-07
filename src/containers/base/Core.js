@@ -5,8 +5,7 @@ import { FullScreenLoading } from 'components/base/loading';
 import ErrorContainer from 'containers/base/ErrorContainer';
 import { useShallowSelector, useDidUpdateEffect } from 'lib/utils';
 import { isAuthenticatedSelector } from 'store/modules/auth.selectors';
-import storage from 'api/storage';
-import * as mapper from 'lib/mapper';
+import storage, { keys } from 'api/storage';
 
 const CoreState = {
   visible: false,
@@ -14,6 +13,9 @@ const CoreState = {
 
 // NOTE: 초기 landing, error, notifications, popup 등록
 function Core() {
+  const { isAuthenticated } = useShallowSelector(state => ({
+    isAuthenticated: isAuthenticatedSelector(state),
+  }));
   const { apiCalling, landing, accessToken } = useShallowSelector(state => ({
     apiCalling: state.app.apiCalling,
     landing: state.base.landing,
@@ -22,15 +24,15 @@ function Core() {
   const [values, setValues] = useImmer(CoreState);
   const valuesVisible = values.visible;
 
+  // NOTE: user가 없는 경우 == login이 안된경우
   const initialize = async () => {
-    // const storedUser = storage.get(mapper.storage.user);
-    const storedToken = storage.get(mapper.storage.token);
-    // console.log(storedUser, 'storedUser');
+    const storedUser = storage.get(keys.user);
+    // const storedToken = storage.get(keys.token);
+    console.log(isAuthenticated, 'isAuthenticated');
+    console.log(storedUser, 'storedUser');
 
-    // TEST: removeToken
-    storage.remove(mapper.storage.token);
-    if (!storedToken) {
-      DispatchActions.set_token(null);
+    if (!storedUser) {
+      DispatchActions.auth_sign_out();
       return;
     }
     DispatchActions.base_exit_landing();

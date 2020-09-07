@@ -1,7 +1,9 @@
 const st = typeof localStorage === 'object' ? localStorage : {};
 
 export const keys = {
+  persist: '__reapro_persist__',
   user: '__reapro_user__',
+  token: '__reapro_token__',
 };
 
 const storage = {

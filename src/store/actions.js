@@ -28,9 +28,19 @@ export const base_response_error = createAction(BASE_RESPONSE_ERROR);
 // auth
 export const SET_TOKEN = 'auth/SET_TOKEN';
 export const set_token = createAction(SET_TOKEN);
+
 // TEMP: test용
 export const AUTH_TOKEN = 'auth/AUTH_TOKEN';
 export const auth_token = createAction(AUTH_TOKEN);
+
+export const AUTH_SIGN_UP = 'auth/AUTH_SIGN_UP';
+export const auth_sign_up = createAction(AUTH_SIGN_UP);
+
+export const AUTH_SIGN_IN = 'auth/AUTH_SIGN_IN';
+export const auth_sign_in = createAction(AUTH_SIGN_IN);
+
+export const AUTH_SIGN_OUT = 'auth/AUTH_SIGN_OUT';
+export const auth_sign_out = createAction(AUTH_SIGN_OUT);
 
 // user
 export const SET_USER = 'auth/SET_USER';
@@ -53,11 +63,11 @@ export const TEST_DATA = makeAsyncActions('base/TEST_DATA');
 export const TEST_DATA_SAGA = makeAsyncCreateActions(TEST_DATA)(api.fetchPosts);
 
 // auth
-export const AUTH_SIGNUP = makeAsyncActions('auth/AUTH_SIGNUP');
-export const AUTH_SIGNUP_SAGA = makeAsyncCreateActions(AUTH_SIGNUP)(api.fetchPosts);
+// export const AUTH_SIGNUP = makeAsyncActions('auth/AUTH_SIGNUP');
+// export const AUTH_SIGNUP_SAGA = makeAsyncCreateActions(AUTH_SIGNUP)(api.fetchPosts);
 
-export const AUTH_SIGNIN = makeAsyncActions('auth/AUTH_SIGNIN');
-export const AUTH_SIGNIN_SAGA = makeAsyncCreateActions(AUTH_SIGNIN)(api.fetchPosts);
+// export const AUTH_SIGNIN = makeAsyncActions('auth/AUTH_SIGNIN');
+// export const AUTH_SIGNIN_SAGA = makeAsyncCreateActions(AUTH_SIGNIN)(api.fetchPosts);
 
-export const AUTH_SIGNOUT = makeAsyncActions('auth/AUTH_SIGNOUT');
-export const AUTH_SIGNOUT_SAGA = makeAsyncCreateActions(AUTH_SIGNOUT)(api.fetchPosts);
+// export const AUTH_SIGNOUT = makeAsyncActions('auth/AUTH_SIGNOUT');
+// export const AUTH_SIGNOUT_SAGA = makeAsyncCreateActions(AUTH_SIGNOUT)(api.fetchPosts);

@@ -1,7 +1,8 @@
 pending:
   ❍ auth관련 및 reducer, sagas 연결 테스트 컴포넌트 개발
-  ❍ Core에서 체크 후 init landing route 연결
-  ❍ 차후 새로고침시 User data 유지
+  ❍ Core에서 user login체크 후 initialize() 개발
+  ❍ 새로고침시 data 유지 관련, whiteList, Blacklist 설정
+
   ❍ Core(landing, Error, Notificions, Popup)
   ❍ convention (App structure, Design Pattern정리 및 gitlab upload)
 Todo:

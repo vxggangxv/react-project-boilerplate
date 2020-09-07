@@ -1,11 +1,11 @@
 import { handleActions } from 'redux-actions';
 import { SpreadSagas } from 'lib/asyncUtils';
 import * as actions from 'store/actions';
-import * as mapper from 'lib/mapper';
-import storage from 'api/storage';
+import storage, { keys } from 'api/storage';
 
 const initialState = {
-  user: storage.get(mapper.storage.user) || null,
+  // NOTE: 최초 랜딩시 storage값 유무 확인
+  user: storage.get(keys.user) || null,
 };
 
 const SpreadReducer = SpreadSagas({ state: initialState });

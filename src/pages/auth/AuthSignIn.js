@@ -15,7 +15,9 @@ function AuthSignIn(props) {
   let { from } = location.state || { from: { pathname: '/' } };
 
   let login = () => {
-    DispatchActions.auth_token({ token: 'token', user: 'user' });
+    console.log('?');
+    DispatchActions.auth_sign_in({ token: 'token', user: 'user' });
+    // DispatchActions.auth_token({ token: 'token', user: 'user' });
   };
 
   // console.log(location.state, 'location.state');
