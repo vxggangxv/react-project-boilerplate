@@ -5,7 +5,6 @@ import GlobalStyle from 'styles/base';
 import { Error, Home, Auth, About, User, Test } from 'pages';
 import { FullScreenLoading } from 'components/base/loading';
 import { PrivateRoute } from 'components/base/route';
-import Counter from 'containers/counter/Counter';
 
 function App() {
   return (
@@ -22,7 +21,6 @@ function App() {
         <PrivateRoute path="/about" component={About} />
         {/* <Route path="/about" component={About} /> */}
         <Route path="/test" component={Test} />
-        <Route path="/counter" component={Counter} />
         <Route component={() => <Redirect to="/error/404" />} />
       </Switch>
     </>

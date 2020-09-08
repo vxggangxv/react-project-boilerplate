@@ -56,8 +56,4 @@ export const navigation = [
     path: '/test',
     text: 'Test',
   },
-  {
-    path: '/counter',
-    text: 'Counter',
-  },
 ];
