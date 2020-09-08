@@ -1,12 +1,18 @@
 import React from 'react';
 import styled from 'styled-components';
 import { CustomCircleLoading } from 'components/base/loading';
+import PropTypes from 'prop-types';
+
+FullScreenLoading.propTypes = {
+  visible: PropTypes.bool,
+  size: PropTypes.number,
+};
 
 function FullScreenLoading({ visible, size }) {
   if (visible === false) return null;
   return (
     <Styled.FullScreenLoading>
-      <CustomCircleLoading size={size ? size : 30} />
+      <CustomCircleLoading size={size} />
     </Styled.FullScreenLoading>
   );
 }

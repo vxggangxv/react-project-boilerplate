@@ -3,6 +3,12 @@ import { Route, Redirect, useLocation } from 'react-router-dom';
 import * as mapper from 'lib/mapper';
 import { isAuthenticatedSelector } from 'store/modules/auth.selectors';
 import { useShallowSelector } from 'lib/utils';
+import PropTypes from 'prop-types';
+
+// NOTE: propTypes 는 필요시 적용
+PrivateRoute.propTypes = {
+  component: PropTypes.object,
+};
 
 // 사용법: <PrivateRoute path="/project" component={Project} to="/auth/signup"/>
 function PrivateRoute({ component: Component, ...rest }) {
@@ -10,7 +16,6 @@ function PrivateRoute({ component: Component, ...rest }) {
     isAuthenticated: isAuthenticatedSelector(state),
   }));
   const isRedirect = rest.redirect;
-
   const location = useLocation();
   // console.log(location, 'location');
 

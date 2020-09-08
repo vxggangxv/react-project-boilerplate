@@ -1,6 +1,7 @@
 import React from 'react';
 import Helmet from 'react-helmet';
 
+// TODO: 차후에 mapper로 이동
 const locales = {
   en: 'en_US',
   ko: 'ko_KR',
