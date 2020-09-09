@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 
-const UserProfile = ({ id }) => {
+const UserProfile = ({ id = 1 }) => {
   const [userData, setUserData] = useState(null);
   const [loading, setLoading] = useState(false);
   const getUser = async id => {

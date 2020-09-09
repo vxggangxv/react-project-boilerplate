@@ -18,7 +18,7 @@ function TestList({ match }) {
   // console.log(match, 'match');
   // console.log(testListData, 'testListData');
   useEffect(() => {
-    actions.TEST_DATA_LIST_SAGA();
+    actions.FETCH_TESTS_SAGA();
   }, []);
 
   const data = testListData?.slice(0, 10);
@@ -27,7 +27,7 @@ function TestList({ match }) {
     const { type = '' } = config;
 
     if (type === 'data') {
-      actions.TEST_DATA_LIST_SAGA();
+      actions.FETCH_TESTS_SAGA();
 
       return;
     }

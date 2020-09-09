@@ -54,11 +54,11 @@ export const set_user = createAction(SET_USER);
  */
 
 // test
-export const TEST_DATA_LIST = makeAsyncActions('base/TEST_DATA_LIST');
-export const TEST_DATA_LIST_SAGA = makeAsyncCreateActions(TEST_DATA_LIST)(api.fetchPosts);
+export const FETCH_TESTS = makeAsyncActions('base/FETCH_TESTS');
+export const FETCH_TESTS_SAGA = makeAsyncCreateActions(FETCH_TESTS)(api.fetchPosts);
 
-export const TEST_DATA = makeAsyncActions('base/TEST_DATA');
-export const TEST_DATA_SAGA = makeAsyncCreateActions(TEST_DATA)(api.fetchPosts);
+export const FETCH_TEST = makeAsyncActions('base/FETCH_TEST');
+export const FETCH_TEST_SAGA = makeAsyncCreateActions(FETCH_TEST)(api.fetchPosts);
 
 // auth
 // export const SIGN_UP = makeAsyncActions('auth/SIGN_UP');

@@ -15,6 +15,9 @@ function Test({ match }) {
       <Styled.Test>
         <ul className="test__menu_list">
           <li className="test__menu_item">
+            <Link to={`${match.url}`}>TestList</Link>
+          </li>
+          <li className="test__menu_item">
             <Link to={`${match.url}/counter`}>Counter</Link>
           </li>
           <li className="test__menu_item">

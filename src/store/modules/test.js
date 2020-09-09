@@ -26,7 +26,7 @@ export default handleActions(
     /**
      * 사용법
      * @params {string, null} name: initialState의 state 이름
-     * ...new SpreadReducer(name, actions.TEST_DATA_LIST, {
+     * ...new SpreadReducer(name, actions.FETCH_TESTS, {
      * (name: null 일 경우)
      *  callback: (draft => {})
      * (obj: string 일 경우)
@@ -35,13 +35,13 @@ export default handleActions(
      *  failure:(draft, { payload: diff }, state) => {}),
      * }),
      */
-    ...new SpreadReducer('obj.list', actions.TEST_DATA_LIST, {
+    ...new SpreadReducer('obj.list', actions.FETCH_TESTS, {
       success: (draft, { payload: diff }, state) => {
         console.log(diff, 'diff');
         draft.obj.list.data = diff;
       },
     }),
-    ...new SpreadReducer('obj.detail', actions.TEST_DATA, {
+    ...new SpreadReducer('obj.detail', actions.FETCH_TEST, {
       success: (draft, { payload: diff }, state) => {
         console.log(diff, 'diff');
         draft.obj.detail.data = diff;

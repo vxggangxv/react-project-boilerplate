@@ -5,8 +5,8 @@ import * as actions from 'store/actions';
 
 const MainHomeContainer = () => {
   useEffect(() => {
-    // actions.TEST_DATA_LIST_SAGA();
-    // actions.TEST_DATA_SAGA(1);
+    // actions.FETCH_TESTS_SAGA();
+    // actions.FETCH_TEST_SAGA(1);
   }, []);
 
   return (

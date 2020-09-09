@@ -16,7 +16,7 @@ function TestDetail({ match }) {
   }));
 
   useEffect(() => {
-    actions.TEST_DATA_SAGA(id);
+    actions.FETCH_TEST_SAGA(id);
   }, []);
 
   // NOTE: 기존 데이터를 보여줘도 되는 경우
