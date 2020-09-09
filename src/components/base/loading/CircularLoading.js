@@ -3,18 +3,18 @@ import { _color } from 'styles/_variables';
 import styled from 'styled-components';
 import { CircularProgress } from '@material-ui/core';
 
-function CustomCircleLoading({ size = 30, color = _color.blue }) {
+function CircularLoading({ size = 30, color = _color.blue }) {
   return (
-    <Styled.CustomCircleLoading color={color}>
+    <Styled.CircularLoading data-component-name="CircularLoading" color={color}>
       <CircularProgress size={size} />
-    </Styled.CustomCircleLoading>
+    </Styled.CircularLoading>
   );
 }
 
-export default CustomCircleLoading;
+export default CircularLoading;
 
 const Styled = {
-  CustomCircleLoading: styled.div`
+  CircularLoading: styled.div`
     .MuiCircularProgress-colorPrimary {
       color: ${({ color }) => color};
     }

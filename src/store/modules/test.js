@@ -37,13 +37,11 @@ export default handleActions(
      */
     ...new SpreadReducer('obj.list', actions.FETCH_TESTS, {
       success: (draft, { payload: diff }, state) => {
-        console.log(diff, 'diff');
         draft.obj.list.data = diff;
       },
     }),
     ...new SpreadReducer('obj.detail', actions.FETCH_TEST, {
       success: (draft, { payload: diff }, state) => {
-        console.log(diff, 'diff');
         draft.obj.detail.data = diff;
       },
     }),

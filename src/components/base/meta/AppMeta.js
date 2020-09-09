@@ -41,6 +41,7 @@ function AppMeta(props) {
         <meta property="og:site_name" content={siteName} />
         <meta property="og:locale" content={locales[lang]} />
         <meta property="fb:pages" content={siteName} />
+        <meta property="fb:app_id" content={} />
          */}
 
         {/* twitter */}

@@ -1,7 +1,8 @@
 pending:
-  ❍ Project - Page, Container, Components, [Container,Components - common], 컴포넌트 네이밍 컨벤션 정리
-  ❍ DOFSync BASE_POPUP 포팅 및 ModalConfirm 및 ModalComplete 통합 작업중
-  
+  ❍ DOFSync BASE_POPUP 포팅 및 ModalConfirm 및 ModalComplete 통합 완료
+  ❍ asyncUtils, store - logger: console - 개발모드 설정 추가
+  ❍ 차후 Scroll UI 및 infinite scroll 컴포넌트 개발
+
   ❍ convention (App structure, Design Pattern정리 및 gitlab upload)
   ❍ DOFSync scroll UI 개선 테스트 예정
 Todo:
@@ -28,3 +29,5 @@ Done:
   ✔ Core(landing, Error, Notificions, Popup) @done(20-09-07 19:16)
   ✔ prop-types(Runtime type checking for React props) 모듈 적용 (복잡한 컴포넌트 구조에서 에러 발생 방지) @done(20-09-08 11:13)
   ✔ React Testing Library로 TDD개발환경 구축 - 간단 Counter.test.js 테스트, Basic, Complex Example 추가 개발 @done(20-09-08 11:13)
+
+  ✔ Project - Page, Container, Components, [Container,Components - common], 컴포넌트 네이밍 컨벤션 정리 @done(20-09-09 19:07)

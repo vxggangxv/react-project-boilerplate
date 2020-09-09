@@ -15,6 +15,26 @@ const initialState = {
     message: null,
     data: null,
   },
+  popup: {
+    title: '',
+    content: '',
+    button: '',
+    hideButton: false,
+    reverseButton: false,
+    okText: '',
+    okLink: '',
+    cancelLink: '',
+    isOpen: false,
+    width: 350,
+    type: '',
+    key: '',
+    dim: null,
+    onClick: () => {},
+    onCancel: () => {},
+    onExited: () => {},
+    align: [],
+    paddingNone: false,
+  },
 };
 
 const SpreadReducer = SpreadSagas({ state: initialState });
@@ -35,15 +55,62 @@ export default handleActions(
     }),
     ...new SpreadReducer(null, actions.RESPONSE_STATUS, {
       callback: (draft, { payload: diff }) => {
-        // TEST: 필요
+        // DEBUG: 필요
         draft.responseStatus = diff;
       },
     }),
     ...new SpreadReducer(null, actions.RESPONSE_ERROR, {
       callback: (draft, { payload: diff }) => {
-        // TEST: 필요
+        // DEBUG: 필요
         draft.responseError.message = diff.message;
         draft.responseError.data = diff;
+      },
+    }),
+    ...new SpreadReducer(null, actions.BASE_POPUP, {
+      callback: (draft, { payload: diff }, state) => {
+        const {
+          type = 'alert',
+          title = '',
+          content = '',
+          button = '',
+          reverseButton = false,
+          hideButton = false,
+          onClick = () => {},
+          onCancel = () => {},
+          onExited = () => {},
+          align = [],
+          okText = '',
+          okLink = '',
+          cancelLink = '',
+          isOpen = false,
+          key = '',
+          dim = true,
+          width = 534,
+          paddingNone = false,
+        } = diff;
+
+        if (type === 'dim') {
+          draft.popup.isOpen = false;
+        } else {
+          draft.popup.title = title;
+          draft.popup.content = content;
+          draft.popup.button = button;
+          draft.popup.reverseButton = reverseButton;
+          draft.popup.hideButton = hideButton;
+          draft.popup.onClick = onClick;
+          draft.popup.onCancel = onCancel;
+          draft.popup.onExited = onExited;
+          draft.popup.okText = okText;
+          draft.popup.okLink = okLink;
+          draft.popup.cancelLink = cancelLink;
+          draft.popup.align = align;
+          draft.popup.isOpen = isOpen;
+          draft.popup.type = type;
+          draft.popup.key = key;
+          draft.popup.dim = dim;
+          draft.popup.width = width;
+          draft.popup.paddingNone = paddingNone;
+        }
       },
     }),
   },

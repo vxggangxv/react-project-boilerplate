@@ -12,7 +12,7 @@ function Test({ match }) {
   // NOTE: match.url 또는 mapper.pageUrl 설정후 path 연결
   return (
     <AppTemplate title={'Test'}>
-      <Styled.Test>
+      <Styled.Test data-component-name="Test">
         <ul className="test__menu_list">
           <li className="test__menu_item">
             <Link to={`${match.url}`}>TestList</Link>

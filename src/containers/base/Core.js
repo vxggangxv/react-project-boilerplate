@@ -8,10 +8,9 @@ import { isAuthenticatedSelector } from 'store/modules/auth.selectors';
 import storage, { keys } from 'api/storage';
 import { ToastContainer, toast } from 'react-toastify';
 import { NotifyToast } from 'components/base/notifications';
+import { PopupContainer } from 'containers/common/popup';
 
-const CoreState = {
-  visible: false,
-};
+const CoreState = {};
 
 // NOTE: 초기 landing, error, notifications, popup 등록
 function Core() {
@@ -22,7 +21,6 @@ function Core() {
     accessToken: state.auth.accessToken,
   }));
   const [values, setValues] = useImmer(CoreState);
-  const valuesVisible = values.visible;
 
   // NOTE: 초기화 함수
   // user가 없는 경우 == login이 안된경우, autn_sign_out() 실행
@@ -33,6 +31,7 @@ function Core() {
     if (!storedUser) {
       await DispatchActions.sign_out();
     }
+
     DispatchActions.exit_landing();
   };
 
@@ -40,19 +39,13 @@ function Core() {
     initialize();
   }, []);
 
-  // NOTE: landing 및 api 호출에 따른 loading show
-  useDidUpdateEffect(() => {
-    setValues(draft => {
-      draft.visible = isVisibleLoading;
-    });
-  }, [apiCalling]);
-
   const isVisibleLoading = [apiCalling, landing].some(item => item === true);
 
   return (
     <>
       <FullScreenLoading visible={isVisibleLoading} />
       <ErrorContainer />
+      <PopupContainer />
       <NotifyToast />
     </>
   );

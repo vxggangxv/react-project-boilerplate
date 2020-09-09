@@ -1,12 +1,13 @@
 import { createStore, applyMiddleware } from 'redux';
 import { composeWithDevTools } from 'redux-devtools-extension/developmentOnly';
 import createSagaMiddleware from 'redux-saga';
-// import logger from 'redux-logger';
+import logger from 'redux-logger';
 import { persistStore, persistReducer } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
 import { keys } from 'api/storage';
 import rootReducer from 'store/modules';
 import rootSaga from 'store/sagas';
+import { ENV_MODE_DEV } from 'lib/setting';
 
 const customMiddleware = () => next => action => {
   const result = next(action);
@@ -23,7 +24,10 @@ const persistConfig = {
 const persistedReducer = persistReducer(persistConfig, rootReducer);
 
 const sagaMiddleware = createSagaMiddleware();
-const middlewares = [sagaMiddleware, customMiddleware];
+let middlewares = [sagaMiddleware, customMiddleware];
+if (ENV_MODE_DEV) {
+  middlewares = [...middlewares, logger];
+}
 const composeEnhancers = composeWithDevTools({ trace: true, traceLimit: 25 });
 const enhancers = composeEnhancers(applyMiddleware(...middlewares));
 

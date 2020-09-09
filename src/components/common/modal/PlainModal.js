@@ -5,6 +5,8 @@ import Backdrop from '@material-ui/core/Backdrop';
 import Fade from '@material-ui/core/Fade';
 import styled from 'styled-components';
 import cx from 'classnames';
+import { useEffect } from 'react';
+import { DispatchActions } from 'store/actionCreators';
 
 /**
  * 
@@ -14,13 +16,12 @@ import cx from 'classnames';
     });
   }
  *  <PlainModal 
- *      type = "caseLoad" // 있으면 지정 없으면 plain
-        isOpen={values.modal.isShow}
-        content={<ModalLoginContent /> }
-        onClick={handleModalClick}
-        dim={false}
-        width={200} // 있으면 지정 없으면 360
-      />
+      isOpen={values.modal.isShow}
+      content={<ModalLoginContent /> }
+      onClick={handleModalClick}
+      dim={false}
+      width={200} // 있으면 지정 없으면 360
+    />
  * @param {*} props 
  */
 function PlainModal(props) {
@@ -35,29 +36,38 @@ function PlainModal(props) {
     width = 0,
   } = props;
 
-  const handleCloseDim = dim?.clickClose === false ? null : () => onClick('dim');
-  const loadClasses = loadStyles({ width: width });
+  const [open, setOpen] = React.useState(false);
+
+  // NOTE: init set open(from PopupContainer)
+  useEffect(() => {
+    setOpen(isOpen);
+  }, [isOpen]);
+
   let classes = PlainStyles({ width: width });
-  const isTypeCaseLoad = type === 'caseLoad';
-  if (isTypeCaseLoad) classes = loadClasses;
+
+  const handleOpen = () => {
+    onClick({ type: 'dim' });
+    setOpen(false);
+  };
+
+  const handleCloseDim = dim?.clickClose === false ? null : handleOpen;
 
   const handleClick = config => {
     const { e, type } = config;
 
     if (type === 'exit') {
-      if (!!onExited) onExited();
+      onExited();
+      return;
     }
   };
 
-  // if(!isOpen) return null;
-
   return (
-    <Styled.PlainModal>
+    <Styled.PlainModal data-component-name="PlainModal">
       <Modal
         aria-labelledby="transition-modal-title"
         aria-describedby="transition-modal-description"
         className={classes.modal}
-        open={isOpen} // 원래 open
+        open={open}
         onClose={handleCloseDim}
         closeAfterTransition
         BackdropComponent={Backdrop}
@@ -65,32 +75,13 @@ function PlainModal(props) {
           timeout: 500,
         }}
       >
-        <Fade in={isOpen} onExited={e => handleClick({ type: 'exit' })}>
+        <Fade in={open} onExited={e => handleClick({ type: 'exit' })}>
           <div className={cx(classes.paper)}>{content || children}</div>
         </Fade>
       </Modal>
     </Styled.PlainModal>
   );
 }
-
-const loadStyles = prop => {
-  prop = prop || {};
-  return makeStyles(theme => ({
-    modal: {
-      display: 'flex',
-      alignItems: 'center',
-      justifyContent: 'center',
-    },
-    paper: {
-      backgroundColor: theme.palette.background.paper,
-      boxShadow: theme.shadows[5],
-      fontSize: 28,
-      width: prop.width ? prop.width : 360,
-      borderRadius: 5,
-      outline: 'none',
-    },
-  }))();
-};
 
 const PlainStyles = prop => {
   prop = prop || {};

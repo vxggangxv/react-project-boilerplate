@@ -3,6 +3,7 @@ import _ from 'lodash';
 import { createActinos } from 'redux-actions';
 import { dispatch } from 'store/actionCreators';
 import { call } from 'redux-saga/effects';
+import { ENV_MODE_DEV } from 'lib/setting';
 
 /**
  * makeAsyncActions: 액션 타입 생성
@@ -41,19 +42,19 @@ export function makeAsyncCreateActions(actions) {
 
     const request = data => api(data);
     const init = payload => {
-      console.log(`${actions.INIT}`);
+      // console.log(`${actions.INIT}`);
       makeActionCreator(actions.INIT, payload);
     };
     const pending = payload => {
-      console.log(`${actions.PENDING}`);
+      // console.log(`${actions.PENDING}`);
       makeActionCreator(actions.PENDING, payload);
     };
     const success = payload => {
-      console.log(`${actions.SUCCESS}`);
+      // console.log(`${actions.SUCCESS}`);
       makeActionCreator(actions.SUCCESS, payload);
     };
     const failure = payload => {
-      console.log(`${actions.FAILURE}`);
+      // console.log(`${actions.FAILURE}`);
       makeActionCreator(actions.FAILURE, payload);
     };
     ActionsFunction.index = actions.INDEX;
@@ -110,12 +111,14 @@ export const createPromiseSaga = ({
       currentState = 'pending';
       const { data, error, cancel } = yield call(type.request, payload);
       const viewPayload = error ? error.payload : data.payload;
-
       data.payload = viewPayload || {};
-      console.group(`-- ${tag} Redux saga`);
-      console.log(` %cRequest Data :\n`, 'color:red;padding:5px;font-weight:bold', viewPayload);
-      console.log(` %cResponse Data :\n`, 'color:red;padding:5px;font-weight:bold', data);
-      console.groupEnd();
+
+      if (ENV_MODE_DEV) {
+        console.group(`-- ${tag} Redux saga`);
+        console.log(` %cRequest Data :\n`, 'color:red;padding:5px;font-weight:bold', viewPayload);
+        console.log(` %cResponse Data :\n`, 'color:red;padding:5px;font-weight:bold', data);
+        console.groupEnd();
+      }
 
       // NOTE: 차후 추가개발
       if (cancel) {

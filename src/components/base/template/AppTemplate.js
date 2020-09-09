@@ -34,28 +34,28 @@ function AppTemplate(props) {
     <>
       <AppMeta title={title} />
       <Styled.AppTemplate data-component-name="AppTemplate" style={templateStyle}>
-        {header && <div className={cx('appTemplate__header')} children={header} />}
+        {header && <div className={cx('template__header')} children={header} />}
 
         {/* NOTE: header와 nav가 분리되어있을 경우 */}
-        {nav && <div className={cx('appTemplate__nav')} children={nav} />}
+        {nav && <div className={cx('template__nav')} children={nav} />}
 
         {children && (
-          <div className="appTemplate__main_container">
-            {leftSide && <div className={cx('appTemplate__leftSide')} children={leftSide} />}
-            <main className={cx('appTemplate__main', { main_title: childrenTitle })}>
-              {childrenTitle && <h1 className="appTemplate__main_title">{childrenTitle}</h1>}
+          <div className="template__main_container">
+            {leftSide && <div className={cx('template__leftSide')} children={leftSide} />}
+            <main className={cx('template__main', { main_title: childrenTitle })}>
+              {childrenTitle && <h1 className="template__main_title">{childrenTitle}</h1>}
 
               {children && (
-                <div style={childrenStyle} className={cx('appTemplate__main_children')}>
+                <div style={childrenStyle} className={cx('template__main_children')}>
                   {children}
                 </div>
               )}
             </main>
-            {rightSide && <div className={cx('appTemplate__rightSide')} children={rightSide} />}
+            {rightSide && <div className={cx('template__rightSide')} children={rightSide} />}
           </div>
         )}
 
-        {footer && <div className={cx('appTemplate__footer')} children={footer} />}
+        {footer && <div className={cx('template__footer')} children={footer} />}
       </Styled.AppTemplate>
     </>
   );
@@ -64,7 +64,7 @@ function AppTemplate(props) {
 const Styled = {
   AppTemplate: styled.div`
     position: relative;
-    .appTemplate__main_container {
+    .template__main_container {
       position: relative;
       width: 1200px;
       margin: auto;

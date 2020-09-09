@@ -3,9 +3,9 @@ import styled from 'styled-components';
 import cx from 'classnames';
 // import uuid from 'react-uuid';
 import _ from 'lodash';
-import { buttonBlue, font, color } from 'styles/__utils';
+import { buttonBlue, font, color } from 'styles/utils';
 import { Link } from 'react-router-dom';
-import { EscapeConvert } from 'components/base/helpers/convert';
+import { EscapeConvert } from 'components/common/convert';
 import { icon_modal_alert } from 'components/base/images';
 import { useImmer } from 'use-immer';
 
@@ -33,25 +33,28 @@ const contentTypeCheck = (data, text = '') => {
   return conditionConfig;
 };
 
-const ModalCompleteState = {
+const AppModalState = {
   loading: null,
 };
 
-function ModalComplete(props) {
+function AppModal(props) {
   const {
+    type = '',
     title = {},
     content = {},
     button = {},
     hideButton = null,
+    reverseButton = null,
     onClick = () => {},
     onCancel = () => {},
     align = [],
     okText = '',
     okLink = '',
+    cancelLink = '',
     paddingNone = null,
   } = props;
 
-  const [values, setValues] = useImmer(ModalCompleteState);
+  const [values, setValues] = useImmer(AppModalState);
   const modalRef = useRef(null);
   const valuesLoading = values.loading;
 
@@ -76,6 +79,7 @@ function ModalComplete(props) {
 
   const titleObj = contentTypeCheck(title);
   const contentObj = contentTypeCheck(content);
+
   const Title = () => titleObj.value;
   const Content = () => contentObj.value;
   const Button = () => button;
@@ -90,7 +94,8 @@ function ModalComplete(props) {
       {valuesLoading ? (
         ''
       ) : (
-        <Styled.ModalComplete
+        <Styled.AppModal
+          data-component-name="AppModal"
           ref={modalRef}
           className={cx({ modal__container_padding_none: paddingNone })}
         >
@@ -98,12 +103,10 @@ function ModalComplete(props) {
             <div
               className={cx('modal__title', { default: titleObj?.isTypeString })}
               style={{ textAlign: alignConfig.title }}
-              // ref={refTitle}
             >
               <Title />
             </div>
           </div>
-
           <div className="modal__body">
             <div
               className={cx('modal__content', {
@@ -111,20 +114,35 @@ function ModalComplete(props) {
               })}
               style={{ textAlign: alignConfig.content }}
             >
-              {/* {content} */}
               <Content />
             </div>
           </div>
-
           <div className="modal__footer" hidden={hideButton}>
             <div
-              className={cx('modal__btn_box', { default: !button })}
-              style={{ textAlign: alignConfig.button || 'right' }}
+              className={cx('modal__btn_box', { default: !button, reverse: reverseButton })}
+              style={{
+                textAlign: alignConfig.button || 'right',
+              }}
             >
               {button ? (
                 <Button />
               ) : (
                 <>
+                  {type === 'confirm' && (
+                    <>
+                      {cancelLink ? (
+                        <Link to={cancelLink}>
+                          <button className="modal__btn cancel" onClick={onCancel}>
+                            Cancel
+                          </button>
+                        </Link>
+                      ) : (
+                        <button className="modal__btn cancel" onClick={onCancel}>
+                          Cancel
+                        </button>
+                      )}
+                    </>
+                  )}
                   {okLink ? (
                     <Link to={okLink}>
                       <button className="modal__btn ok" onClick={onClick}>
@@ -140,13 +158,13 @@ function ModalComplete(props) {
               )}
             </div>
           </div>
-        </Styled.ModalComplete>
+        </Styled.AppModal>
       )}
     </>
   );
 }
 const Styled = {
-  ModalComplete: styled.div`
+  AppModal: styled.div`
     /* text-align: left; */
     padding: 40px 35px 30px 35px;
     &.modal__container_padding_none {
@@ -184,7 +202,6 @@ const Styled = {
           ${font(15, color.gray_font)};
           text-align: left;
           line-height: 22px;
-          word-break: break-all;
         }
       }
       .modal__footer {
@@ -201,6 +218,23 @@ const Styled = {
             &:not(:first-child) {
               margin-left: 5px;
             }
+            &.cancel {
+              background: white;
+              border: 1px solid ${color.blue};
+              color: ${color.blue};
+            }
+          }
+          &.reverse {
+            display: flex;
+            flex-direction: row-reverse;
+            .modal__btn {
+              &:not(:first-child) {
+                margin-left: 0px;
+              }
+              &:not(:last-child) {
+                margin-left: 5px;
+              }
+            }
           }
         }
       }
@@ -208,4 +242,4 @@ const Styled = {
   `,
 };
 
-export default ModalComplete;
+export default AppModal;

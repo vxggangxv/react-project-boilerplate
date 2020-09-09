@@ -5,7 +5,7 @@ import ErrorForm from './ErrorForm';
 function NotFound(props) {
   console.log(props, 'not found props');
   return (
-    <Stlyed.NotFound>
+    <Stlyed.NotFound data-component-name="NotFound">
       <ErrorForm code="404" text="Not Found" infoHide={true} />
     </Stlyed.NotFound>
   );

@@ -7,6 +7,7 @@ import { ErrorForm } from 'components/base/error';
 import { DispatchActions } from 'store/actionCreators';
 import { ToastContainer, toast } from 'react-toastify';
 import ErrorIcon from '@material-ui/icons/Error';
+import { CustomToastContent } from 'components/base/notifications';
 // import { icon_modal_alert } from 'components/base/images';
 // import ErrorOutlineIcon from '@material-ui/icons/ErrorOutline';
 // import NotificationsActiveIcon from '@material-ui/icons/NotificationsActive';
@@ -21,25 +22,25 @@ function ErrorContainer(props) {
   // NOTE: Error Status 에 따른 toast 알림
   const responseStatusConfig = {
     status400() {
-      toast.error(() => <CustomToast content="Bad Request" />);
+      toast.error(() => <CustomToastContent content="Bad Request" />);
     },
     status401() {
-      toast.error(() => <CustomToast content="Unauthorized" />);
+      toast.error(() => <CustomToastContent content="Unauthorized" />);
     },
     status403() {
-      toast.error(() => <CustomToast content="Forbidden" />);
+      toast.error(() => <CustomToastContent content="Forbidden" />);
     },
     status404() {
-      toast.error(() => <CustomToast content="Not Found" />);
+      toast.error(() => <CustomToastContent content="Not Found" />);
     },
     status405() {
-      toast.error(() => <CustomToast content="Method Not Allowd" />);
+      toast.error(() => <CustomToastContent content="Method Not Allowd" />);
     },
     status409() {
-      toast.error(() => <CustomToast content="Conflict" />);
+      toast.error(() => <CustomToastContent content="Conflict" />);
     },
     status429() {
-      toast.error(() => <CustomToast content="Too many Requests" />);
+      toast.error(() => <CustomToastContent content="Too many Requests" />);
     },
     status500() {
       history.replace('/error/500');
@@ -58,26 +59,5 @@ function ErrorContainer(props) {
 
   return null;
 }
-
-function CustomToast({ content = '' }) {
-  return (
-    <Styled.CustomToast>
-      <ErrorIcon className="customToast__icon_alert" />
-      {content}.
-    </Styled.CustomToast>
-  );
-}
-
-const Styled = {
-  CustomToast: styled.div`
-    display: flex;
-    align-items: center;
-    padding: 0 10px;
-    font-weight: 700;
-    .customToast__icon_alert {
-      margin-right: 5px;
-    }
-  `,
-};
 
 export default ErrorContainer;

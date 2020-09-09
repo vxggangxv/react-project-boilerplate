@@ -7,7 +7,7 @@ function ErrorForm(props) {
   const { code = '404', text = 'Not Found', infoHide = false } = props;
 
   return (
-    <Styled.ErrorForm>
+    <Styled.ErrorForm data-component-name="ErrorForm">
       <div className="error__container">
         <p className="error__title">
           <span className="error__code">{code}</span>

@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { CustomCircleLoading } from 'components/base/loading';
+import { CircularLoading } from 'components/base/loading';
 import PropTypes from 'prop-types';
 
 FullScreenLoading.propTypes = {
@@ -11,8 +11,8 @@ FullScreenLoading.propTypes = {
 function FullScreenLoading({ visible, size }) {
   if (visible === false) return null;
   return (
-    <Styled.FullScreenLoading>
-      <CustomCircleLoading size={size} />
+    <Styled.FullScreenLoading data-component-name="FullScreenLoading">
+      <CircularLoading size={size} />
     </Styled.FullScreenLoading>
   );
 }
