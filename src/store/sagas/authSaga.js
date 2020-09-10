@@ -18,7 +18,9 @@ const handleSignOut = createPromiseSaga({
 });
 
 export default function* baseSaga() {
-  yield all([actions.SIGNUP_SAGA.index, handleSignUp]);
-  yield all([actions.SIGNIN_SAGA.index, handleSignIn]);
-  yield all([actions.SIGNOUT_SAGA.index, handleSignOut]);
+  yield all([
+    takeEvery(actions.SIGNUP_SAGA.index, handleSignUp)
+    takeEvery(actions.SIGNIN_SAGA.index, handleSignIn),
+    takeEvery(actions.SIGNOUT_SAGA.index, handleSignOut),
+  ]);
 }

@@ -24,7 +24,7 @@ import { DispatchActions } from 'store/actionCreators';
 const { CancelToken } = axios;
 const source = CancelToken.source();
 
-export function acx(axiosConf) {
+export function axs(axiosConf) {
   // axiosConf.cancelToken = source.token;
   // NOTE: 차후 cancel 필요시 추가 개발
   // if (axiosConf.cancel) source.cancel('Operation canceled');

@@ -10,13 +10,13 @@ import { ENV_MODE_PROD } from 'lib/setting';
 
 function Root(props) {
   return (
-    <Router>
-      <Provider store={store}>
+    <Provider store={store}>
+      <Router>
         <PersistGate loading={null} persistor={persistor}>
           <App />
         </PersistGate>
-      </Provider>
-    </Router>
+      </Router>
+    </Provider>
   );
 }
 

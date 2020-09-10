@@ -4,7 +4,7 @@ import createSagaMiddleware from 'redux-saga';
 import logger from 'redux-logger';
 import { persistStore, persistReducer } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
-import { keys } from 'api/storage';
+import { keys } from 'api/config/storage';
 import rootReducer from 'store/modules';
 import rootSaga from 'store/sagas';
 import { ENV_MODE_DEV } from 'lib/setting';

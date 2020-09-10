@@ -8,7 +8,8 @@ const initialState = {
   // NOTE: api통신 pending, success, failure에 따른 자동 loading show
   apiCalling: false,
   // NOTE: router에 error 연결(e.g serverError : 500)
-  responseStatus: null,
+  // responseStatus: null,
+  responseStatus: 401,
   // TODO: 차후 error toasty또는 popup과 연결 예정
   responseError: {
     isShow: false,

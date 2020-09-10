@@ -1,4 +1,4 @@
-import { put, takeEvery, all } from 'redux-saga/effects';
+import { put, takeEvery, all, getContext } from 'redux-saga/effects';
 import * as actions from 'store/actions';
 import { isString } from 'util';
 
@@ -7,6 +7,10 @@ function* handleSetApiCalling() {
 }
 function* handleClearApiCalling() {
   yield put({ type: actions.SET_API_CALLING_STATUS, payload: false });
+}
+function* handleGoToHome() {
+  const history = yield getContext('history');
+  history.push('/#/');
 }
 
 export default function* appSaga() {
@@ -21,10 +25,6 @@ export default function* appSaga() {
         return action.type.endsWith('_SUCCESS') || action.type.endsWith('_FAILURE');
       }
     }, handleClearApiCalling),
-    // yield takeEvery((action) => {
-    //   if (isString(action.type)) {
-    //     return action.type.endsWith('_FAILURE');
-    //   }
-    // }, handleFailure)
+    takeEvery(actions.GO_TO_HOME, handleGoToHome),
   ]);
 }

@@ -1,23 +1,20 @@
 import React, { useEffect } from 'react';
 import styled from 'styled-components';
 import { useSelector } from 'react-redux';
-import { Link, useHistory } from 'react-router-dom';
+import { Link, useHistory, useLocation } from 'react-router-dom';
 import { useDidUpdateEffect, useShallowSelector } from 'lib/utils';
 import { ErrorForm } from 'components/base/error';
 import { DispatchActions } from 'store/actionCreators';
 import { ToastContainer, toast } from 'react-toastify';
-import ErrorIcon from '@material-ui/icons/Error';
 import { CustomToastContent } from 'components/base/notifications';
-// import { icon_modal_alert } from 'components/base/images';
-// import ErrorOutlineIcon from '@material-ui/icons/ErrorOutline';
-// import NotificationsActiveIcon from '@material-ui/icons/NotificationsActive';
-// import NotificationsNoneIcon from '@material-ui/icons/NotificationsNone';
+import * as mapper from 'lib/mapper';
 
 function ErrorContainer(props) {
   const { responseStatus } = useShallowSelector(state => ({
     responseStatus: state.base.responseStatus,
   }));
   const history = useHistory();
+  const location = useLocation();
 
   // NOTE: Error Status 에 따른 toast 알림
   const responseStatusConfig = {
@@ -26,6 +23,12 @@ function ErrorContainer(props) {
     },
     status401() {
       toast.error(() => <CustomToastContent content="Unauthorized" />);
+      // DispatchActions.sign_out();
+      // pathname: mapper.pageUrl.signIn,
+      // state: { from: location },
+
+      console.log(location.pathname, 'location.pathname');
+      history.push(`${mapper.pageUrl.signIn}/?returnPath=${encodeURIComponent(location.pathname)}`);
     },
     status403() {
       toast.error(() => <CustomToastContent content="Forbidden" />);
@@ -43,8 +46,8 @@ function ErrorContainer(props) {
       toast.error(() => <CustomToastContent content="Too many Requests" />);
     },
     status500() {
-      history.replace('/error/500');
       DispatchActions.response_status(false);
+      history.replace(mapper.pageUrl.error.server);
     },
   };
   // const responseStatus401 = () => toast('Will close after 7s', { autoClose: 7000 });

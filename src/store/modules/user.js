@@ -1,7 +1,7 @@
 import { handleActions } from 'redux-actions';
 import { SpreadSagas } from 'lib/asyncUtils';
 import * as actions from 'store/actions';
-import storage, { keys } from 'api/storage';
+import storage, { keys } from 'api/config/storage';
 
 const initialState = {
   // NOTE: 최초 랜딩시 storage값 유무 확인

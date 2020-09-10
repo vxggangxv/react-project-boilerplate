@@ -1,5 +1,10 @@
 import React from 'react';
 import styled from 'styled-components';
+import ErrorIcon from '@material-ui/icons/Error';
+// import { icon_modal_alert } from 'components/base/images';
+// import ErrorOutlineIcon from '@material-ui/icons/ErrorOutline';
+// import NotificationsActiveIcon from '@material-ui/icons/NotificationsActive';
+// import NotificationsNoneIcon from '@material-ui/icons/NotificationsNone';
 
 function CustomToastContent({ content }) {
   return (

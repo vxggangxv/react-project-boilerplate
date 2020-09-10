@@ -2,7 +2,7 @@ import { handleActions } from 'redux-actions';
 import { SpreadSagas } from 'lib/asyncUtils';
 import * as actions from 'store/actions';
 import { setAuthInHeader } from 'api/config/axiosUtils';
-import storage, { keys } from 'api/storage';
+import storage, { keys } from 'api/config/storage';
 import { DispatchActions } from 'store/actionCreators';
 
 const initialState = {
@@ -41,6 +41,7 @@ export default handleActions(
         // DEBUG: 백엔드 연결 후 테스트 필요
         console.log(diff, 'diff signIn');
         const { token, user } = diff;
+        if (!token) return;
         draft.accessToken = token;
         setAuthInHeader(token);
         storage.set(keys.token, token);

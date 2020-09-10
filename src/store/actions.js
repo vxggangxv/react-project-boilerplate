@@ -25,6 +25,9 @@ export const response_status = createAction(RESPONSE_STATUS);
 export const RESPONSE_ERROR = 'base/RESPONSE_ERROR';
 export const response_error = createAction(RESPONSE_ERROR);
 
+export const GO_TO_HOME = 'base/GO_TO_HOME';
+export const go_to_home = createAction(GO_TO_HOME);
+
 export const BASE_POPUP = 'base/BASE_POPUP';
 export const base_popup = createAction(BASE_POPUP);
 
