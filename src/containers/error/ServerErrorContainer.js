@@ -1,10 +1,10 @@
 import React from 'react';
 import { useEffect } from 'react';
-import { useSelector } from 'react-redux';
 import { ErrorForm } from 'components/base/error';
+import { useShallowSelector } from 'lib/utils';
 
 function ServerErrorContainer(props) {
-  const { responseStatus } = useSelector(state => ({
+  const { responseStatus } = useShallowSelector(state => ({
     responseStatus: state.base.responseStatus,
   }));
 

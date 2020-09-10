@@ -1,4 +1,9 @@
 pending:
+  ❍ redux에서 router사용 적용 테스트 적용 X, 차후 redux-saga에서 필요시 재검토
+  ❍ ErrorContainer returnPath 작업중
+  ❍ react.i18next 언어 팩 설정 준비 완료
+  ❍ NotifyToast custom style설정 추가
+
   ❍ 9/11 언어팬 수정 예정
   ❍ 차후 Scroll UI 및 infinite scroll 컴포넌트 개발
   ❍ sign_out 시 login페이지 이동

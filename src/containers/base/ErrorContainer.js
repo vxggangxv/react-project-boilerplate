@@ -1,6 +1,5 @@
 import React, { useEffect } from 'react';
 import styled from 'styled-components';
-import { useSelector } from 'react-redux';
 import { Link, useHistory, useLocation } from 'react-router-dom';
 import { useDidUpdateEffect, useShallowSelector } from 'lib/utils';
 import { ErrorForm } from 'components/base/error';
@@ -23,12 +22,8 @@ function ErrorContainer(props) {
     },
     status401() {
       toast.error(() => <CustomToastContent content="Unauthorized" />);
-      // DispatchActions.sign_out();
-      // pathname: mapper.pageUrl.signIn,
-      // state: { from: location },
-
-      console.log(location.pathname, 'location.pathname');
-      history.push(`${mapper.pageUrl.signIn}/?returnPath=${encodeURIComponent(location.pathname)}`);
+      DispatchActions.sign_out();
+      history.push(`${mapper.pageUrl.signIn}?returnPath=${encodeURIComponent(location.pathname)}`);
     },
     status403() {
       toast.error(() => <CustomToastContent content="Forbidden" />);

@@ -1,11 +1,18 @@
 import React from 'react';
 import styled from 'styled-components';
 import cx from 'classnames';
-import { NavLink, Link, withRouter } from 'react-router-dom';
+import { NavLink, Link, useLocation } from 'react-router-dom';
 import { logo } from 'components/base/images';
 import * as mapper from 'lib/mapper';
+import { isAuthenticatedSelector } from 'store/modules/auth.selectors';
+import { useShallowSelector } from 'lib/utils';
 
-function AppHeader({ location: { pathname } }) {
+function AppHeader() {
+  const { isAuthenticated } = useShallowSelector(state => ({
+    isAuthenticated: isAuthenticatedSelector(state),
+  }));
+  const { pathname } = useLocation();
+
   return (
     <Styled.AppHeader data-component-name="AppHeader">
       <header className="header">
@@ -27,6 +34,27 @@ function AppHeader({ location: { pathname } }) {
             ))}
           </ul>
         </nav>
+        <div className="header__auth_menu">
+          <ul className="header__nav_list auth">
+            {isAuthenticated ? (
+              <li
+                className={cx('header__nav_item', { active: pathname === mapper.pageUrl.signOut })}
+              >
+                <NavLink to={mapper.pageUrl.signOut} className="header__link">
+                  Logout
+                </NavLink>
+              </li>
+            ) : (
+              <li
+                className={cx('header__nav_item', { active: pathname === mapper.pageUrl.signIn })}
+              >
+                <NavLink to={mapper.pageUrl.signIn} className="header__link">
+                  Login
+                </NavLink>
+              </li>
+            )}
+          </ul>
+        </div>
       </header>
     </Styled.AppHeader>
   );
@@ -69,7 +97,10 @@ const Styled = {
       .header__link {
       }
     }
+    .header__auth_menu {
+      margin-left: 30px;
+    }
   `,
 };
 
-export default withRouter(AppHeader);
+export default AppHeader;

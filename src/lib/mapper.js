@@ -1,25 +1,21 @@
 export const setting = {
   language: {
-    defs: {
-      kr: {
-        id: 1,
-        label: 'Korean',
-        index: 'KR',
-      },
-      en: {
-        id: 2,
-        label: 'English',
-        index: 'EN',
-      },
+    kr: {
+      id: 1,
+      label: 'Korean',
+      index: 'KR',
     },
-    use: {
-      default: [1, 2],
+    en: {
+      id: 2,
+      label: 'English',
+      index: 'EN',
     },
   },
 };
 
 export const pageUrl = {
   index: '/',
+  home: '/home',
   signIn: '/auth/login',
   signUp: '/auth/join',
   signOut: '/auth/logout',
@@ -33,16 +29,8 @@ export const pageUrl = {
 
 export const navigation = [
   {
-    path: '/home',
+    path: pageUrl.home,
     text: 'Home',
-  },
-  {
-    path: '/auth/login',
-    text: 'Login',
-  },
-  {
-    path: '/auth/logout',
-    text: 'Logout',
   },
   {
     path: '/about',

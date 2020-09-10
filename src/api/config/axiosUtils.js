@@ -30,7 +30,7 @@ export const setAuthInHeader = token => {
 };
 
 // export const onUnauthorized = () => {
-//   // const history = useHistory();
+//   const history = useHistory();
 //   // history.push(`/auth/login?returnPath=${encodeURIComponent(location.pathname)}`);
 //   return null;
 // };

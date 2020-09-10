@@ -8,10 +8,6 @@ function* handleSetApiCalling() {
 function* handleClearApiCalling() {
   yield put({ type: actions.SET_API_CALLING_STATUS, payload: false });
 }
-function* handleGoToHome() {
-  const history = yield getContext('history');
-  history.push('/#/');
-}
 
 export default function* appSaga() {
   yield all([
@@ -25,6 +21,5 @@ export default function* appSaga() {
         return action.type.endsWith('_SUCCESS') || action.type.endsWith('_FAILURE');
       }
     }, handleClearApiCalling),
-    takeEvery(actions.GO_TO_HOME, handleGoToHome),
   ]);
 }

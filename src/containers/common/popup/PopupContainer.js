@@ -1,5 +1,4 @@
 import React, { useMemo } from 'react';
-import { useSelector, shallowEqual } from 'react-redux';
 import { DispatchActions } from 'store/actionCreators';
 import { PlainModal, AppModal } from 'components/common/modal';
 import { useShallowSelector } from 'lib/utils';

@@ -8,14 +8,15 @@ const initialState = {
   // NOTE: api통신 pending, success, failure에 따른 자동 loading show
   apiCalling: false,
   // NOTE: router에 error 연결(e.g serverError : 500)
-  // responseStatus: null,
-  responseStatus: 401,
+  responseStatus: null,
+  // responseStatus: 401,
   // TODO: 차후 error toasty또는 popup과 연결 예정
   responseError: {
     isShow: false,
     message: null,
     data: null,
   },
+  language: 'en',
   popup: {
     title: '',
     content: '',
@@ -65,6 +66,11 @@ export default handleActions(
         // DEBUG: 필요
         draft.responseError.message = diff.message;
         draft.responseError.data = diff;
+      },
+    }),
+    ...new SpreadReducer(null, actions.LANGUAGE_CHANGE, {
+      callback: (draft, { payload: diff }) => {
+        draft.language = diff;
       },
     }),
     ...new SpreadReducer(null, actions.BASE_POPUP, {

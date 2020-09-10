@@ -13,12 +13,13 @@ import { PopupContainer } from 'containers/common/popup';
 const CoreState = {};
 
 // NOTE: 초기 landing, error, notifications, popup 등록
+// DEBUG: 차후 성능적인 문제 발생시 apiCalling분리
 function Core() {
-  const { isAuthenticated, apiCalling, landing, accessToken } = useShallowSelector(state => ({
+  const { isAuthenticated, landing, accessToken, apiCalling } = useShallowSelector(state => ({
     isAuthenticated: isAuthenticatedSelector(state),
-    apiCalling: state.base.apiCalling,
     landing: state.base.landing,
     accessToken: state.auth.accessToken,
+    apiCalling: state.base.apiCalling,
   }));
   const [values, setValues] = useImmer(CoreState);
 
@@ -39,7 +40,7 @@ function Core() {
     initialize();
   }, []);
 
-  const isVisibleLoading = [apiCalling, landing].some(item => item === true);
+  const isVisibleLoading = [landing].some(item => item === true);
 
   return (
     <>

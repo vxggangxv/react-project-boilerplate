@@ -1,9 +1,9 @@
 import React from 'react';
 import { useHistory, useLocation } from 'react-router-dom';
+import queryString from 'query-string';
 import { useShallowSelector, useDidUpdateEffect } from 'lib/utils';
 import { DispatchActions } from 'store/actionCreators';
 import { AppTemplate } from 'components/base/template';
-import { onUnauthorized } from 'api/config/axiosUtils';
 import { isAuthenticatedSelector } from 'store/modules/auth.selectors';
 
 function AuthSignIn(props) {
@@ -12,24 +12,25 @@ function AuthSignIn(props) {
   }));
   let history = useHistory();
   let location = useLocation();
-  let { from } = location.state || { from: { pathname: '/' } };
+
+  const queryParse = queryString.parse(history.location.search);
+  const { from } = location.state || { from: { pathname: '/' } };
+  // NOTE: ErrorContainer 에서 returnPath 넘겨줬을 경우, PrivateRoute에서 from을 넘겨줬을경우
+  const returnPath = queryParse.returnPath || from.pathname;
 
   let login = () => {
     DispatchActions.sign_in({ token: 'token', user: 'user' });
   };
 
-  // console.log(location.state, 'location.state');
-  // console.log(from, 'from');
-
   useDidUpdateEffect(() => {
-    if (isAuthenticated) return history.replace(from);
+    if (isAuthenticated) return history.replace(returnPath);
   }, [isAuthenticated]);
 
   return (
     <AppTemplate title={'Auth'}>
       <br />
       <br />
-      <p>You must log in to view the page at {from.pathname}</p>
+      <p>You must log in to view the page at {returnPath}</p>
       <br />
       <button onClick={login}>Log in</button>
       <br />
