@@ -1,7 +1,7 @@
 import React, { Suspense } from 'react';
 import Core from 'containers/base/Core';
 import { Route, Switch, Redirect } from 'react-router-dom';
-import GlobalStyle from 'styles/base';
+import GlobalAppStyle from 'styles/base';
 import { Error, Home, Auth, About, User, Test } from 'pages';
 import { FullScreenLoading } from 'components/base/loading';
 import { PrivateRoute } from 'components/base/route';
@@ -9,7 +9,7 @@ import { PrivateRoute } from 'components/base/route';
 function App() {
   return (
     <>
-      <GlobalStyle />
+      <GlobalAppStyle />
       <Core />
 
       <Switch>

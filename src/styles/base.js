@@ -1,9 +1,9 @@
-import { css, createGlobalStyle } from 'styled-components';
+import styled, { css, createGlobalStyle } from 'styled-components';
 import reset from 'styled-reset';
 import { fontFamily, disableDrag } from 'styles/utils';
 import { ENV_MODE_PROD } from 'lib/setting';
 
-const globalStyle = createGlobalStyle`
+const globalStyle = css`
   ${reset};
   * {
     box-sizing: border-box !important;
@@ -50,20 +50,20 @@ const globalStyle = createGlobalStyle`
     width: 6px;
     transition: width 0.3s;
   }
-  ::-webkit-scrollbar:hover {
-    /* background-color: #000; */
-  }
   ::-webkit-scrollbar-track:hover {
     background-color: #f2f2f2;
     ::-webkit-scrollbar-thumb {
-      background-color: rgba(0,0,0, 0.4);
+      background-color: rgba(0, 0, 0, 0.6);
     }
   }
   ::-webkit-scrollbar-thumb {
-    background-color: rgba(0,0,0, 0.2);
-    cursor: pointer;
+    background-color: rgba(0, 0, 0, 0.2);
     border-radius: 5px;
   }
 `;
 
-export default globalStyle;
+const globalAppStyle = createGlobalStyle`
+  ${globalStyle}
+`;
+
+export default globalAppStyle;
