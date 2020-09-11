@@ -1,9 +1,4 @@
 pending:
-  ❍ redux에서 router사용 적용 테스트 적용 X, 차후 redux-saga에서 필요시 재검토
-  ❍ ErrorContainer returnPath 작업중
-  ❍ react.i18next 언어 팩 설정 준비 완료
-  ❍ NotifyToast custom style설정 추가
-
   ❍ 9/11 언어팬 수정 예정
   ❍ 차후 Scroll UI 및 infinite scroll 컴포넌트 개발
   ❍ sign_out 시 login페이지 이동
@@ -34,7 +29,11 @@ Done:
   ✔ Core(landing, Error, Notificions, Popup) @done(20-09-07 19:16)
   ✔ prop-types(Runtime type checking for React props) 모듈 적용 (복잡한 컴포넌트 구조에서 에러 발생 방지) @done(20-09-08 11:13)
   ✔ React Testing Library로 TDD개발환경 구축 - 간단 Counter.test.js 테스트, Basic, Complex Example 추가 개발 @done(20-09-08 11:13)
-
   ✔ Project - Page, Container, Components, [Container,Components - common], 컴포넌트 네이밍 컨벤션 정리 @done(20-09-09 13:00)
   ✔ DOFSync BASE_POPUP 포팅 및 ModalConfirm 및 ModalComplete 통합 완료 @done(20-09-09 19:00)
   ✔ asyncUtils, store - logger: console - 개발모드 설정 추가 @done(20-09-09 19:00)
+  
+  ✔ redux에서 router사용 적용 테스트 적용 X, 차후 redux-saga에서 필요시 재검토 @done(20-09-10 18:59)
+  ✔ ErrorContainer returnPath 작업중 @done(20-09-10 18:59)
+  ✔ react.i18next 언어 팩 설정 준비 완료 @done(20-09-10 18:59)
+  ✔ NotifyToast custom style설정 추가 @done(20-09-10 18:59)

@@ -25,7 +25,6 @@ const globalStyle = createGlobalStyle`
     ${fontFamily}
     font-size: 14px;
     color: #333;
-    /* min-width: 1900px; */
   }
   .hidden {
     display: none !important;
@@ -45,6 +44,25 @@ const globalStyle = createGlobalStyle`
   }
   .margin-none {
     margin: 0 !important;
+  }
+  /* custom scrollbar */
+  ::-webkit-scrollbar {
+    width: 6px;
+    transition: width 0.3s;
+  }
+  ::-webkit-scrollbar:hover {
+    /* background-color: #000; */
+  }
+  ::-webkit-scrollbar-track:hover {
+    background-color: #f2f2f2;
+    ::-webkit-scrollbar-thumb {
+      background-color: rgba(0,0,0, 0.4);
+    }
+  }
+  ::-webkit-scrollbar-thumb {
+    background-color: rgba(0,0,0, 0.2);
+    cursor: pointer;
+    border-radius: 5px;
   }
 `;
 
