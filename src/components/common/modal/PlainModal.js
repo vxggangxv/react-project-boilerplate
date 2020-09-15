@@ -6,7 +6,8 @@ import Fade from '@material-ui/core/Fade';
 import styled from 'styled-components';
 import cx from 'classnames';
 import { useEffect } from 'react';
-import { DispatchActions } from 'store/actionCreators';
+import IconButton from '@material-ui/core/IconButton';
+import CloseIcon from '@material-ui/icons/Close';
 
 /**
  * 
@@ -34,6 +35,7 @@ function PlainModal(props) {
     onClick = () => {},
     onExited = () => {},
     width = 0,
+    isCloseIcon = false,
   } = props;
 
   const [open, setOpen] = React.useState(false);
@@ -75,10 +77,22 @@ function PlainModal(props) {
           timeout: 500,
         }}
       >
-        <Fade in={open} onExited={e => handleClick({ type: 'exit' })}>
-          <div className={cx(classes.paper)}>{content || children}</div>
+        <Fade in={isOpen} onExited={e => handleClick({ type: 'exit' })}>
+          <div className={cx('plainModal__children', classes.paper)}>
+            {isCloseIcon && (
+              <IconButton
+                aria-label="close modal"
+                className="plainModal__close_btn"
+                onClick={handleCloseDim}
+              >
+                <CloseIcon className="plainModal__close_icon" />
+              </IconButton>
+            )}
+            {content || children}
+          </div>
         </Fade>
       </Modal>
+      <Styled.PlainModalGlobalStyle />
     </Styled.PlainModal>
   );
 }
@@ -103,12 +117,20 @@ const PlainStyles = prop => {
 };
 
 const Styled = {
-  PlainModal: styled.div`
-    /* .modal__content{
-      border-radius:5px;
-      background:black;
-      font-size:50px;
-    } */
+  PlainModalGlobalStyle: createGlobalStyle`
+    #plainModalContent {
+      .plainModal__children {
+        position: relative;
+        .plainModal__close_btn {  
+          z-index: 1;
+          position: absolute;
+          top: 10px;
+          right: 10px;
+        }
+      }
+    }
   `,
+  PlainModal: styled.div``,
 };
+
 export default PlainModal;

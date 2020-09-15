@@ -6,15 +6,27 @@ import { DispatchActions } from 'store/actionCreators';
 import { T } from 'components/common/text';
 import { withTranslation } from 'react-i18next';
 import styled from 'styled-components';
+import { CustomInfiniteScroll } from 'components/common/scroll';
+import { useImmer } from 'use-immer';
+import InfiniteScroll from 'react-infinite-scroll-component';
+
+const AboutContainerState = {
+  loading: false,
+  items: Array.from({ length: 20 }),
+};
 
 function AboutContainer() {
+  const [values, setValues] = useImmer(AboutContainerState);
+  const loading = values.loading;
+  const items = values.items;
+
   useEffect(() => {
     // DispatchActions.language_change('ko');
   }, []);
 
   const closeAfter7 = () => toast('Will close after 7s', { autoClose: false });
   const openPopup = () => {
-    DispatchActions.base_popup({
+    Popup({
       content: 'hellow',
       isOpen: true,
       onExited() {
@@ -23,7 +35,19 @@ function AboutContainer() {
     });
   };
 
-  const n = { n: 5 };
+  const fetchMoreData = () => {
+    // a fake async api call like which sends
+    // 20 more records in 1.5 secs
+    setValues(draft => {
+      draft.loading = true;
+    });
+    setTimeout(() => {
+      setValues(draft => {
+        draft.items = items.concat(Array.from({ length: 20 }));
+        draft.loading = false;
+      });
+    }, 1500);
+  };
 
   return (
     <Styled.AboutContainer>
@@ -31,12 +55,31 @@ function AboutContainer() {
       <button onClick={openPopup}>openPopup</button>
       <T>hello</T>
       <div className="scroll__box">
-        <div className="scroll__content">
-          {[...Array(200).keys()].map((item, idx) => (
-            <p key={idx}>하이</p>
+        <InfiniteScroll
+          className="scroll__content"
+          dataLength={items.length}
+          next={fetchMoreData}
+          hasMore={true}
+          loader={<h4>Loading...</h4>}
+          height={200}
+        >
+          {items.map((item, idx) => (
+            <div key={idx}>div - ${idx}</div>
           ))}
-        </div>
+        </InfiniteScroll>
       </div>
+
+      {/* <CustomInfiniteScroll
+        maxDataLength={200}
+        dataLength={items.length}
+        next={fetchMoreData}
+        unMount={null}
+        height={200}
+      >
+        {items.map((item, idx) => (
+          <div key={idx}>div - ${idx}</div>
+        ))}
+      </CustomInfiniteScroll> */}
     </Styled.AboutContainer>
   );
 }
@@ -44,8 +87,9 @@ function AboutContainer() {
 const Styled = {
   AboutContainer: styled.div`
     .scroll__box {
-      height: 300px;
-      overflow-y: auto;
+      margin-top: 10px;
+      /* height: 200px;
+      overflow-y: auto; */
       /* border: 1px solid #000; */
       .scroll__content {
       }

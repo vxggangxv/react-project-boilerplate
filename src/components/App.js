@@ -4,7 +4,7 @@ import { Route, Switch, Redirect } from 'react-router-dom';
 import GlobalAppStyle from 'styles/base';
 import { Error, Home, Auth, About, User, Test } from 'pages';
 import { FullScreenLoading } from 'components/base/loading';
-import { PrivateRoute } from 'components/base/route';
+import { LRoute, PrivateRoute } from 'components/base/route';
 
 function App() {
   return (
@@ -15,7 +15,7 @@ function App() {
       <Switch>
         <Redirect exact path="/" to="/home" />
         <Route path="/home" component={Home} />
-        <Route path="/auth" component={Auth} />
+        <LRoute path="/auth" component={Auth} />
         <Route path="/error" component={Error} />
         <Route path="/user" component={User} />
         <PrivateRoute path="/about" component={About} />
