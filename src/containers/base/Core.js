@@ -9,6 +9,8 @@ import storage, { keys } from 'api/config/storage';
 import { ToastContainer, toast } from 'react-toastify';
 import { NotifyToast } from 'components/base/notifications';
 import { PopupContainer } from 'containers/common/popup';
+import { T } from 'components/common/text';
+import { I18nLanguage } from 'components/base/language';
 
 const CoreState = {};
 
@@ -48,6 +50,7 @@ function Core() {
       <ErrorContainer />
       <PopupContainer />
       <NotifyToast />
+      <I18nLanguage />
     </>
   );
 }

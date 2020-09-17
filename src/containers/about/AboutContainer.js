@@ -4,7 +4,7 @@ import { Popup } from 'lib/utils';
 import { useEffect } from 'react';
 import { DispatchActions } from 'store/actionCreators';
 import { T } from 'components/common/text';
-import { withTranslation } from 'react-i18next';
+import { Translation, withTranslation } from 'react-i18next';
 import styled from 'styled-components';
 import { CustomInfiniteScroll } from 'components/common/scroll';
 import { useImmer } from 'use-immer';
@@ -49,11 +49,17 @@ function AboutContainer() {
     }, 1500);
   };
 
+  const languageChange = () => {
+    // DispatchActions.language_change('KO');
+    DispatchActions.language_change('en');
+    // DispatchActions.language_change('ko');
+  };
+
   return (
     <Styled.AboutContainer>
       <button onClick={closeAfter7}>Close after 7 seconds</button>
       <button onClick={openPopup}>openPopup</button>
-      <T>hello</T>
+      <button onClick={languageChange}>언어변경</button>
       <div className="scroll__box">
         <InfiniteScroll
           className="scroll__content"
@@ -68,6 +74,8 @@ function AboutContainer() {
           ))}
         </InfiniteScroll>
       </div>
+      <T lang="en">hello</T>
+      <Translation>{t => <p>{t('hello')}</p>}</Translation>
 
       {/* <CustomInfiniteScroll
         maxDataLength={200}

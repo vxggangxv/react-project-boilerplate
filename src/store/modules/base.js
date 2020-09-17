@@ -16,7 +16,8 @@ const initialState = {
     message: null,
     data: null,
   },
-  language: 'en',
+  // language: 'en',
+  language: 'ko',
   popup: {
     title: '',
     content: '',

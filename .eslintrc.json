@@ -1,6 +1,6 @@
 {
   "extends": ["airbnb-base", "plugin:prettier/recommended"],
-  "plugins": ["prettier"],
+  "parser": "babel-eslint",
   "rules": {
     "prettier/prettier": "error",
     "no-var": "warn",

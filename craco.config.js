@@ -1,5 +1,5 @@
 module.exports = {
   eslint: {
-    enable: false,
+    // enable: false,
   },
 };

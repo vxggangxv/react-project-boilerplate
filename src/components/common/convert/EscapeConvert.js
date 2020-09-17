@@ -1,20 +1,32 @@
-import React from 'react';
+import React, { Fragment } from 'react';
+import PropTypes from 'prop-types';
+
+EscapeConvert.propTypes = {
+  content: PropTypes.any.isRequired,
+};
 
 /**
- * <EscapeConvert
- *  prev={'\n'}
- *  next={<br />}
- *  content={"야호 \n ㅋㅋㅋ"}
- * />
- * @param {*} param0
+ * @param {*} prev
+ * @param {*} next
+ * @param {*} content
  */
-const EscapeConvert = ({ prev, next, content }) =>
-  content.split(prev).map((line, key) => {
-    return (
-      <div key={key}>
-        {line}
-        {next}
-      </div>
-    );
-  });
+function EscapeConvert({ prev = '\n', next = <br />, content }) {
+  const splitContent = content.split(prev);
+  const splitContentLastIdx = splitContent.length - 1;
+
+  return (
+    <>
+      {splitContent.map((item, idx) => {
+        // console.log(`${item} ${idx}`, 'item');
+        return (
+          <Fragment key={idx}>
+            {item}
+            {splitContentLastIdx !== idx && next}
+          </Fragment>
+        );
+      })}
+    </>
+  );
+}
+
 export default EscapeConvert;
