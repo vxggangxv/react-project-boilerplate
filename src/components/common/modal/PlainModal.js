@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Modal from '@material-ui/core/Modal';
 import Backdrop from '@material-ui/core/Backdrop';
@@ -25,7 +25,7 @@ import CloseIcon from '@material-ui/icons/Close';
     />
  * @param {*} props 
  */
-function PlainModal(props) {
+const PlainModal = React.memo(function PlainModal(props) {
   const {
     isOpen = false,
     content = '',
@@ -38,7 +38,7 @@ function PlainModal(props) {
     isCloseIcon = false,
   } = props;
 
-  const [open, setOpen] = React.useState(false);
+  const [open, setOpen] = useState(false);
 
   // NOTE: init set open(from PopupContainer)
   useEffect(() => {
@@ -47,19 +47,18 @@ function PlainModal(props) {
 
   let classes = PlainStyles({ width: width });
 
-  const handleOpen = () => {
+  const handleClose = () => {
     onClick({ type: 'dim' });
     setOpen(false);
   };
 
-  const handleCloseDim = dim?.clickClose === false ? null : handleOpen;
+  const handleCloseDim = dim?.clickClose === false ? null : handleClose;
 
   const handleClick = config => {
     const { e, type } = config;
 
     if (type === 'exit') {
-      onExited();
-      return;
+      if (!!onExited) onExited();
     }
   };
 
@@ -77,7 +76,7 @@ function PlainModal(props) {
           timeout: 500,
         }}
       >
-        <Fade in={isOpen} onExited={e => handleClick({ type: 'exit' })}>
+        <Fade in={open} onExited={e => handleClick({ type: 'exit' })}>
           <div className={cx('plainModal__children', classes.paper)}>
             {isCloseIcon && (
               <IconButton
@@ -95,7 +94,7 @@ function PlainModal(props) {
       <Styled.PlainModalGlobalStyle />
     </Styled.PlainModal>
   );
-}
+});
 
 const PlainStyles = prop => {
   prop = prop || {};
