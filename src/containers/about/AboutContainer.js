@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { toast } from 'react-toastify';
 import { Popup } from 'lib/utils';
 import { useEffect } from 'react';
@@ -13,10 +13,14 @@ import InfiniteScroll from 'react-infinite-scroll-component';
 const AboutContainerState = {
   loading: false,
   items: Array.from({ length: 20 }),
+  async: '',
 };
 
 function AboutContainer() {
   const [values, setValues] = useImmer(AboutContainerState);
+  const [async, setAsync] = useState({
+    async: '',
+  });
   const loading = values.loading;
   const items = values.items;
 
@@ -49,6 +53,38 @@ function AboutContainer() {
     }, 1500);
   };
 
+  const submitData = {
+    async: values.async,
+  };
+
+  // const asyncFunc = () => {
+  //   return new Promise(function (resolve, reject) {
+  //     setValues(
+  //       draft => {
+  //         draft.async = 'async work';
+  //         resolve(draft);
+  //       },
+  //       // () => {
+  //       //   console.log(values.async, 'values.async');
+  //       // },
+  //     );
+  //   });
+  //   // console.log(submitData, 'submitData');
+
+  //   // setAsync(
+  //   //   {
+  //   //     ...async,
+  //   //     async: 'async',
+  //   //   },
+  //   //   () => console.log(values.async, 'values.async'),
+  //   // );
+  // };
+
+  // const handleAsync = async () => {
+  //   await asyncFunc();
+  //   console.log(submitData, 'submitData');
+  // };
+
   const languageChange = () => {
     // DispatchActions.language_change('KO');
     DispatchActions.language_change('en');
@@ -60,6 +96,9 @@ function AboutContainer() {
       <button onClick={closeAfter7}>Close after 7 seconds</button>
       <button onClick={openPopup}>openPopup</button>
       <button onClick={languageChange}>언어변경</button>
+      {/* <button onClick={handleAsync}>handleAsync</button>
+      <button onClick={asyncFunc}>AsyncTest</button> */}
+      <span>{values.async}</span>
       <div className="scroll__box">
         <InfiniteScroll
           className="scroll__content"

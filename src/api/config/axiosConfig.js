@@ -54,7 +54,7 @@ export function axs(axiosConf) {
       return response;
     })
     .catch(error => {
-      const { response = {}, resquest = '', message = '' } = error;
+      const { response = {}, request = '', message = '' } = error;
       if (response) {
         const { data = {}, status = 0, headers = {} } = response;
         // 요청이 이루어졌으며 서버가 2xx의 범위를 벗어나는 상태 코드로 응답했습니다.
@@ -67,7 +67,7 @@ export function axs(axiosConf) {
         // NOTE: 차후 auth에 대한 에러처리
         // const { status } = response;
         // if (status === 401) return onUnauthorized();
-      } else if (resquest) {
+      } else if (request) {
         // 요청이 이루어 졌으나 응답을 받지 못했습니다.
         console.log('Error request', request);
       } else {
