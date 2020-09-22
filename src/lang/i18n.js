@@ -1,19 +1,16 @@
 import i18n from 'i18next';
 import { initReactI18next } from 'react-i18next';
-
-import translationEn from './translation.en';
-import translationKo from './translation.ko';
-import translationJp from './translation.jp';
+import { en, ko, jp } from './locale';
 
 const resources = {
   en: {
-    translation: translationEn,
+    translation: en,
   },
   ko: {
-    translation: translationKo,
+    translation: ko,
   },
   jp: {
-    translation: translationJp,
+    translation: jp,
   },
 };
 

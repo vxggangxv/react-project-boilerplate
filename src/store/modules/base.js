@@ -21,6 +21,8 @@ const initialState = {
   popup: {
     title: '',
     content: '',
+    isTitleDefault: false,
+    isContentDefault: false,
     button: '',
     hideButton: false,
     reverseButton: false,
@@ -102,6 +104,8 @@ export default handleActions(
         } else {
           draft.popup.title = title;
           draft.popup.content = content;
+          draft.popup.isTitleDefault = isTitleDefault;
+          draft.popup.isContentDefault = isContentDefault;
           draft.popup.button = button;
           draft.popup.reverseButton = reverseButton;
           draft.popup.hideButton = hideButton;

@@ -32,10 +32,12 @@ function PopupContainer() {
           type={popupConfig.type}
           title={popupConfig.title}
           content={popupConfig.content}
+          isTitleDefault={popupConfig.isTitleDefault}
+          isContentDefault={popupConfig.isContentDefault}
           button={popupConfig.button}
           hideButton={popupConfig.hideButton}
           reverseButton={popupConfig.reverseButton}
-          okText={popupConfig.okText}
+          okText={popupConfig.okText || 'Ok'}
           okLink={popupConfig.okLink}
           cancelLink={popupConfig.cancelLink}
           align={popupConfig.align}
@@ -44,6 +46,12 @@ function PopupContainer() {
             DispatchActions.base_popup({ type: 'dim' });
             if (!!popupConfig.onClick) {
               popupConfig.onClick();
+            }
+          }}
+          onCancel={() => {
+            Actions.base_popup({ type: 'dim' });
+            if (!!popupConfig.onCancel) {
+              popupConfig.onCancel();
             }
           }}
         />

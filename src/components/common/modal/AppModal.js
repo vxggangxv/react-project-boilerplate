@@ -42,6 +42,8 @@ function AppModal(props) {
     type = '',
     title = {},
     content = {},
+    isTitleDefault = false,
+    isContentDefault = false,
     button = {},
     hideButton = null,
     reverseButton = null,
@@ -79,88 +81,80 @@ function AppModal(props) {
 
   const titleObj = contentTypeCheck(title);
   const contentObj = contentTypeCheck(content);
+  const okObj = contentTypeCheck(okText);
 
   const Title = () => titleObj.value;
   const Content = () => contentObj.value;
   const Button = () => button;
+  const Ok = () => okObj.value;
 
-  let propOkText = 'OK';
-  if (okText) {
-    propOkText = okText;
-  }
-
+  if (valuesLoading) return null;
   return (
-    <>
-      {valuesLoading ? (
-        ''
-      ) : (
-        <Styled.AppModal
-          data-component-name="AppModal"
-          ref={modalRef}
-          className={cx({ modal__container_padding_none: paddingNone })}
+    <Styled.AppModal
+      data-component-name="AppModal"
+      ref={modalRef}
+      className={cx({ modal__container_padding_none: paddingNone })}
+    >
+      <div className="modal__header">
+        <div
+          className={cx('modal__title', { default: titleObj?.isTypeString || isTitleDefault })}
+          style={{ textAlign: alignConfig.title }}
         >
-          <div className="modal__header">
-            <div
-              className={cx('modal__title', { default: titleObj?.isTypeString })}
-              style={{ textAlign: alignConfig.title }}
-            >
-              <Title />
-            </div>
-          </div>
-          <div className="modal__body">
-            <div
-              className={cx('modal__content', {
-                default: contentObj?.isTypeString && !paddingNone,
-              })}
-              style={{ textAlign: alignConfig.content }}
-            >
-              <Content />
-            </div>
-          </div>
-          <div className="modal__footer" hidden={hideButton}>
-            <div
-              className={cx('modal__btn_box', { default: !button, reverse: reverseButton })}
-              style={{
-                textAlign: alignConfig.button || 'right',
-              }}
-            >
-              {button ? (
-                <Button />
-              ) : (
+          <Title />
+        </div>
+      </div>
+      <div className="modal__body">
+        <div
+          className={cx('modal__content', {
+            default: (contentObj?.isTypeString && !paddingNone) || isContentDefault,
+          })}
+          style={{ textAlign: alignConfig.content || 'right' }}
+        >
+          <Content />
+        </div>
+      </div>
+      <div className="modal__footer" hidden={hideButton}>
+        <div
+          className={cx('modal__btn_box', { default: !button, reverse: reverseButton })}
+          style={{
+            textAlign: alignConfig.button || 'right',
+          }}
+        >
+          {button ? (
+            <Button />
+          ) : (
+            <>
+              {type === 'confirm' && (
                 <>
-                  {type === 'confirm' && (
-                    <>
-                      {cancelLink ? (
-                        <Link to={cancelLink}>
-                          <button className="modal__btn cancel" onClick={onCancel}>
-                            Cancel
-                          </button>
-                        </Link>
-                      ) : (
-                        <button className="modal__btn cancel" onClick={onCancel}>
-                          Cancel
-                        </button>
-                      )}
-                    </>
-                  )}
-                  {okLink ? (
-                    <Link to={okLink}>
-                      <button className="modal__btn ok" onClick={onClick}>
-                        {propOkText}
+                  {cancelLink ? (
+                    <Link to={cancelLink}>
+                      <button className="modal__btn cancel" onClick={onCancel}>
+                        Cancel
                       </button>
                     </Link>
                   ) : (
-                    <button className="modal__btn ok" onClick={onClick}>
-                      {propOkText}
+                    <button className="modal__btn cancel" onClick={onCancel}>
+                      Cancel
                     </button>
                   )}
                 </>
               )}
-            </div>
-          </div>
-        </Styled.AppModal>
-      )}
-    </>
+              {okLink ? (
+                <Link to={okLink}>
+                  <button className="modal__btn ok" onClick={onClick}>
+                    <Ok />
+                  </button>
+                </Link>
+              ) : (
+                <button className="modal__btn ok" onClick={onClick}>
+                  <Ok />
+                </button>
+              )}
+            </>
+          )}
+        </div>
+      </div>
+    </Styled.AppModal>
   );
 }
 const Styled = {
