@@ -49,7 +49,7 @@ function PopupContainer() {
             }
           }}
           onCancel={() => {
-            Actions.base_popup({ type: 'dim' });
+            DispatchActions.base_popup({ type: 'dim' });
             if (!!popupConfig.onCancel) {
               popupConfig.onCancel();
             }

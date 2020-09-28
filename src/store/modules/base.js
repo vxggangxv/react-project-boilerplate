@@ -82,6 +82,8 @@ export default handleActions(
           type = 'alert',
           title = '',
           content = '',
+          isTitleDefault = false,
+          isContentDefault = false,
           button = '',
           reverseButton = false,
           hideButton = false,
