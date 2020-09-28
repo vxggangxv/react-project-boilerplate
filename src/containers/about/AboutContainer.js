@@ -115,7 +115,6 @@ function AboutContainer() {
       </div>
       <T lang="en">hello</T>
       <Translation>{t => <p>{t('hello')}</p>}</Translation>
-
       {/* <CustomInfiniteScroll
         maxDataLength={200}
         dataLength={items.length}
