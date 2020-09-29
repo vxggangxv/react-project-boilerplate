@@ -16,7 +16,7 @@ const AboutContainerState = {
   async: '',
 };
 
-function AboutContainer() {
+function AboutContainer({ aboutData }) {
   const [values, setValues] = useImmer(AboutContainerState);
   const [async, setAsync] = useState({
     async: '',
@@ -51,6 +51,10 @@ function AboutContainer() {
         draft.loading = false;
       });
     }, 1500);
+  };
+
+  const handleError = () => {
+    throw new Error('에러발생');
   };
 
   const submitData = {
@@ -96,6 +100,8 @@ function AboutContainer() {
       <button onClick={closeAfter7}>Close after 7 seconds</button>
       <button onClick={openPopup}>openPopup</button>
       <button onClick={languageChange}>언어변경</button>
+      <button onClick={handleError}>에러발생</button>
+      <p>{aboutData.id}</p>
       {/* <button onClick={handleAsync}>handleAsync</button>
       <button onClick={asyncFunc}>AsyncTest</button> */}
       <span>{values.async}</span>

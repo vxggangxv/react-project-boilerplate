@@ -2,30 +2,36 @@ import React from 'react';
 import cx from 'classnames';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
+import ReplyIcon from '@material-ui/icons/Reply';
 
 function ErrorForm(props) {
-  const { code = '404', text = 'Not Found', infoHide = false } = props;
+  const { code = '', text = '', infoText = null, infoHide = false } = props;
 
   return (
     <Styled.ErrorForm data-component-name="ErrorForm">
       <div className="error__container">
         <p className="error__title">
-          <span className="error__code">{code}</span>
+          <span className="error__title_code">{code}</span>
           {!infoHide && <br />}
-          <span className={cx('error__text', { infoHide: infoHide })}>{text}</span>
+          <span className={cx('error__title_text', { infoHide: infoHide })}>{text}</span>
         </p>
         {!infoHide && (
-          <p className="error__content">
-            Oops, something went wrong.
-            <br />
-            <br />
-            The server encountered an internal error or misconfiguration and was unable to complete
-            your request.
-          </p>
+          <>
+            {!infoText && (
+              <p className="error__content">
+                Oops, something went wrong.
+                <br />
+                <br />
+                The server encountered an internal error or misconfiguration and was unable to
+                complete your request.
+              </p>
+            )}
+            {infoText && <p className="error__content">{infoText}</p>}
+          </>
         )}
         <div className="error__link_box">
           <Link to="/" className="error__link">
-            Home
+            <ReplyIcon className="error__link_icon" /> <span className="error_link_home">Home</span>
           </Link>
         </div>
       </div>
@@ -42,38 +48,47 @@ const Styled = {
     justify-content: center;
     align-items: center;
     flex-wrap: wrap;
-    & {
-      .error__container {
-        width: 460px;
-        color: #767675;
+    .error__container {
+      width: 460px;
+      color: #767675;
+    }
+    .error__title,
+    .error__link_box {
+      text-align: left;
+    }
+    .error__title {
+      margin-top: -50px;
+      font-weight: 700;
+      .error__title_code {
+        font-size: 75px;
+        color: #bbb;
       }
-      .error__title,
-      .error__link_box {
-        text-align: left;
+      .error__title_text {
+        font-size: 45px;
+        color: #d2567e;
+        &.infoHide {
+          margin-left: 10px;
+        }
       }
-      .error__title {
-        margin-top: -50px;
+    }
+    .error__content {
+      margin-top: 25px;
+      font-size: 15px;
+    }
+    .error__link_box {
+      margin-top: 12px;
+      margin-left: 3px;
+      .error__link {
+        display: inline-flex;
+        align-items: center;
         font-weight: 700;
-        .error__code {
-          font-size: 75px;
-          color: #bbb;
+        font-size: 20px;
+        border-bottom: 2px solid #767675;
+        .error__link_icon {
+          margin-left: -5px;
         }
-        .error__text {
-          font-size: 45px;
-          color: #d2567e;
-          &.infoHide {
-            margin-left: 10px;
-          }
-        }
-      }
-      .error__content {
-        margin-top: 30px;
-      }
-      .error__link_box {
-        margin-top: 10px;
-        .error__link {
+        .error__link_home {
           margin-left: 3px;
-          text-decoration: underline;
         }
       }
     }
