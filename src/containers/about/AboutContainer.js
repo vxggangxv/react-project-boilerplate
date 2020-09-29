@@ -16,7 +16,7 @@ const AboutContainerState = {
   async: '',
 };
 
-function AboutContainer({ aboutData }) {
+function AboutContainer() {
   const [values, setValues] = useImmer(AboutContainerState);
   const [async, setAsync] = useState({
     async: '',
@@ -101,7 +101,7 @@ function AboutContainer({ aboutData }) {
       <button onClick={openPopup}>openPopup</button>
       <button onClick={languageChange}>언어변경</button>
       <button onClick={handleError}>에러발생</button>
-      <p>{aboutData.id}</p>
+      {/* <p>{aboutData.id}</p> */}
       {/* <button onClick={handleAsync}>handleAsync</button>
       <button onClick={asyncFunc}>AsyncTest</button> */}
       <span>{values.async}</span>
