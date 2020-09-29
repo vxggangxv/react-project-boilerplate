@@ -1,5 +1,8 @@
 import React from 'react';
 import { ErrorForm } from 'components/base/error';
+import axios from 'axios';
+import { endPoint } from 'lib/api';
+import { ENV_MODE_PROD } from 'lib/setting';
 
 class AppErrorBoundary extends React.Component {
   state = { hasError: false, error: null, errorInfo: null };
@@ -18,7 +21,7 @@ class AppErrorBoundary extends React.Component {
     console.log(errorData.error, errorData.errorInfo);
     this.setState(errorData);
     // You can also log error messages to an error reporting service here
-    // apiRequest({error, errorInfo.componentStack})
+    // if (ENV_MODE_PROD) axios.post(endPoint.post_error_meesage, errorData);
   }
 
   render() {
@@ -33,6 +36,7 @@ class AppErrorBoundary extends React.Component {
             infoText={
               'The server encountered an misconfiguration and was unable to complete your request.'
             }
+            linkText={'Refresh'}
           />
           {/* {error && (
             <div style={{ whiteSpace: 'pre-wrap' }}>

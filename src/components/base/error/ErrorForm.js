@@ -5,7 +5,14 @@ import styled from 'styled-components';
 import ReplyIcon from '@material-ui/icons/Reply';
 
 function ErrorForm(props) {
-  const { code = '', text = '', infoText = null, infoHide = false } = props;
+  const {
+    code = '',
+    text = '',
+    infoText = null,
+    infoHide = false,
+    link = '/',
+    linkText = 'Home',
+  } = props;
 
   return (
     <Styled.ErrorForm data-component-name="ErrorForm">
@@ -30,8 +37,13 @@ function ErrorForm(props) {
           </>
         )}
         <div className="error__link_box">
-          <Link to="/" className="error__link">
-            <ReplyIcon className="error__link_icon" /> <span className="error_link_home">Home</span>
+          <Link
+            to={link}
+            className="error__link"
+            onClick={linkText?.toLowerCase() === 'refresh' && (() => window.location.reload(false))}
+          >
+            <ReplyIcon className="error__link_icon" />{' '}
+            <span className="error_link_home">{linkText}</span>
           </Link>
         </div>
       </div>
@@ -74,6 +86,7 @@ const Styled = {
     .error__content {
       margin-top: 25px;
       font-size: 15px;
+      line-height: 1.3;
     }
     .error__link_box {
       margin-top: 12px;
