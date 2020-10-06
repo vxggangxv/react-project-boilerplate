@@ -14,6 +14,10 @@ function ErrorForm(props) {
     linkText = 'Home',
   } = props;
 
+  const handleRefresh = linkText => {
+    return linkText?.toLowerCase() === 'refresh' && (() => window.location.reload(false));
+  };
+
   return (
     <Styled.ErrorForm data-component-name="ErrorForm">
       <div className="error__container">
@@ -37,11 +41,7 @@ function ErrorForm(props) {
           </>
         )}
         <div className="error__link_box">
-          <Link
-            to={link}
-            className="error__link"
-            onClick={linkText?.toLowerCase() === 'refresh' && (() => window.location.reload(false))}
-          >
+          <Link to={link} className="error__link" onClick={handleRefresh}>
             <ReplyIcon className="error__link_icon" />{' '}
             <span className="error_link_home">{linkText}</span>
           </Link>
