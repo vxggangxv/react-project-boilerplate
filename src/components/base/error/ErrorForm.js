@@ -15,7 +15,7 @@ function ErrorForm(props) {
   } = props;
 
   const handleRefresh = linkText => {
-    return linkText?.toLowerCase() === 'refresh' && (() => window.location.reload(false));
+    return linkText?.toLowerCase() === 'refresh' ? () => window.location.reload(false) : null;
   };
 
   return (
