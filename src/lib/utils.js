@@ -40,6 +40,13 @@ export const useInput = (function () {
 })();
 
 /**
+ *
+ * @param {*} f
+ */
+// eslint-disable-next-line react-hooks/exhaustive-deps
+export const useDidMount = f => useEffect(() => f && f(), []);
+
+/**
  * DidUpdateMount를 구현한 Custom hooks
  * @param {*} fn
  * @param {*} inputs
@@ -79,13 +86,6 @@ export function useForceUpdate() {
   }, []);
   return update;
 }
-
-/**
- *
- * @param {*} f
- */
-// eslint-disable-next-line react-hooks/exhaustive-deps
-export const useDidMount = f => useEffect(() => f && f(), []);
 
 /**
  *

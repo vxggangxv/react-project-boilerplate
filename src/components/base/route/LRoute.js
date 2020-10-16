@@ -5,7 +5,7 @@ import * as mapper from 'lib/mapper';
 import { useShallowSelector } from 'lib/utils';
 
 // <LRoute path="/auth" component={Auth} token/>
-// token이 있을때 보이면 안되는 페이지 or Login이 되있을경우 다시 오면 홈으로
+// Login이 되있을경우 다시 오면 홈으로 or token이 있을때 보이면 안되는 페이지
 function LRoute({ component: Component, ...rest }) {
   const { landing, isAuthenticated } = useShallowSelector(state => ({
     landing: state.base.landing,

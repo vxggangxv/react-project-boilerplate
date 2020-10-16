@@ -1,6 +1,7 @@
 import React from 'react';
 import { Switch, Route, Redirect, Link } from 'react-router-dom';
 import { TestList, TestDetail, Counter, TodoApp, DelayedToggle, UserProfile } from 'pages';
+import DropzoneWrapper from './DropzoneWrapper';
 import { NotFound } from 'components/base/error';
 import { AppTemplate } from 'components/base/template';
 import styled from 'styled-components';
@@ -29,6 +30,9 @@ function Test({ match }) {
           <li className="test__menu_item">
             <Link to={`${match.url}/userProfile`}>UserProfile</Link>
           </li>
+          <li className="test__menu_item">
+            <Link to={`${match.url}/dropzone`}>Dropzone</Link>
+          </li>
         </ul>
         <Switch>
           <Route exact path={`${match.url}`} component={TestList} />
@@ -37,6 +41,7 @@ function Test({ match }) {
           <Route exact path={`${match.url}/todo`} component={TodoApp} />
           <Route exact path={`${match.url}/delayedToggle`} component={DelayedToggle} />
           <Route exact path={`${match.url}/userProfile`} component={UserProfile} />
+          <Route exact path={`${match.url}/dropzone`} component={DropzoneWrapper} />
           {/* <Route path={`${match.url}/`} component={() => <Redirect to="/test" />} /> */}
           {/* <Route path={`${match.url}/`} component={() => <div>해당값이 없습니다</div>} /> */}
           <Route component={() => <Redirect to="/error/404" />} />

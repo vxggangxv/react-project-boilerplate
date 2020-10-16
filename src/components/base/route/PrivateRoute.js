@@ -5,11 +5,6 @@ import { isAuthenticatedSelector } from 'store/modules/auth.selectors';
 import { useShallowSelector } from 'lib/utils';
 import PropTypes from 'prop-types';
 
-// NOTE: propTypes 는 필요시 적용
-PrivateRoute.propTypes = {
-  component: PropTypes.object,
-};
-
 // 사용법: <PrivateRoute path="/project" component={Project} to="/auth/signup"/>
 function PrivateRoute({ component: Component, ...rest }) {
   const { isAuthenticated } = useShallowSelector(state => ({
@@ -41,5 +36,10 @@ function PrivateRoute({ component: Component, ...rest }) {
     />
   );
 }
+
+// NOTE: propTypes 는 필요시 적용
+PrivateRoute.propTypes = {
+  component: PropTypes.object,
+};
 
 export default PrivateRoute;

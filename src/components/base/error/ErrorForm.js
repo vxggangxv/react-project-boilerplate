@@ -41,7 +41,7 @@ function ErrorForm(props) {
           </>
         )}
         <div className="error__link_box">
-          <Link to={link} className="error__link" onClick={handleRefresh}>
+          <Link to={link} className="error__link" onClick={handleRefresh(linkText)}>
             <ReplyIcon className="error__link_icon" />{' '}
             <span className="error_link_home">{linkText}</span>
           </Link>

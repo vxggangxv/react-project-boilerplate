@@ -9,6 +9,7 @@ import icon_dash_board from 'static/images/icons/icon_dash_board.svg';
 import icon_mypage_person from 'static/images/icons/icon_mypage_person.svg';
 import icon_price_line from 'static/images/icons/icon_price_line.svg';
 import icon_works_box from 'static/images/icons/icon_works_box.svg';
+import icon_picture from 'static/images/icons/icon_picture.svg';
 
 export {
   logo,
@@ -18,4 +19,5 @@ export {
   icon_dash_board,
   icon_mypage_person,
   icon_price_line,
+  icon_picture,
 };

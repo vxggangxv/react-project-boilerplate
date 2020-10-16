@@ -1,14 +1,10 @@
 import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
 
-EscapeConvert.propTypes = {
-  content: PropTypes.any.isRequired,
-};
-
 /**
- * @param {*} prev
- * @param {*} next
- * @param {*} content
+ * @param {string} prev
+ * @param {node} next
+ * @param {string} content
  */
 function EscapeConvert({ prev = '\n', next = <br />, content }) {
   const splitContent = content.split(prev);
@@ -28,5 +24,9 @@ function EscapeConvert({ prev = '\n', next = <br />, content }) {
     </>
   );
 }
+
+EscapeConvert.propTypes = {
+  content: PropTypes.any.isRequired,
+};
 
 export default EscapeConvert;
