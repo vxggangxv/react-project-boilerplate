@@ -3,7 +3,11 @@ import { Dropzone } from 'components/common/dropzone';
 import styled from 'styled-components';
 
 function DropzoneChildren() {
-  return <Styled.DropzoneChildren className="content__container">content</Styled.DropzoneChildren>;
+  return (
+    <Styled.DropzoneChildren className="content__container">
+      Test content UI
+    </Styled.DropzoneChildren>
+  );
 }
 
 function DropzoneWrapper({ className, children, width, height }) {
@@ -29,8 +33,8 @@ function DropzoneWrapper({ className, children, width, height }) {
       className={className}
     >
       {children}
-      {visible && <Dropzone onSetVisible={handleSetVisible} />}
-      {/* {true && <Dropzone onSetVisible={handleSetVisible} />} */}
+      {/* {visible && <Dropzone onSetVisible={handleSetVisible} />} */}
+      {true && <Dropzone onSetVisible={handleSetVisible} />}
     </Styled.DropzoneWrapper>
   );
 }
@@ -45,6 +49,7 @@ function DropzoneContainer() {
 
 const Styled = {
   DropzoneWrapper: styled.div`
+    margin-top: 100px;
     position: relative;
     width: ${({ width }) => (width ? `${width}px` : `100%`)};
     height: ${({ height }) => (height ? `${height}px` : `100%`)};
@@ -52,7 +57,8 @@ const Styled = {
   DropzoneChildren: styled.div`
     width: 100%;
     height: 100%;
-    background-color: #bbb;
+    border: 1px solid #bbb;
+    padding: 50px;
   `,
 };
 

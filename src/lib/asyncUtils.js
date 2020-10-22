@@ -181,9 +181,12 @@ export function SpreadSagas(config) {
         if ([pending, success, failure].every(item => item === undefined)) return;
 
         if (type === 'init') {
-          _.forEach(initialState, (value, key, obj) => {
-            targetState[key] = value;
-          });
+          targetState.pending = false;
+          targetState.success = false;
+          targetState.failure = false;
+          // _.forEach(initialState, (value, key, obj) => {
+          //   targetState[key] = value;
+          // });
         } else {
           targetState.pending = false;
           targetState.success = false;
