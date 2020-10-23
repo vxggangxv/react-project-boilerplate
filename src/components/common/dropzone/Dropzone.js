@@ -5,9 +5,10 @@ import styled from 'styled-components';
 import { useImmer } from 'use-immer';
 import { icon_picture } from 'components/base/images';
 import { AirlineSeatIndividualSuiteSharp } from '@material-ui/icons';
+import axios from 'axios';
 
 /**
- *
+ * e.g.
  * <Dropzone
  *  width={number} : styles가 없을 경우 width 적용, 기본 100%
  *  height={number} : styles가 없을 경우 height 적용, 기본 100%
@@ -15,10 +16,8 @@ import { AirlineSeatIndividualSuiteSharp } from '@material-ui/icons';
  *  onSetVisible={function} : dropzoneView visible설정을 위해 DropzoneWrapper에서 받은 function
  * />
  */
-function Dropzone({ width, height, styles, onSetVisible }) {
-  const [image, setImage] = useState(null);
-  // const [images, setImages] = useImmer([]);
-  const [images, setImages] = useState([]);
+function Dropzone({ width, height, styles, onSetVisible, apiRequest }) {
+  const [dropFiles, setDropFiles] = useState([]);
   const [isRequest, setIsRequest] = useState(false);
   // DEBUG: async await 실제 api테스트 필요
   const onDrop = useCallback(async acceptedFiles => {
@@ -29,7 +28,6 @@ function Dropzone({ width, height, styles, onSetVisible }) {
       reader.onabort = () => console.log('file reading was aborted');
       reader.onerror = () => console.log('file reading has failed');
       reader.onload = e => {
-        // setImage(file.name);
         // console.log(e.target.result, 'e.target.result');
         // console.log(file, 'file');
         // Do whatever you want with the file contents
@@ -40,7 +38,7 @@ function Dropzone({ width, height, styles, onSetVisible }) {
       // reader.readAsDataURL(file);
       // reader.readAsArrayBuffer(file);
     });
-    setImages(images.concat(acceptedFiles));
+    setDropFiles(dropFiles.concat(acceptedFiles));
     setIsRequest(true);
   }, []);
 
@@ -58,7 +56,7 @@ function Dropzone({ width, height, styles, onSetVisible }) {
   const inputProps = {
     ...getInputProps(),
     // multiple: false,
-    accept: 'image/gif, image/jpg, image/jpeg',
+    // accept: 'image/gif, image/jpg, image/jpeg',
   };
 
   // useEffect(() => {
@@ -68,14 +66,16 @@ function Dropzone({ width, height, styles, onSetVisible }) {
 
   // valuesImage에 담은 후 api호출
   // await call Api 은 DropzoneWrapper에서 연결
-  useEffect(() => {
-    console.log(images, 'images');
-  }, [images]);
+  // useEffect(() => {
+  //   console.log(dropFiles, 'dropFiles');
+  // }, [dropFiles]);
 
   // 파일 Drop 완료후 set Dropzone visible false
   useEffect(() => {
     console.log(isRequest, 'isRequest');
     if (isRequest) {
+      apiRequest();
+      // apiRequest({ dropFiles });
       onSetVisible(false);
     }
   }, [isRequest]);

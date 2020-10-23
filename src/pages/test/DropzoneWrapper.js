@@ -10,7 +10,28 @@ function DropzoneChildren() {
   );
 }
 
-function DropzoneWrapper({ className, children, width, height }) {
+const onDropFilesUpload = () => {
+  return new Promise((resolve, reject) => {
+    setTimeout(() => {
+      console.log('apiRequest');
+      resolve(5);
+    }, 5000);
+  });
+};
+
+// 차후 dropzoneComponent 종류 추가될 경우 키값 추가
+// 드래그할 경우 나타났다 사라지게 하는 wrapper
+/**
+ * e.g.
+ * <DropzoneWrapper
+ *  apiRequest={function}> : api요청 function
+ *  className={string} : 상위컴포넌트에서 스타일을 설정한 className
+ *  width={number} : styles가 없을 경우 width 적용, 기본 100%
+ *  height={number} : styles가 없을 경우 height 적용, 기본 100%
+ *  {children}
+ * </>
+ */
+function DropzoneWrapper({ className, children, width, height, apiRequest }) {
   const [visible, setVisible] = useState(false);
 
   const handleSetVisible = toggle => {
@@ -28,13 +49,13 @@ function DropzoneWrapper({ className, children, width, height }) {
     <Styled.DropzoneWrapper
       data-component-name="DropzoneWrapper"
       onDragEnter={() => handleSetVisible(true)}
+      className={className}
       width={!className && width}
       height={!className && height}
-      className={className}
     >
       {children}
-      {/* {visible && <Dropzone onSetVisible={handleSetVisible} />} */}
-      {true && <Dropzone onSetVisible={handleSetVisible} />}
+      {visible && <Dropzone onSetVisible={handleSetVisible} apiRequest={onDropFilesUpload} />}
+      {/* {true && <Dropzone onSetVisible={handleSetVisible} />} */}
     </Styled.DropzoneWrapper>
   );
 }

@@ -57,6 +57,7 @@ export default handleActions(
         storage.remove(keys.token);
         storage.remove(keys.user);
         storage.remove(`persist:${keys.persist}`);
+        sessionStorage.removeItem(`persist:${keys.persist}`);
       },
     }),
   },
