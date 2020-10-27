@@ -1,5 +1,5 @@
 import { axs, setHeader } from './config/axiosConfig';
-import * as endPoints from 'api/endPoints';
+import * as endPoints from 'api/config/endPoints';
 
 // NOTE: posts
 export function fetchPosts(id) {
