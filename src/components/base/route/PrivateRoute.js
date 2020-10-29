@@ -39,7 +39,7 @@ function PrivateRoute({ component: Component, ...rest }) {
 
 // NOTE: propTypes 는 필요시 적용
 PrivateRoute.propTypes = {
-  component: PropTypes.object,
+  component: PropTypes.func,
 };
 
 export default PrivateRoute;

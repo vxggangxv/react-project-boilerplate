@@ -24,7 +24,7 @@ const MainHomeContainer = () => {
     <h3>AnyTime, AnyWhere</h3>
   </section>
   <section>Slide2</section> */}
-      <h1>MainHome</h1>
+      <h1>MainHome who are you?</h1>
     </>
   );
 };
