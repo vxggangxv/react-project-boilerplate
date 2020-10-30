@@ -26,6 +26,9 @@ function AboutContainer() {
 
   useEffect(() => {
     // DispatchActions.language_change('ko');
+    return () => {
+      // fetchMoreData();
+    };
   }, []);
 
   const closeAfter7 = () => toast('Will close after 7s', { autoClose: false });
@@ -45,12 +48,14 @@ function AboutContainer() {
     setValues(draft => {
       draft.loading = true;
     });
-    setTimeout(() => {
-      setValues(draft => {
-        draft.items = items.concat(Array.from({ length: 20 }));
-        draft.loading = false;
-      });
-    }, 1500);
+    return new Promise((resolve, reject) => {
+      setTimeout(() => {
+        setValues(draft => {
+          draft.items = items.concat(Array.from({ length: 20 }));
+          draft.loading = false;
+        });
+      }, 1500);
+    });
   };
 
   const handleError = () => {

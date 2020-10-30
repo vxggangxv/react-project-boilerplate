@@ -6,6 +6,12 @@ import { AppHeader } from 'components/base/header';
 import { AppFooter } from 'components/base/footer';
 import PropTypes from 'prop-types';
 
+AppTemplate.propTypes = {
+  title: PropTypes.string,
+  headerHide: PropTypes.bool,
+  footerHide: PropTypes.bool,
+};
+
 function AppTemplate(props) {
   const {
     title = '',
@@ -54,12 +60,6 @@ function AppTemplate(props) {
     </>
   );
 }
-
-AppTemplate.propTypes = {
-  title: PropTypes.string,
-  headerHide: PropTypes.bool,
-  footerHide: PropTypes.bool,
-};
 
 const Styled = {
   AppTemplate: styled.div`

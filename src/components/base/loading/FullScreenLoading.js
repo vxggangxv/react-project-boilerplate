@@ -3,6 +3,11 @@ import styled from 'styled-components';
 import { CircularLoading } from 'components/base/loading';
 import PropTypes from 'prop-types';
 
+FullScreenLoading.propTypes = {
+  visible: PropTypes.bool,
+  size: PropTypes.number,
+};
+
 function FullScreenLoading({ visible, size }) {
   if (visible === false) return null;
   return (
@@ -11,11 +16,6 @@ function FullScreenLoading({ visible, size }) {
     </Styled.FullScreenLoading>
   );
 }
-
-FullScreenLoading.propTypes = {
-  visible: PropTypes.bool,
-  size: PropTypes.number,
-};
 
 const Styled = {
   FullScreenLoading: styled.div`
