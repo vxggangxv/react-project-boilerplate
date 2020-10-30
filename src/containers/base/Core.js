@@ -32,7 +32,7 @@ function Core() {
     // const storedToken = storage.get(keys.token);
 
     if (!storedUser) {
-      await DispatchActions.sign_out();
+      // await DispatchActions.sign_out();
     }
 
     DispatchActions.exit_landing();
@@ -41,6 +41,10 @@ function Core() {
   useEffect(() => {
     initialize();
   }, []);
+
+  useEffect(() => {
+    console.log(apiCalling, 'apiCalling');
+  }, [apiCalling]);
 
   const isVisibleLoading = [landing].some(item => item === true);
 

@@ -1,6 +1,13 @@
-import { handleActions } from 'redux-actions';
-import { SpreadSagas } from 'lib/asyncUtils';
-import * as actions from 'store/actions';
+import { takeEvery, put, all } from 'redux-saga/effects';
+import { createAction, createReducer, createSlice } from '@reduxjs/toolkit';
+import { fetchReducerActions } from 'store/utils';
+
+// action
+const exit_landing = createAction('exit_landing');
+const response_status = createAction('response_status');
+const response_error = createAction('response_error');
+const language_change = createAction('language_change');
+const base_popup = createAction('base_popup');
 
 const initialState = {
   // NOTE: 초기 랜딩중일 경우 true, false일 경우 화면 랜딩 완료
@@ -42,91 +49,84 @@ const initialState = {
   },
 };
 
-const SpreadReducer = SpreadSagas({ state: initialState });
-
-export default handleActions(
-  {
-    ...new SpreadReducer(null, actions.SET_API_CALLING_STATUS, {
-      callback: (draft, { payload: diff }) => {
-        // console.log(diff, 'diff apiCalling');
-        draft.apiCalling = diff;
-      },
-    }),
-    ...new SpreadReducer(null, actions.EXIT_LANDING, {
-      callback: (draft, { payload: diff }) => {
-        draft.landing = false;
-        // console.log(draft.landing, 'exit_landing');
-      },
-    }),
-    ...new SpreadReducer(null, actions.RESPONSE_STATUS, {
-      callback: (draft, { payload: diff }) => {
-        // DEBUG: 필요
-        draft.responseStatus = diff;
-      },
-    }),
-    ...new SpreadReducer(null, actions.RESPONSE_ERROR, {
-      callback: (draft, { payload: diff }) => {
-        // DEBUG: 필요
-        draft.responseError.message = diff.message;
-        draft.responseError.data = diff;
-      },
-    }),
-    ...new SpreadReducer(null, actions.LANGUAGE_CHANGE, {
-      callback: (draft, { payload: diff }) => {
-        draft.language = diff;
-      },
-    }),
-    ...new SpreadReducer(null, actions.BASE_POPUP, {
-      callback: (draft, { payload: diff }, state) => {
-        const {
-          type = 'alert',
-          title = '',
-          content = '',
-          isTitleDefault = false,
-          isContentDefault = false,
-          button = '',
-          reverseButton = false,
-          hideButton = false,
-          onClick = () => {},
-          onCancel = () => {},
-          onExited = () => {},
-          align = [],
-          okText = '',
-          okLink = '',
-          cancelLink = '',
-          isOpen = false,
-          key = '',
-          dim = true,
-          width = 534,
-          paddingNone = false,
-        } = diff;
-
-        if (type === 'dim') {
-          draft.popup.isOpen = false;
-        } else {
-          draft.popup.title = title;
-          draft.popup.content = content;
-          draft.popup.isTitleDefault = isTitleDefault;
-          draft.popup.isContentDefault = isContentDefault;
-          draft.popup.button = button;
-          draft.popup.reverseButton = reverseButton;
-          draft.popup.hideButton = hideButton;
-          draft.popup.onClick = onClick;
-          draft.popup.onCancel = onCancel;
-          draft.popup.onExited = onExited;
-          draft.popup.okText = okText;
-          draft.popup.okLink = okLink;
-          draft.popup.cancelLink = cancelLink;
-          draft.popup.align = align;
-          draft.popup.isOpen = isOpen;
-          draft.popup.type = type;
-          draft.popup.key = key;
-          draft.popup.dim = dim;
-          draft.popup.width = width;
-          draft.popup.paddingNone = paddingNone;
-        }
-      },
-    }),
-  },
+const slice = createSlice({
+  name: 'base',
   initialState,
-);
+  reducers: {
+    response_status: (state, { action: payload }) => {
+      // DEBUG: 필요
+      state.responseStatus = payload;
+    },
+    response_error: (state, { action: payload }) => {
+      // DEBUG: 필요
+      state.responseError.message = payload.message;
+      state.responseError.data = payload;
+    },
+    language_change: (state, { action: payload }) => {
+      state.language = payload;
+    },
+    base_popup: (state, { action: payload }) => {
+      const {
+        type = 'alert',
+        title = '',
+        content = '',
+        isTitleDefault = false,
+        isContentDefault = false,
+        button = '',
+        reverseButton = false,
+        hideButton = false,
+        onClick = () => {},
+        onCancel = () => {},
+        onExited = () => {},
+        align = [],
+        okText = '',
+        okLink = '',
+        cancelLink = '',
+        isOpen = false,
+        key = '',
+        dim = true,
+        width = 534,
+        paddingNone = false,
+      } = payload;
+
+      if (type === 'dim') {
+        state.popup.isOpen = false;
+      } else {
+        state.popup.title = title;
+        state.popup.content = content;
+        state.popup.isTitleDefault = isTitleDefault;
+        state.popup.isContentDefault = isContentDefault;
+        state.popup.button = button;
+        state.popup.reverseButton = reverseButton;
+        state.popup.hideButton = hideButton;
+        state.popup.onClick = onClick;
+        state.popup.onCancel = onCancel;
+        state.popup.onExited = onExited;
+        state.popup.okText = okText;
+        state.popup.okLink = okLink;
+        state.popup.cancelLink = cancelLink;
+        state.popup.align = align;
+        state.popup.isOpen = isOpen;
+        state.popup.type = type;
+        state.popup.key = key;
+        state.popup.dim = dim;
+        state.popup.width = width;
+        state.popup.paddingNone = paddingNone;
+      }
+    },
+  },
+});
+
+export const name = slice.name;
+export const actions = slice.actions;
+
+// saga
+function* handleSetApiCalling() {
+  yield put();
+}
+
+export function* baseSaga() {
+  yield all([]);
+}
+
+export default slice.reducer;

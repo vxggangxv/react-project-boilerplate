@@ -13,12 +13,12 @@ export default function* appSaga() {
   yield all([
     takeEvery(action => {
       if (isString(action.type)) {
-        return action.type.endsWith('_PENDING');
+        return action.type.endsWith('_request');
       }
     }, handleSetApiCalling),
     takeEvery(action => {
       if (isString(action.type)) {
-        return action.type.endsWith('_SUCCESS') || action.type.endsWith('_FAILURE');
+        return action.type.endsWith('_success') || action.type.endsWith('_failure');
       }
     }, handleClearApiCalling),
     // yield takeEvery((action) => {
