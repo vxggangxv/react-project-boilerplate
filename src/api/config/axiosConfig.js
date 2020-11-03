@@ -56,11 +56,11 @@ export function axs(axiosConf) {
     .catch(error => {
       const { response = {}, request = '', message = '' } = error;
       if (response) {
-        const { data = {}, status = 0, headers = {} } = response;
+        const { data = null, status = null, headers = null } = response;
         // 요청이 이루어졌으며 서버가 2xx의 범위를 벗어나는 상태 코드로 응답했습니다.
-        console.log('Error response', response.data);
-        console.log('Error response', response.status);
-        console.log('Error response', response.headers);
+        console.log('Error response', data);
+        console.log('Error response', status);
+        console.log('Error response', headers);
         // NOTE: 에러 상태에 대한 처리
         if (data) DispatchActions.response_error(data);
         if (status) DispatchActions.response_status(status);
@@ -91,9 +91,7 @@ export function setHeader(axiosConf) {
   if (ENV_MODE_DEV) {
     headerObj = {
       headers: {
-        'x-access-token':
-          'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1dWlkIjoiOTA3MjhmOWUtZDI3Mi00YmVkLTkwYTQtNDliMzUyNTYwYzQzIiwiaWF0IjoxNTgxMDUzMTA2LCJleHAiOjE1ODEwNTMxMDd9.rYK8C5f7SRFrn_1RRX9cxTHsNH9csKmXqmwhbwGsrkY',
-        loginUserCode: '20Jan31-0001',
+        'x-access-token': '',
       },
     };
   }
