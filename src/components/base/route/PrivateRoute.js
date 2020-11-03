@@ -1,7 +1,7 @@
 import React from 'react';
 import { Route, Redirect, useLocation } from 'react-router-dom';
 import * as mapper from 'lib/mapper';
-import { isAuthenticatedSelector } from 'store/modules/auth.selectors';
+import { isAuthenticatedSelector } from 'store/modules/auth';
 import { useShallowSelector } from 'lib/utils';
 import PropTypes from 'prop-types';
 

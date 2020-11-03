@@ -9,13 +9,13 @@ import storage from 'redux-persist/lib/storage/session';
 import { keys } from 'api/config/storage';
 import rootReducer, { rootSaga } from 'store/modules';
 // import rootSaga from 'store/sagas';
-import { ENV_MODE_DEV } from 'lib/setting';
+import { ENV_MODE_DEV, ENV_MODE_PROD } from 'lib/setting';
 
 const persistConfig = {
   key: keys.persist,
   storage,
   // whitelist: [],
-  blacklist: ['app', 'auth', 'base', 'user'],
+  blacklist: ['app', 'base', 'auth', 'user'],
 };
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);
@@ -23,8 +23,11 @@ const persistedReducer = persistReducer(persistConfig, rootReducer);
 const sagaMiddleware = createSagaMiddleware();
 let middlewares = [sagaMiddleware];
 
-if (ENV_MODE_DEV) {
+if (ENV_MODE_PROD) {
   middlewares = [...middlewares, customLogger];
+}
+if (ENV_MODE_DEV) {
+  middlewares = [...middlewares, logger];
 }
 
 const composeEnhancers = composeWithDevTools({ trace: true, traceLimit: 25 });

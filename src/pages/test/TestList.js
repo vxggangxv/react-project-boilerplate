@@ -3,7 +3,7 @@ import { useShallowSelector } from 'lib/utils';
 import { useImmer } from 'use-immer';
 import { useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import * as actions from 'store/actions';
+import { DispatchActions } from 'store/actionCreators';
 
 const TestListState = {
   data: null,
@@ -11,23 +11,23 @@ const TestListState = {
 
 function TestList({ match }) {
   const [values, setValues] = useImmer(TestListState);
-  const { testListData } = useShallowSelector(state => ({
-    testListData: state.test.obj.list.data,
+  const { testsData } = useShallowSelector(state => ({
+    testsData: state.test.tests.data,
   }));
 
   // console.log(match, 'match');
-  // console.log(testListData, 'testListData');
+  // console.log(testsData, 'testsData');
   useEffect(() => {
-    actions.FETCH_TESTS_SAGA();
+    DispatchActions.fetch_tests_request();
   }, []);
 
-  const data = testListData?.slice(0, 10);
+  const data = testsData?.slice(0, 10);
 
   const handleClick = config => {
     const { type = '' } = config;
 
     if (type === 'data') {
-      actions.FETCH_TESTS_SAGA();
+      DispatchActions.fetch_tests_request();
 
       return;
     }

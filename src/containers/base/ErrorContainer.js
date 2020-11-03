@@ -1,11 +1,9 @@
 import React, { useEffect } from 'react';
-import styled from 'styled-components';
-import { Link, useHistory, useLocation } from 'react-router-dom';
-import { useDidUpdateEffect, useShallowSelector } from 'lib/utils';
-import { ErrorForm } from 'components/base/error';
+import { useHistory, useLocation } from 'react-router-dom';
+import { useShallowSelector } from 'lib/utils';
 import { DispatchActions } from 'store/actionCreators';
-import { ToastContainer, toast } from 'react-toastify';
-import { CustomToastContent } from 'components/base/notifications';
+// import { toast } from 'react-toastify';
+// import { CustomToastContent } from 'components/base/notifications';
 import * as mapper from 'lib/mapper';
 
 function ErrorContainer(props) {
@@ -18,27 +16,34 @@ function ErrorContainer(props) {
   // NOTE: Error Status 에 따른 toast 알림
   const responseStatusConfig = {
     status400() {
-      toast.error(() => <CustomToastContent content="Bad Request" />);
+      // toast.error(() => <CustomToastContent content="Bad Request" />);
+      DispatchActions.show_toast('Bad Request');
     },
     status401() {
-      toast.error(() => <CustomToastContent content="Unauthorized" />);
+      // toast.error(() => <CustomToastContent content="Unauthorized" />);
+      DispatchActions.show_toast('Unauthorized');
       DispatchActions.sign_out();
       history.push(`${mapper.pageUrl.signIn}?returnPath=${encodeURIComponent(location.pathname)}`);
     },
     status403() {
-      toast.error(() => <CustomToastContent content="Forbidden" />);
+      // toast.error(() => <CustomToastContent content="Forbidden" />);
+      DispatchActions.show_toast('Forbidden');
     },
     status404() {
-      toast.error(() => <CustomToastContent content="Not Found" />);
+      // toast.error(() => <CustomToastContent content="Not Found" />);
+      DispatchActions.show_toast('Not Found');
     },
     status405() {
-      toast.error(() => <CustomToastContent content="Method Not Allowd" />);
+      // toast.error(() => <CustomToastContent content="Method Not Allowd" />);
+      DispatchActions.show_toast('Method Not Allowd');
     },
     status409() {
-      toast.error(() => <CustomToastContent content="Conflict" />);
+      // toast.error(() => <CustomToastContent content="Conflict" />);
+      DispatchActions.show_toast('Conflict');
     },
     status429() {
-      toast.error(() => <CustomToastContent content="Too many Requests" />);
+      // toast.error(() => <CustomToastContent content="Too many Requests" />);
+      DispatchActions.show_toast('Too many Requests');
     },
     status500() {
       DispatchActions.response_status(false);

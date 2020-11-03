@@ -1,6 +1,6 @@
-import { takeEvery, call, put, all, delay } from 'redux-saga/effects';
-import { createAction, createReducer } from '@reduxjs/toolkit';
-import { SET_API_CALLING_STATUS, CLEAR_API_CALLING_STATUS } from './modules/app';
+import { call, put } from 'redux-saga/effects';
+import { createAction } from '@reduxjs/toolkit';
+import { actions as appActions } from './modules/app';
 
 export const fetchInitialState = {
   pending: null,
@@ -38,62 +38,70 @@ export function createFetchAction(type) {
 
 export function fetchReducerActions(type, key, config = {}) {
   const { init = () => {}, pending = () => {}, success = () => {}, failure = () => {} } = config;
+  const targetState = (str, obj, type, action) => {
+    const splitArray = str.split('.');
+    const targetState = str.split('.').reduce((a, c) => {
+      if (splitArray[splitArray.length - 1] === c) {
+        a[c] = {
+          ...a[c],
+          ...fetchCurrentState(a[c], type),
+        };
+        if (type === 'success') {
+          a[c] = {
+            ...a[c],
+            ...fetchCurrentState(a[c], type),
+            data: action.payload,
+          };
+        }
+      }
+      return a[c];
+    }, obj);
+    return targetState;
+  };
+  // console.log(key, 'key');
+  // state[key] = {
+  //   ...state[key],
+  //   ...fetchCurrentState(state[key], 'init'),
+  // };
   return {
     [type.init]: (state, action) => {
-      state[key] = {
-        ...state[key],
-        ...fetchCurrentState(state[key], 'init'),
-      };
+      targetState(key, state, 'init');
       init(state, action);
-      // console.log(action.type + '---init');
     },
     [type.request]: (state, action) => {
-      state[key] = {
-        ...state[key],
-        ...fetchCurrentState(state[key], 'pending'),
-      };
+      targetState(key, state, 'pending');
       pending(state, action);
-      // console.log(action.type + '---pending');
     },
     [type.success]: (state, action) => {
-      state[key] = {
-        ...state[key],
-        ...fetchCurrentState(state[key], 'success'),
-      };
-      state[key].data = action.payload;
+      targetState(key, state, 'success', action);
       success(state, action);
-      // console.log(action.type + '---success');
     },
     [type.failure]: (state, action) => {
-      state[key] = {
-        ...state[key],
-        ...fetchCurrentState(state[key], 'failure'),
-      };
+      targetState(key, state, 'failure');
       failure(state, action);
-      // console.log(action.type + '---failure');
     },
   };
 }
 
 export function createSaga(actions, key, req, config = {}) {
-  const { success = () => {}, failure = () => {} } = config;
+  const { apiLoading = true, success = () => {}, failure = () => {} } = config;
   // console.log(actions, 'actions');
   return function* ({ payload }) {
     // const payload = action?.payload;
-    // console.log(payload, 'payload')
+    // console.log(payload, 'payload');
+    if (apiLoading) yield put(appActions.set_api_calling_status());
     try {
-      const {
-        data: { results: result },
-      } = yield call(req, payload);
-      // console.log(result, 'result');
-      yield put(actions[`${key}_success`](result));
+      const { data } = yield call(req, payload);
+      // console.log(data, 'data');
+      yield put(actions[`${key}_success`](data));
       success();
     } catch (e) {
       yield put(actions[`${key}_failure`]('데이터를 불러오기에 실패했습니다.'));
       failure();
     } finally {
-      // DEBUG: 완료후 자동 init
+      // 완료후 자동 init
       yield put(actions[`${key}_init`]());
+      if (apiLoading) yield put(appActions.clear_api_calling_status());
     }
   };
 }

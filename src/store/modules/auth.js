@@ -1,6 +1,6 @@
-import { takeEvery, put, all, delay } from 'redux-saga/effects';
-import { createAction, createReducer, createSlice } from '@reduxjs/toolkit';
-import { fetchInitialState, fetchReducerActions } from 'store/utils';
+import { all } from 'redux-saga/effects';
+import { createAction, createSlice, createSelector } from '@reduxjs/toolkit';
+import { fetchInitialState } from 'store/utils';
 import { setAuthInHeader } from 'api/config/axiosUtils';
 import storage, { keys } from 'api/config/storage';
 
@@ -61,25 +61,20 @@ const slice = createSlice({
 export const name = slice.name;
 export const actions = slice.actions;
 
-// const handleSignUp = createPromiseSaga({
-//   type: actions.SIGNUP_SAGA,
-//   tag: 'handleSignUp',
-// });
+// createSelector
+export const accessTokenSelector = state => state.auth.accessToken;
+export const isAuthenticatedSelector = createSelector(accessTokenSelector, item => !!item);
 
-// const handleSignIn = createPromiseSaga({
-//   type: actions.SIGNIN_SAGA,
-//   tag: 'handleSignIn',
-// });
+// function* handleSignUp (action) {}
 
-// const handleSignOut = createPromiseSaga({
-//   type: actions.SIGNOUT_SAGA,
-//   tag: 'handleSignOut',
-// });
+// function* handleSignIn (action) {}
+
+// function* handleSignOut (action) {}
 
 export function* authSaga() {
   yield all([
     // takeLatest(
-    //   actions[fetch_movies.request],
+    //   actions.fetch_movie_request,
     //   createSaga(actions, 'fetch_movies', api.fetchMoviesNowPlaying),
     // ),
     // takeEvery(actions.SIGNUP_SAGA.index, handleSignUp)

@@ -3,12 +3,12 @@ import { useImmer } from 'use-immer';
 import { DispatchActions } from 'store/actionCreators';
 import { FullScreenLoading } from 'components/base/loading';
 import ErrorContainer from 'containers/base/ErrorContainer';
+import NotificationContainer from 'containers/base/NotificationContainer';
 import { useShallowSelector, useDidUpdateEffect } from 'lib/utils';
-import { isAuthenticatedSelector } from 'store/modules/auth.selectors';
+import { isAuthenticatedSelector } from 'store/modules/auth';
 import storage, { keys } from 'api/config/storage';
-import { ToastContainer, toast } from 'react-toastify';
-import { NotifyToast } from 'components/base/notifications';
-import { PopupContainer } from 'containers/common/popup';
+// import { NotifyToast } from 'components/base/notifications';
+import { PopupContainer, PopupsContainer } from 'containers/common/popup';
 import { T } from 'components/common/text';
 import { I18nLanguage } from 'components/base/language';
 
@@ -17,11 +17,21 @@ const CoreState = {};
 // NOTE: 초기 landing, error, notifications, popup 등록
 // DEBUG: 차후 성능적인 문제 발생시 apiCalling분리
 function Core() {
-  const { isAuthenticated, landing, accessToken, apiCalling } = useShallowSelector(state => ({
+  const {
+    isAuthenticated,
+    landing,
+    accessToken,
+    apiCalling,
+    toasts,
+    popups,
+    test,
+  } = useShallowSelector(state => ({
     isAuthenticated: isAuthenticatedSelector(state),
     landing: state.base.landing,
     accessToken: state.auth.accessToken,
-    apiCalling: state.base.apiCalling,
+    apiCalling: state.app.apiCalling,
+    toasts: state.app.toasts,
+    popups: state.app.popups,
   }));
   const [values, setValues] = useImmer(CoreState);
 
@@ -36,24 +46,56 @@ function Core() {
     }
 
     DispatchActions.exit_landing();
+    // DispatchActions.set_api_calling_status();
   };
 
   useEffect(() => {
     initialize();
   }, []);
 
-  useEffect(() => {
-    console.log(apiCalling, 'apiCalling');
-  }, [apiCalling]);
+  // useEffect(() => {
+  //   console.log(apiCalling, 'apiCalling');
+  //   console.log(landing, 'landing');
+  //   console.log(toasts, 'toasts');
+  //   // DispatchActions.response_status(400);
+  //   console.log(popups, 'popups');
+  // }, [apiCalling, landing, toasts, popups]);
 
-  const isVisibleLoading = [landing].some(item => item === true);
+  // useEffect(() => {
+  //   console.log(selector, 'selector');
+  // }, [selector]);
+
+  useEffect(() => {
+    // DispatchActions.base_popup({
+    //   isOpen: true,
+    //   title: 'Title',
+    //   content: 'Cotnent',
+    // });
+    // DispatchActions.add_popup({
+    //   isOpen: true,
+    //   title: 'Title1',
+    //   content: 'Cotnent1',
+    //   hideBackdrop: true,
+    // });
+    // DispatchActions.add_popup({
+    //   isOpen: true,
+    //   title: 'Title2',
+    //   content: 'Cotnent2',
+    //   hideBackdrop: true,
+    // });
+  }, []);
+
+  const isVisibleLoading = [landing, apiCalling].some(item => item === true);
 
   return (
     <>
       <FullScreenLoading visible={isVisibleLoading} />
       <ErrorContainer />
+      {/* 하위 호환용 차후 전체 변경 고려 */}
       <PopupContainer />
-      <NotifyToast />
+      <PopupsContainer />
+      <NotificationContainer />
+      {/* <NotifyToast /> */}
       <I18nLanguage />
     </>
   );

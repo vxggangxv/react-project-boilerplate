@@ -15,43 +15,71 @@ import { useShallowSelector } from 'lib/utils';
  * @param {*} props
  */
 function PopupContainer() {
-  const { popupConfig } = useShallowSelector(state => ({
-    popupConfig: state.base.popup,
+  const { popup } = useShallowSelector(state => ({
+    popup: state.base.popup,
   }));
+
+  // init props
+  let {
+    isOpen = false,
+    type = 'alert',
+    width = 534,
+    title = '',
+    content = '',
+    isTitleDefault = false,
+    isContentDefault = false,
+    button = '',
+    hideButton = false,
+    reverseButton = false,
+    okText = '',
+    okLink = '',
+    cancelLink = '',
+    key = '',
+    align = [],
+    dim = true,
+    paddingNone = false,
+    hideBackdrop = false,
+    onClick = () => {},
+    onCancel = () => {},
+    onExited = () => {},
+  } = popup;
+
+  isOpen = type === 'dim' ? false : isOpen;
 
   return (
     <>
       <PlainModal
-        isOpen={popupConfig.isOpen}
+        isOpen={isOpen}
         onClick={() => DispatchActions.base_popup({ type: 'dim' })}
-        onExited={popupConfig.onExited}
-        dim={popupConfig.dim}
-        width={popupConfig.width}
+        onExited={onExited}
+        dim={dim}
+        width={width}
+        hideBackdrop={hideBackdrop}
       >
         <AppModal
-          type={popupConfig.type}
-          title={popupConfig.title}
-          content={popupConfig.content}
-          isTitleDefault={popupConfig.isTitleDefault}
-          isContentDefault={popupConfig.isContentDefault}
-          button={popupConfig.button}
-          hideButton={popupConfig.hideButton}
-          reverseButton={popupConfig.reverseButton}
-          okText={popupConfig.okText || 'Ok'}
-          okLink={popupConfig.okLink}
-          cancelLink={popupConfig.cancelLink}
-          align={popupConfig.align}
-          paddingNone={popupConfig.paddingNone}
+          type={type}
+          title={title}
+          content={content}
+          isTitleDefault={isTitleDefault}
+          isContentDefault={isContentDefault}
+          button={button}
+          hideButton={hideButton}
+          reverseButton={reverseButton}
+          okText={okText || 'Ok'}
+          okLink={okLink}
+          cancelLink={cancelLink}
+          align={align}
+          paddingNone={paddingNone}
           onClick={() => {
             DispatchActions.base_popup({ type: 'dim' });
-            if (!!popupConfig.onClick) {
-              popupConfig.onClick();
+            if (!!onClick) {
+              onClick();
             }
           }}
           onCancel={() => {
             DispatchActions.base_popup({ type: 'dim' });
-            if (!!popupConfig.onCancel) {
-              popupConfig.onCancel();
+            if (!!onCancel) {
+              onCancel();
             }
           }}
         />

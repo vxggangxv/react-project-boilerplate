@@ -36,6 +36,7 @@ const PlainModal = React.memo(function PlainModal(props) {
     onExited = () => {},
     width = 0,
     isCloseIcon = false,
+    hideBackdrop = false,
   } = props;
 
   const [open, setOpen] = useState(false);
@@ -65,8 +66,8 @@ const PlainModal = React.memo(function PlainModal(props) {
   return (
     <Styled.PlainModal data-component-name="PlainModal">
       <Modal
-        aria-labelledby="transition-modal-title"
-        aria-describedby="transition-modal-description"
+        aria-labelledby="plain-modal-title"
+        aria-describedby="plain-modal-description"
         className={classes.modal}
         open={open}
         onClose={handleCloseDim}
@@ -75,6 +76,7 @@ const PlainModal = React.memo(function PlainModal(props) {
         BackdropProps={{
           timeout: 500,
         }}
+        hideBackdrop={hideBackdrop}
       >
         <Fade in={open} onExited={e => handleClick({ type: 'exit' })}>
           <div className={cx('plainModal__children', classes.paper)}>

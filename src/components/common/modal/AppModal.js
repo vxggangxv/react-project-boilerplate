@@ -108,7 +108,7 @@ function AppModal(props) {
           className={cx('modal__content', {
             default: (contentObj?.isTypeString && !paddingNone) || isContentDefault,
           })}
-          style={{ textAlign: alignConfig.content || 'right' }}
+          style={{ textAlign: alignConfig.content }}
         >
           <Content />
         </div>

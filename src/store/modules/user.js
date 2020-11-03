@@ -1,22 +1,24 @@
-import { handleActions } from 'redux-actions';
-import { SpreadSagas } from 'lib/asyncUtils';
-import * as actions from 'store/actions';
+import { createAction, createSlice } from '@reduxjs/toolkit';
 import storage, { keys } from 'api/config/storage';
 
+export const set_user = createAction('set_user');
+
 const initialState = {
-  // NOTE: 최초 랜딩시 storage값 유무 확인
+  // 최초 랜딩시 storage값 유무 확인
   user: storage.get(keys.user) || null,
 };
 
-const SpreadReducer = SpreadSagas({ state: initialState });
-export default handleActions(
-  {
-    ...new SpreadReducer(null, actions.SET_USER, {
-      callback: (draft, { payload: diff }) => {
-        console.log(diff, 'diff SET_USER');
-        draft.user = diff;
-      },
-    }),
-  },
+const slice = createSlice({
+  name: 'user',
   initialState,
-);
+  reducers: {
+    set_user: (state, { payload }) => {
+      console.log(payload, 'payload SET_USER');
+      state.user = payload;
+    },
+  },
+});
+
+export const actions = slice.actions;
+
+export default slice.reducer;

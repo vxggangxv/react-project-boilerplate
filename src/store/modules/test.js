@@ -1,50 +1,65 @@
-import { handleActions } from 'redux-actions';
-import { SpreadSagas } from 'lib/asyncUtils';
-import * as actions from 'store/actions';
+import { put, all, takeLatest } from 'redux-saga/effects';
+import { createSlice } from '@reduxjs/toolkit';
+import { fetchReducerActions, createFetchAction, createSaga, fetchInitialState } from 'store/utils';
+import * as api from 'api/test';
+
+export const fetch_tests = createFetchAction('fetch_tests');
+export const fetch_test = createFetchAction('fetch_test');
 
 const initialState = {
+  tests: {
+    ...fetchInitialState,
+    data: null,
+  },
+  test: {
+    ...fetchInitialState,
+    data: null,
+  },
   obj: {
     list: {
-      data: null,
-      pending: null,
-      success: null,
-      failure: null,
-    },
-    detail: {
-      data: null,
-      pending: null,
-      success: null,
-      failure: null,
+      item: {
+        ...fetchInitialState,
+        data: null,
+      },
     },
   },
 };
 
-const SpreadReducer = SpreadSagas({ state: initialState });
-
-export default handleActions(
-  {
-    /**
-     * 사용법
-     * @params {string, null} name: initialState의 state 이름
-     * ...new SpreadReducer(name, actions.FETCH_TESTS, {
-     * (name: null 일 경우)
-     *  callback: (draft => {})
-     * (obj: string 일 경우)
-     *  pending:(draft, { payload: diff }, state) => {}),
-     *  success:(draft, { payload: diff }, state) => {}),
-     *  failure:(draft, { payload: diff }, state) => {}),
-     * }),
-     */
-    ...new SpreadReducer('obj.list', actions.FETCH_TESTS, {
-      success: (draft, { payload: diff }, state) => {
-        draft.obj.list.data = diff;
-      },
-    }),
-    ...new SpreadReducer('obj.detail', actions.FETCH_TEST, {
-      success: (draft, { payload: diff }, state) => {
-        draft.obj.detail.data = diff;
-      },
-    }),
-  },
+const slice = createSlice({
+  name: 'test',
   initialState,
-);
+  reducers: {
+    ...new fetchReducerActions(fetch_tests, 'tests'),
+    ...new fetchReducerActions(fetch_test, 'test'),
+  },
+});
+
+export const actions = slice.actions;
+
+// saga
+function* handleFetchTests() {
+  try {
+    yield put(actions.fetch_tests_sucess());
+  } catch (err) {
+    yield put(actions.fetch_tests_failure());
+  } finally {
+    // yield put();
+  }
+}
+
+function* handleFetchTest() {
+  try {
+    yield put(actions.fetch_test_sucess());
+  } catch (err) {
+    yield put(actions.fetch_test_failure());
+  }
+}
+
+export function* testSaga() {
+  yield all([
+    takeLatest(actions.fetch_tests_request, createSaga(actions, 'fetch_tests', api.fetchTests)),
+    takeLatest(actions.fetch_test_request, createSaga(actions, 'fetch_test', api.fetchTestById)),
+  ]);
+}
+
+export default slice.reducer;

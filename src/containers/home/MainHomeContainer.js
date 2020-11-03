@@ -1,7 +1,6 @@
 import React, { useEffect } from 'react';
 import { useImmer } from 'use-immer';
 import { useShallowSelector } from 'lib/utils';
-import * as actions from 'store/actions';
 
 const MainHomeContainer = () => {
   useEffect(() => {

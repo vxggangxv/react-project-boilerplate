@@ -4,7 +4,7 @@ import queryString from 'query-string';
 import { useShallowSelector, useDidUpdateEffect } from 'lib/utils';
 import { DispatchActions } from 'store/actionCreators';
 import { AppTemplate } from 'components/base/template';
-import { isAuthenticatedSelector } from 'store/modules/auth.selectors';
+import { isAuthenticatedSelector } from 'store/modules/auth';
 
 function AuthSignIn(props) {
   const { isAuthenticated } = useShallowSelector(state => ({
