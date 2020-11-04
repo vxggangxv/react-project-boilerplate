@@ -26,28 +26,7 @@ const initialState = {
   language: 'ko',
   popups: [],
   test: 'test',
-  popup: {
-    title: '',
-    content: '',
-    isTitleDefault: false,
-    isContentDefault: false,
-    button: '',
-    hideButton: false,
-    reverseButton: false,
-    okText: '',
-    okLink: '',
-    cancelLink: '',
-    isOpen: false,
-    width: 350,
-    type: '',
-    key: '',
-    dim: null,
-    onClick: () => {},
-    onCancel: () => {},
-    onExited: () => {},
-    align: [],
-    paddingNone: false,
-  },
+  popup: {},
 };
 
 // 팝업 아이디로 사용한다
@@ -73,7 +52,20 @@ const slice = createSlice({
       state.language = payload;
     },
     base_popup: (state, { payload }) => {
-      state.popup = payload;
+      let result = {};
+      if (payload.type === 'dim') {
+        result = {
+          isOpen: false,
+        };
+      } else {
+        result = {
+          ...payload,
+        };
+      }
+      state.popup = {
+        ...state.popup,
+        ...result,
+      };
     },
   },
 });

@@ -1,6 +1,7 @@
 import { call, put } from 'redux-saga/effects';
 import { createAction } from '@reduxjs/toolkit';
 import { actions as appActions } from './modules/app';
+import { ENV_MODE_DEV } from 'lib/setting';
 
 export const fetchInitialState = {
   pending: null,
@@ -95,13 +96,30 @@ export function createSaga(actions, key, req, config = {}) {
       // console.log(data, 'data');
       yield put(actions[`${key}_success`](data));
       success();
-    } catch (e) {
+
+      // 개발자용 redux console
+      if (ENV_MODE_DEV) {
+        console.group(`-- ${key}_request Redux saga success`);
+        console.log(` %cRequest Data :\n`, 'color:red;padding:5px;font-weight:bold', data.payload);
+        console.log(` %cResponse Data :\n`, 'color:red;padding:5px;font-weight:bold', data);
+        console.groupEnd();
+      }
+    } catch (error) {
       yield put(actions[`${key}_failure`]('데이터를 불러오기에 실패했습니다.'));
       failure();
+
+      // DEBUG: 실제 Error 발생시 확인
+      console.group(`-- ${key}_request Redux saga error`);
+      console.log(` %cPayload :\n`, 'color:red;padding:5px;font-weight:bold', payload);
+      console.log(` %cError :\n`, 'color:red;padding:5px;font-weight:bold', error);
+      console.groupEnd();
     } finally {
-      // 완료후 자동 init
-      yield put(actions[`${key}_init`]());
       if (apiLoading) yield put(appActions.clear_api_calling_status());
+      // TODO: 완료후 자동 init, 적용시 예외 key 적용 필요
+      // const isExceptList = ['handleAutoLogin', 'handleUserInfo', 'handleIndicationFormat'];
+      // const isExcept = isExceptList.some(item => item === tag);
+      // if (!isExcept) yield put(actions[`${key}_init`]());
+      yield put(actions[`${key}_init`]());
     }
   };
 }

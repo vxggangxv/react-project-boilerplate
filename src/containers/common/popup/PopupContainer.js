@@ -44,13 +44,11 @@ function PopupContainer() {
     onExited = () => {},
   } = popup;
 
-  isOpen = type === 'dim' ? false : isOpen;
-
   return (
     <>
       <PlainModal
         isOpen={isOpen}
-        onClick={() => DispatchActions.base_popup({ type: 'dim' })}
+        onClick={() => DispatchActions.base_popup({ isOpen: false })}
         onExited={onExited}
         dim={dim}
         width={width}
@@ -71,13 +69,13 @@ function PopupContainer() {
           align={align}
           paddingNone={paddingNone}
           onClick={() => {
-            DispatchActions.base_popup({ type: 'dim' });
+            DispatchActions.base_popup({ isOpen: false });
             if (!!onClick) {
               onClick();
             }
           }}
           onCancel={() => {
-            DispatchActions.base_popup({ type: 'dim' });
+            DispatchActions.base_popup({ isOpen: false });
             if (!!onCancel) {
               onCancel();
             }
