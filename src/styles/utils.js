@@ -7,18 +7,6 @@ export const fontFamily = css`
 export const color = _color;
 export const device = _deviceSize;
 
-export const font = (size = 14, color = 'black') => {
-  return css`
-    color: ${color};
-    font-size: ${size}px;
-    ${fontFamily};
-    & :hover {
-      color: $clr;
-    }
-    /* @content; */
-  `;
-};
-
 export const floatClear = css`
   &:after {
     content: '';
@@ -53,35 +41,75 @@ export const positionWide = css`
   height: 100%;
 `;
 
+export const font = (size = 14, color = 'black') => {
+  return css`
+    color: ${color};
+    font-size: ${size}px;
+    ${fontFamily};
+    /* @content; */
+  `;
+};
+
+export const flexCenter = css`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`;
+export const InlineflexCenter = css`
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+`;
+
+/* border-radius:3px; */
 export const buttonBlue = css`
+  ${InlineflexCenter};
   background: ${color.blue};
   transition: 0.3s;
   border: 1px solid ${color.blue};
   padding: 5px 15px;
-  /* border-radius:3px; */
   cursor: pointer;
   ${font(16, color.white)};
   &:hover {
     background: ${color.blue_hover};
   }
+  &:disabled {
+    color: rgb(118, 118, 118, 0.5);
+    background: rgba(118, 118, 118, 0.2);
+    border-color: rgba(118, 118, 118, 0.1);
+    cursor: initial;
+  }
 `;
 
 export const outlinedButtonBlue = css`
+  ${InlineflexCenter};
   background: ${color.white};
   transition: 0.3s;
   border: 1px solid ${color.blue};
   padding: 5px 15px;
-  /* border-radius:3px; */
   cursor: pointer;
   ${font(16, color.blue)};
 `;
 
+export const buttonGray = css`
+  ${InlineflexCenter};
+  background: ${color.btn_gray};
+  transition: 0.3s;
+  border: 1px solid ${color.btn_gray};
+  padding: 5px 15px;
+  cursor: pointer;
+  ${font(16, color.white)};
+  &:hover {
+    background: ${color.btn_gray};
+  }
+`;
+
 export const buttonNavy = css`
+  ${InlineflexCenter};
   background: ${color.navy};
   transition: 0.3s;
   border: 1px solid ${color.navy};
   padding: 5px 15px;
-  /* border-radius:3px; */
   cursor: pointer;
   ${font(16, color.white)};
   &:hover {
@@ -89,12 +117,25 @@ export const buttonNavy = css`
   }
 `;
 
+export const buttonLightPink = css`
+  ${InlineflexCenter};
+  background: ${color.lightPink};
+  transition: 0.3s;
+  border: 1px solid ${color.lightPink};
+  padding: 5px 15px;
+  cursor: pointer;
+  ${font(16, color.white)};
+  &:hover {
+    background: ${color.lightPink_hover};
+  }
+`;
+
 export const buttonWhite = css`
+${InlineflexCenter};
   background:${color.white};
   transition:.3s;
   border:1px solid ${color.blue};
   padding:5px 15px;
-  /* border-radius:3px; */
   /* text-transform: uppercase; */
   cursor: pointer;
   ${font(16, color.blue)};

@@ -6,6 +6,7 @@ import { Error, Home, Auth, About, User, Test } from 'pages';
 // import { FullScreenLoading } from 'components/base/loading';
 import { AppErrorBoundary } from 'components/base/error';
 import { LRoute, PrivateRoute } from 'components/base/route';
+import './App.scss';
 
 function App() {
   return (

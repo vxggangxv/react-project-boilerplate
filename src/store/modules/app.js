@@ -100,7 +100,7 @@ function* handleShowToast(action) {
   yield delay(duration);
 
   // 토스트를 상태에서 제거한다
-  yield put(actions.remove_toast({ id }));
+  // yield put(actions.remove_toast({ id }));
 }
 
 export function* appSaga() {
