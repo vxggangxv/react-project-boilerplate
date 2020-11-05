@@ -4,7 +4,7 @@ import { HashRouter as Router } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import store, { persistor } from 'store';
 import { PersistGate } from 'redux-persist/integration/react';
-// import { hot } from 'react-hot-loader/root';
+import { hot } from 'react-hot-loader/root';
 import 'lang/i18n';
 import { ENV_MODE_PROD } from 'lib/setting';
 
@@ -22,5 +22,5 @@ function Root(props) {
   );
 }
 
-// export default hot(Root);
-export default Root;
+export default hot(Root);
+// export default Root;

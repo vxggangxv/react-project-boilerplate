@@ -3,7 +3,6 @@ import { useImmer } from 'use-immer';
 import { DispatchActions } from 'store/actionCreators';
 import { FullScreenLoading } from 'components/base/loading';
 import ErrorContainer from 'containers/base/ErrorContainer';
-import NotificationContainer from 'containers/base/NotificationContainer';
 import { useShallowSelector, useDidUpdateEffect } from 'lib/utils';
 import { isAuthenticatedSelector } from 'store/modules/auth';
 import storage, { keys } from 'api/config/storage';
@@ -11,6 +10,7 @@ import storage, { keys } from 'api/config/storage';
 import { PopupContainer, PopupsContainer } from 'containers/common/popup';
 import { T } from 'components/common/text';
 import { I18nLanguage } from 'components/base/language';
+import ToastsContainer from 'containers/base/ToastsContainer';
 
 const CoreState = {};
 
@@ -94,7 +94,7 @@ function Core() {
       {/* 하위 호환용 차후 전체 변경 고려 */}
       <PopupContainer />
       <PopupsContainer />
-      <NotificationContainer />
+      <ToastsContainer />
       {/* <NotifyToast /> */}
       <I18nLanguage />
     </>

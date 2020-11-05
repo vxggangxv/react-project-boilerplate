@@ -30,15 +30,15 @@ const slice = createSlice({
   name: 'app',
   initialState,
   reducers: {
-    set_api_calling_status: (state, action) => {
+    set_api_calling_status: state => {
       state.apiCalling = true;
     },
-    clear_api_calling_status: (state, action) => {
+    clear_api_calling_status: state => {
       state.apiCalling = false;
     },
     show_toast: () => {},
-    add_toast: (state, action) => {
-      state.toasts = state.toasts.concat(action.payload);
+    add_toast: (state, { payload }) => {
+      state.toasts = state.toasts.concat(payload);
     },
     remove_toast: (state, { payload }) => {
       // console.log(payload, 'payload');
@@ -81,18 +81,23 @@ function* handleFailure(action) {
 let _tid = 0;
 
 function* handleShowToast(action) {
-  console.log('handleShowToast');
+  // console.log('handleShowToast');
   const nextId = _tid + 1;
   _tid = nextId;
 
-  const content = action.payload;
+  let config = action.payload;
+  const duration = config.delay ? config.delay : 5000;
+  config = {
+    ...config,
+    duration,
+  };
   const id = nextId;
 
   // 토스트를 상태에 추가한다
-  yield put(actions.add_toast({ id, content }));
+  yield put(actions.add_toast({ id, config }));
 
-  // 3초 대기한다
-  yield delay(5000);
+  // 초 대기한다
+  yield delay(duration);
 
   // 토스트를 상태에서 제거한다
   yield put(actions.remove_toast({ id }));
