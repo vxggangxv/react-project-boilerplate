@@ -3,10 +3,12 @@ import Core from 'containers/base/Core';
 import { Route, Switch, Redirect } from 'react-router-dom';
 import GlobalAppStyle from 'styles/base';
 import { Error, Home, Auth, About, User, Test } from 'pages';
-// import { FullScreenLoading } from 'components/base/loading';
-import { AppErrorBoundary } from 'components/base/error';
-import { LRoute, PrivateRoute } from 'components/base/route';
+// import FullScreenLoading from 'components/base/loading/FullScreenLoading';
+import AppErrorBoundary from 'components/base/error/AppErrorBoundary';
+import LRoute from 'components/base/route/LRoute';
+import PrivateRoute from 'components/base/route/PrivateRoute';
 import './App.scss';
+import * as mapper from 'lib/mapper';
 
 function App() {
   return (
@@ -15,9 +17,9 @@ function App() {
       <AppErrorBoundary>
         <Core />
         <Switch>
-          <Redirect exact path="/" to="/home" />
-          <Route path="/home" component={Home} />
-          <LRoute path="/auth" component={Auth} />
+          <Redirect exact path={mapper.pageUrl.index} to={mapper.pageUrl.home} />
+          <Route path={mapper.pageUrl.home} component={Home} />
+          <LRoute path={mapper.pageUrl.auth.index} component={Auth} />
           <Route path="/error" component={Error} />
           <Route path="/user" component={User} />
           <PrivateRoute path="/about" component={About} />

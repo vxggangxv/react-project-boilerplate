@@ -1,5 +1,5 @@
 import React from 'react';
-import { ErrorForm } from 'components/base/error';
+import ErrorForm from './ErrorForm';
 import axios from 'axios';
 import { endPoint } from 'lib/api';
 import { ENV_MODE_PROD } from 'lib/setting';

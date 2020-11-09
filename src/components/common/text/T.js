@@ -1,7 +1,7 @@
 import React from 'react';
 import { withTranslation } from 'react-i18next';
 import i18next from 'i18next';
-import { EscapeConvert } from 'components/common/convert';
+import EscapeConvert from 'components/common/convert/EscapeConvert';
 
 /**
  * <T

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Dropzone } from 'components/common/dropzone';
+import Dropzone from 'components/common/dropzone/Dropzone';
 import styled from 'styled-components';
 
 function DropzoneChildren() {

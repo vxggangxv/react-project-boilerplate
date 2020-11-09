@@ -5,7 +5,7 @@ import cx from 'classnames';
 import _ from 'lodash';
 import { buttonBlue, font, color } from 'styles/utils';
 import { Link } from 'react-router-dom';
-import { EscapeConvert } from 'components/common/convert';
+import EscapeConvert from 'components/common/convert/EscapeConvert';
 import { icon_modal_alert } from 'components/base/images';
 import { useImmer } from 'use-immer';
 

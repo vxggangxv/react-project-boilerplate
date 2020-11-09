@@ -1,9 +1,9 @@
 import React from 'react';
 import styled from 'styled-components';
 import cx from 'classnames';
-import { AppMeta } from 'components/base/meta';
-import { AppHeader } from 'components/base/header';
-import { AppFooter } from 'components/base/footer';
+import AppMeta from 'components/base/meta/AppMeta';
+import AppHeader from 'components/base/header/AppHeader';
+import AppFooter from 'components/base/footer/AppFooter';
 import PropTypes from 'prop-types';
 
 AppTemplate.propTypes = {
@@ -20,15 +20,17 @@ function AppTemplate(props) {
     childrenTitle,
     leftSide,
     rightSide,
-    templateStyle,
-    childrenStyle,
+    templateStyle, // AppTemplate 스타일 커스텀 prop
+    defaultMainContainer = true, // .template__main_container 기본 스타일 적용 유무
+    mainContainerStyle, //.template__main_container 스타일 커스텀 prop
+    mainChildrenStyle, //.template__main_children 스타일 커스텀 prop
     headerHide = false,
     footerHide = false,
   } = props;
 
-  // NOTE: 기본 값이 있을 경우
-  const header = (props.header && !headerHide) || <AppHeader />;
-  const footer = (props.footer && !footerHide) || <AppFooter />;
+  // NOTE: header 있을경우, headerHide = true 아닐 경우 기본 값 설정
+  const header = props.header ? props.header : !headerHide ? <AppHeader /> : null;
+  const footer = props.footer ? props.header : !footerHide ? <AppFooter /> : null;
 
   return (
     <>
@@ -40,13 +42,16 @@ function AppTemplate(props) {
         {nav && <div className={cx('template__nav')} children={nav} />}
 
         {children && (
-          <div className="template__main_container">
+          <div
+            className={cx('template__main_container', { default: defaultMainContainer })}
+            style={mainContainerStyle}
+          >
             {leftSide && <div className={cx('template__leftSide')} children={leftSide} />}
             <main className={cx('template__main', { main_title: childrenTitle })}>
               {childrenTitle && <h1 className="template__main_title">{childrenTitle}</h1>}
 
               {children && (
-                <div style={childrenStyle} className={cx('template__main_children')}>
+                <div className={cx('template__main_children')} style={mainChildrenStyle}>
                   {children}
                 </div>
               )}
@@ -66,8 +71,10 @@ const Styled = {
     position: relative;
     .template__main_container {
       position: relative;
-      width: 1200px;
-      margin: auto;
+      &.default {
+        width: 1200px;
+        margin: auto;
+      }
 
       @media screen and (max-width: 1200px) {
         width: 100%;

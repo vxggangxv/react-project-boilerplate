@@ -27,7 +27,7 @@ function PrivateRoute({ component: Component, ...rest }) {
           return (
             <Redirect
               to={{
-                pathname: mapper.pageUrl.signIn,
+                pathname: mapper.pageUrl.auth.signIn,
                 state: { from: location },
               }}
             />

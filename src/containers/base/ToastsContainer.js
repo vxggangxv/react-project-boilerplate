@@ -37,7 +37,7 @@ function ToastsContainer(props) {
   };
 
   useEffect(() => {
-    DispatchActions.show_toast({ content: '복사 완료 Copy successed' });
+    // DispatchActions.show_toast({ content: '복사 완료 Copy successed' });
     // DispatchActions.show_toast({ content: () => <ToastContent /> });
   }, []);
 

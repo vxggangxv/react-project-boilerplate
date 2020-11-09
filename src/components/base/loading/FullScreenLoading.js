@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { CircularLoading } from 'components/base/loading';
+import CircularLoading from 'components/base/loading/CircularLoading';
 import PropTypes from 'prop-types';
 
 FullScreenLoading.propTypes = {

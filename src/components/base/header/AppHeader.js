@@ -38,17 +38,21 @@ function AppHeader() {
           <ul className="header__nav_list auth">
             {isAuthenticated ? (
               <li
-                className={cx('header__nav_item', { active: pathname === mapper.pageUrl.signOut })}
+                className={cx('header__nav_item', {
+                  active: pathname === mapper.pageUrl.auth.signOut,
+                })}
               >
-                <NavLink to={mapper.pageUrl.signOut} className="header__link">
+                <NavLink to={mapper.pageUrl.auth.signOut} className="header__link">
                   Logout
                 </NavLink>
               </li>
             ) : (
               <li
-                className={cx('header__nav_item', { active: pathname === mapper.pageUrl.signIn })}
+                className={cx('header__nav_item', {
+                  active: pathname === mapper.pageUrl.auth.signIn,
+                })}
               >
-                <NavLink to={mapper.pageUrl.signIn} className="header__link">
+                <NavLink to={mapper.pageUrl.auth.signIn} className="header__link">
                   Login
                 </NavLink>
               </li>

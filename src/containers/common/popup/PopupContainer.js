@@ -1,6 +1,7 @@
 import React, { useMemo } from 'react';
 import { DispatchActions } from 'store/actionCreators';
-import { PlainModal, AppModal } from 'components/common/modal';
+import PlainModal from 'components/common/modal/PlainModal';
+import AppModal from 'components/common/modal/AppModal';
 import { useShallowSelector } from 'lib/utils';
 
 // basePopup.isOpen

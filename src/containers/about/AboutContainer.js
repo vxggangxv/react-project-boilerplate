@@ -3,7 +3,7 @@ import { toast } from 'react-toastify';
 import { Popup } from 'lib/utils';
 import { useEffect } from 'react';
 import { DispatchActions } from 'store/actionCreators';
-import { T } from 'components/common/text';
+import T from 'components/common/text/T';
 import { Translation, withTranslation } from 'react-i18next';
 import styled from 'styled-components';
 import { CustomInfiniteScroll } from 'components/common/scroll';

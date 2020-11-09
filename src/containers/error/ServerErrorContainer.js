@@ -1,6 +1,6 @@
 import React from 'react';
 import { useEffect } from 'react';
-import { ErrorForm } from 'components/base/error';
+import ErrorForm from 'components/base/error/ErrorForm';
 import { useShallowSelector } from 'lib/utils';
 
 function ServerErrorContainer(props) {

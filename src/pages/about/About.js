@@ -1,6 +1,6 @@
 import React from 'react';
 import AboutContainer from 'containers/about/AboutContainer';
-import { AppTemplate } from 'components/base/template';
+import AppTemplate from 'components/base/template/AppTemplate';
 
 function About(props) {
   return (

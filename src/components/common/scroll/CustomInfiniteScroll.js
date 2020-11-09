@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import InfiniteScroll from 'react-infinite-scroll-component';
-import { CircularLoading } from 'components/base/loading';
+import CircularLoading from 'components/base/loading/CircularLoading';
 import styled from 'styled-components';
 
 /**

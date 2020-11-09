@@ -1,15 +1,16 @@
 import React, { useEffect } from 'react';
 import { useImmer } from 'use-immer';
 import { DispatchActions } from 'store/actionCreators';
-import { FullScreenLoading } from 'components/base/loading';
+import FullScreenLoading from 'components/base/loading/FullScreenLoading';
 import ErrorContainer from 'containers/base/ErrorContainer';
 import { useShallowSelector, useDidUpdateEffect } from 'lib/utils';
 import { isAuthenticatedSelector } from 'store/modules/auth';
 import storage, { keys } from 'api/config/storage';
 // import { NotifyToast } from 'components/base/notifications';
-import { PopupContainer, PopupsContainer } from 'containers/common/popup';
-import { T } from 'components/common/text';
-import { I18nLanguage } from 'components/base/language';
+import PopupContainer from 'containers/common/popup/PopupContainer';
+import PopupsContainer from 'containers/common/popup/PopupsContainer';
+import T from 'components/common/text/T';
+import I18nLanguage from 'components/base/language/I18nLanguage';
 import ToastsContainer from 'containers/base/ToastsContainer';
 
 const CoreState = {};

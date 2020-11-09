@@ -23,7 +23,9 @@ function ErrorContainer(props) {
       // toast.error(() => <CustomToastContent content="Unauthorized" />);
       DispatchActions.show_toast('Unauthorized');
       DispatchActions.sign_out();
-      history.push(`${mapper.pageUrl.signIn}?returnPath=${encodeURIComponent(location.pathname)}`);
+      history.push(
+        `${mapper.pageUrl.auth.signIn}?returnPath=${encodeURIComponent(location.pathname)}`,
+      );
     },
     status403() {
       // toast.error(() => <CustomToastContent content="Forbidden" />);

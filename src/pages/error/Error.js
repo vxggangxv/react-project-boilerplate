@@ -1,8 +1,8 @@
 import React from 'react';
 import { Switch, Route } from 'react-router';
 import * as mapper from 'lib/mapper';
-import { ServerErrorContainer } from 'containers/error';
-import { NotFound, ServerError } from 'components/base/error';
+import NotFound from 'components/base/error/NotFound';
+import ServerError from 'components/base/error/ServerError';
 
 function Error(props) {
   return (
