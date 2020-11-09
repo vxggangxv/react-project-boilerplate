@@ -6,7 +6,7 @@ module.exports = {
     // port: 9090,
   },
   // entry: ['react-hot-loader/patch', './src'],
-  webpack: {
-    alias: { 'react-dom': '@hot-loader/react-dom' },
-  },
+  // webpack: {
+  //   alias: { 'react-dom': '@hot-loader/react-dom' },
+  // },
 };
