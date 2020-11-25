@@ -55,14 +55,15 @@ export function axs(axiosConf) {
     })
     .catch(error => {
       const { response = {}, request = '', message = '' } = error;
+      // console.log(error, 'error');
       if (response) {
         const { data = null, status = null, headers = null } = response;
         // 요청이 이루어졌으며 서버가 2xx의 범위를 벗어나는 상태 코드로 응답했습니다.
         console.log('Error response', data);
         console.log('Error response', status);
         console.log('Error response', headers);
-        // NOTE: 에러 상태에 대한 처리
-        if (data) DispatchActions.response_error(data);
+        // TEST: 에러 상태에 대한 처리
+        // if (data) DispatchActions.response_error(data);
         if (status) DispatchActions.response_status(status);
         // NOTE: 차후 auth에 대한 에러처리
         // const { status } = response;
@@ -74,8 +75,10 @@ export function axs(axiosConf) {
         // 오류를 발생시킨 요청을 설정하는 중에 문제가 발생했습니다.
         console.log('Error message', message);
       }
+      // if (ENV_MODE_PROD) DispatchActions.response_status(500);
+      // DispatchActions.response_status(500);
       // NOTE: 보낸 데이터 payload data 확인용
-      return { error, payload: axiosConf.data };
+      throw { message, payload: axiosConf.data };
     });
 }
 

@@ -1,3 +1,10 @@
+export const brand = {
+  logo: {
+    index: 'logo',
+    text: 'DOF Bridge',
+  },
+};
+
 export const setting = {
   language: {
     kr: {

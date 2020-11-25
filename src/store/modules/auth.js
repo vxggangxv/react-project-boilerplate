@@ -2,7 +2,7 @@ import { all } from 'redux-saga/effects';
 import { createAction, createSlice, createSelector } from '@reduxjs/toolkit';
 import { fetchInitialState } from 'store/utils';
 import { setAuthInHeader } from 'api/config/axiosUtils';
-import storage, { keys } from 'api/config/storage';
+import storage, { keys } from 'lib/storage';
 
 // actions
 export const set_token = createAction('set_token');

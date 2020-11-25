@@ -72,9 +72,12 @@ function* handleSuccess(action) {
   // yield put(actions.show_toast('Request Completed.'));
 }
 
-function* handleFailure(action) {
+function* handleFailure({ payload }) {
   // yield put(actions.clear_api_calling_status());
-  yield put(actions.show_toast('Request Failed.'));
+  let { msg = '', isShow } = payload;
+  msg = msg ? msg : 'Request Failed.';
+  if (isShow) yield put(actions.show_toast({ type: 'error', content: msg }));
+  // content: '데이터를 불러오기에 실패했습니다.'
 }
 
 // 토스트 아이디로 사용한다
@@ -100,7 +103,7 @@ function* handleShowToast(action) {
   yield delay(duration);
 
   // 토스트를 상태에서 제거한다
-  // yield put(actions.remove_toast({ id }));
+  yield put(actions.remove_toast({ id }));
 }
 
 export function* appSaga() {

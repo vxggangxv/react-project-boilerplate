@@ -1,5 +1,5 @@
 import { createAction, createSlice } from '@reduxjs/toolkit';
-import storage, { keys } from 'api/config/storage';
+import storage, { keys } from 'lib/storage';
 
 export const set_user = createAction('set_user');
 

@@ -1,8 +1,10 @@
+import Color from 'color';
 import { css } from 'styled-components';
 import { _color, _font, _sizes, _deviceSize } from 'styles/_variables';
 
+export const fontFamilyValue = `${_font.mulish}, ${_font.notoSans}`;
 export const fontFamily = css`
-  font-family: ${_font.mulish}, ${_font.notoSans};
+  font-family: ${fontFamilyValue};
 `;
 export const color = _color;
 export const device = _deviceSize;
@@ -45,7 +47,7 @@ export const font = (size = 14, color = 'black') => {
   return css`
     color: ${color};
     font-size: ${size}px;
-    ${fontFamily};
+    /* ${fontFamily}; */
     /* @content; */
   `;
 };
@@ -69,9 +71,11 @@ export const buttonBlue = css`
   border: 1px solid ${color.blue};
   padding: 5px 15px;
   cursor: pointer;
-  ${font(16, color.white)};
+  font-size: 16px;
+  color: #fff;
+  transition: background-color 0.25s;
   &:hover {
-    background: ${color.blue_hover};
+    background: ${Color(color.blue).darken(0.12)};
   }
   &:disabled {
     color: rgb(118, 118, 118, 0.5);
@@ -98,7 +102,9 @@ export const buttonGray = css`
   border: 1px solid ${color.btn_gray};
   padding: 5px 15px;
   cursor: pointer;
-  ${font(16, color.white)};
+  font-size: 16px;
+  color: #fff;
+  transition: background-color 0.25s;
   &:hover {
     background: ${color.btn_gray};
   }
@@ -111,9 +117,11 @@ export const buttonNavy = css`
   border: 1px solid ${color.navy};
   padding: 5px 15px;
   cursor: pointer;
-  ${font(16, color.white)};
+  font-size: 16px;
+  color: #fff;
+  transition: background-color 0.25s;
   &:hover {
-    background: ${color.navy_hover};
+    background: ${Color(color.navy).darken(0.12)};
   }
 `;
 
@@ -124,23 +132,27 @@ export const buttonLightPink = css`
   border: 1px solid ${color.lightPink};
   padding: 5px 15px;
   cursor: pointer;
-  ${font(16, color.white)};
+  font-size: 16px;
+  color: #fff;
+  transition: background-color 0.25s;
   &:hover {
-    background: ${color.lightPink_hover};
+    background: ${Color(color.lightPink).darken(0.12)};
   }
 `;
 
 export const buttonWhite = css`
-${InlineflexCenter};
-  background:${color.white};
-  transition:.3s;
-  border:1px solid ${color.blue};
-  padding:5px 15px;
+  ${InlineflexCenter};
+  background: ${color.white};
+  transition: 0.3s;
+  border: 1px solid ${color.blue};
+  padding: 5px 15px;
   /* text-transform: uppercase; */
   cursor: pointer;
-  ${font(16, color.blue)};
-  &:hover{
-    /* background:${color.blue_hover}; */
+  font-size: 16px;
+  color: ${color.blue};
+  transition: background-color 0.25s;
+  &:hover {
+    background: ${Color(color.white).darken(0.12)};
   }
 `;
 

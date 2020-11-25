@@ -6,7 +6,7 @@ import customLogger from 'store/customLogger';
 import { persistStore, persistReducer } from 'redux-persist';
 // import storage from 'redux-persist/lib/storage';
 import storage from 'redux-persist/lib/storage/session';
-import { keys } from 'api/config/storage';
+import { keys } from 'lib/storage';
 import rootReducer, { rootSaga } from 'store/modules';
 // import rootSaga from 'store/sagas';
 import { ENV_MODE_DEV, ENV_MODE_PROD } from 'lib/setting';

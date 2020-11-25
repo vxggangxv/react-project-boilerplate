@@ -5,7 +5,7 @@ import FullScreenLoading from 'components/base/loading/FullScreenLoading';
 import ErrorContainer from 'containers/base/ErrorContainer';
 import { useShallowSelector, useDidUpdateEffect } from 'lib/utils';
 import { isAuthenticatedSelector } from 'store/modules/auth';
-import storage, { keys } from 'api/config/storage';
+import storage, { keys } from 'lib/storage';
 // import { NotifyToast } from 'components/base/notifications';
 import PopupContainer from 'containers/common/popup/PopupContainer';
 import PopupsContainer from 'containers/common/popup/PopupsContainer';
