@@ -1,18 +1,17 @@
-import React, { useEffect } from 'react';
-import { useShallowSelector } from 'lib/utils';
-import { DispatchActions } from 'store/actionCreators';
-import styled, { keyframes } from 'styled-components';
-import CloseIcon from '@material-ui/icons/Close';
+import CancelIcon from '@material-ui/icons/Cancel';
 import CheckCircleIcon from '@material-ui/icons/CheckCircle';
+import CloseIcon from '@material-ui/icons/Close';
 import ErrorIcon from '@material-ui/icons/Error';
 import InfoIcon from '@material-ui/icons/Info';
-import CancelIcon from '@material-ui/icons/Cancel';
-import CachedIcon from '@material-ui/icons/Cached';
 import LoopIcon from '@material-ui/icons/Loop';
+import { useShallowSelector } from 'lib/utils';
+import React, { useEffect } from 'react';
+import { AppActions } from 'store/actionCreators';
+import styled, { keyframes } from 'styled-components';
 
 /**
  * 사용법
- * DispatchActions.show_toast({config});
+ * AppActions.show_toast({config});
  * config = {
  *  type: 'default' - default, success, error, warning, info, dark
  *  duration: 5000 - 실행 초(1000ms)
@@ -37,8 +36,8 @@ function ToastsContainer(props) {
   };
 
   useEffect(() => {
-    // DispatchActions.show_toast({ content: '복사 완료 Copy successed' });
-    // DispatchActions.show_toast({ content: () => <ToastContent /> });
+    // AppActions.show_toast({ content: '복사 완료 Copy successed' });
+    // AppActions.show_toast({ content: () => <ToastContent /> });
   }, []);
 
   if (!toasts.length) return null;
@@ -79,7 +78,7 @@ function ToastsContainer(props) {
           >
             <CloseIcon
               className="toasts__close_icon"
-              onClick={() => DispatchActions.remove_toast({ id })}
+              onClick={() => AppActions.remove_toast({ id })}
             />
             {typeIcon[type] && <span className="toast__type_icon">{typeIcon[type]}</span>}
             <Content />

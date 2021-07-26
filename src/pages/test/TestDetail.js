@@ -1,7 +1,6 @@
-import React, { useEffect } from 'react';
 import { useShallowSelector } from 'lib/utils';
-import { useImmer } from 'use-immer';
-import { DispatchActions } from 'store/actionCreators';
+import React, { useEffect } from 'react';
+import { TestActions } from 'store/actionCreators';
 
 const TestDetailState = {
   data: null,
@@ -16,7 +15,7 @@ function TestDetail({ match }) {
   }));
 
   useEffect(() => {
-    DispatchActions.fetch_test_request(id);
+    TestActions.fetch_test_request(id);
   }, []);
 
   console.log(testData, 'testData');

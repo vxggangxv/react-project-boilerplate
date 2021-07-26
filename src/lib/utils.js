@@ -1,10 +1,9 @@
-import React, { useEffect, useRef, useReducer, useState, useCallback } from 'react';
-import _ from 'lodash';
 import { convertObjectToQueryString } from 'lib/library';
-import { dispatch } from 'store/actionCreators';
+import _ from 'lodash';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
+import { shallowEqual, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
-import { DispatchActions } from 'store/actionCreators';
-import { useSelector, shallowEqual } from 'react-redux';
+import { BaseActions, dispatch } from 'store/actionCreators';
 
 /**
  *
@@ -24,20 +23,20 @@ export function IPSFset(draft, type) {
  * useInput
  * @param {*} initialForm object
  */
-export const useInput = (function () {
-  function reducer(state, action) {
-    return { ...state, [action.name]: action.value };
-  }
+// export const useInput = (function () {
+//   function reducer(state, action) {
+//     return { ...state, [action.name]: action.value };
+//   }
 
-  return function useInput(initialForm) {
-    const [state, dispatch] = useReducer(reducer, initialForm);
+//   return function useInput(initialForm) {
+//     const [state, dispatch] = useReducer(reducer, initialForm);
 
-    const onChange = e => {
-      dispatch(e.target);
-    };
-    return [state, onChange];
-  };
-})();
+//     const onChange = e => {
+//       dispatch(e.target);
+//     };
+//     return [state, onChange];
+//   };
+// })();
 
 /**
  *
@@ -47,7 +46,7 @@ export const useInput = (function () {
 export const useDidMount = f => useEffect(() => f && f(), []);
 
 /**
- * DidUpdateMount를 구현한 Custom hooks
+ * DidUpdateMount를 구현한 Custom hooks, useEffect를 쓰면 한번 읽히는 것을 방지하기 위한 최적화 작업
  * @param {*} fn
  * @param {*} inputs
  */
@@ -307,7 +306,7 @@ export function useHistoryPush() {
 }
 
 // NOTE: Popup
-export const Popup = config => DispatchActions.base_popup(config);
+export const Popup = config => BaseActions.base_popup(config);
 
 // NOTE: useInterval
 export function useInterval(callback, delay) {

@@ -1,9 +1,9 @@
+import { AppTemplate } from 'components/base/template';
+import { useDidUpdateEffect, useShallowSelector } from 'lib/utils';
+import queryString from 'query-string';
 import React from 'react';
 import { useHistory, useLocation } from 'react-router-dom';
-import queryString from 'query-string';
-import { useShallowSelector, useDidUpdateEffect } from 'lib/utils';
-import { DispatchActions } from 'store/actionCreators';
-import { AppTemplate } from 'components/base/template';
+import { AuthActions } from 'store/actionCreators';
 import { isAuthenticatedSelector } from 'store/modules/auth';
 
 function AuthSignIn(props) {
@@ -19,7 +19,7 @@ function AuthSignIn(props) {
   const returnPath = queryParse.returnPath || from.pathname;
 
   let login = () => {
-    DispatchActions.sign_in({ token: 'token', user: 'user' });
+    AuthActions.sign_in({ token: 'token', user: 'user' });
   };
 
   useDidUpdateEffect(() => {

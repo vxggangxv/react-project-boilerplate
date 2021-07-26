@@ -1,14 +1,12 @@
-import React, { useState } from 'react';
-import { toast } from 'react-toastify';
-import { Popup } from 'lib/utils';
-import { useEffect } from 'react';
-import { DispatchActions } from 'store/actionCreators';
 import T from 'components/common/text/T';
-import { Translation, withTranslation } from 'react-i18next';
-import styled from 'styled-components';
-import { CustomInfiniteScroll } from 'components/common/scroll';
-import { useImmer } from 'use-immer';
+import { Popup } from 'lib/utils';
+import React, { useEffect, useState } from 'react';
+import { Translation } from 'react-i18next';
 import InfiniteScroll from 'react-infinite-scroll-component';
+import { toast } from 'react-toastify';
+import { BaseActions } from 'store/actionCreators';
+import styled from 'styled-components';
+import { useImmer } from 'use-immer';
 
 const AboutContainerState = {
   loading: false,
@@ -25,7 +23,7 @@ function AboutContainer() {
   const items = values.items;
 
   useEffect(() => {
-    // DispatchActions.language_change('ko');
+    // BaseActions.language_change('ko');
     return () => {
       // fetchMoreData();
     };
@@ -96,9 +94,9 @@ function AboutContainer() {
   // };
 
   const languageChange = () => {
-    // DispatchActions.language_change('KO');
-    DispatchActions.language_change('en');
-    // DispatchActions.language_change('ko');
+    // BaseActions.language_change('KO');
+    BaseActions.language_change('en');
+    // BaseActions.language_change('ko');
   };
 
   return (

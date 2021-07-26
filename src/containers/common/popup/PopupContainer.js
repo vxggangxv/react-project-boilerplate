@@ -1,8 +1,8 @@
-import React, { useMemo } from 'react';
-import { DispatchActions } from 'store/actionCreators';
-import PlainModal from 'components/common/modal/PlainModal';
 import AppModal from 'components/common/modal/AppModal';
+import PlainModal from 'components/common/modal/PlainModal';
 import { useShallowSelector } from 'lib/utils';
+import React from 'react';
+import { BaseActions } from 'store/actionCreators';
 
 // basePopup.isOpen
 // basePopup.type
@@ -35,7 +35,7 @@ function PopupContainer() {
     okText = '',
     okLink = '',
     cancelLink = '',
-    key = '',
+    // key = '',
     align = [],
     dim = true,
     paddingNone = false,
@@ -49,7 +49,9 @@ function PopupContainer() {
     <>
       <PlainModal
         isOpen={isOpen}
-        onClick={() => DispatchActions.base_popup({ isOpen: false })}
+        onClick={() => {
+          BaseActions.base_popup({ type: 'dim' });
+        }}
         onExited={onExited}
         dim={dim}
         width={width}
@@ -70,16 +72,12 @@ function PopupContainer() {
           align={align}
           paddingNone={paddingNone}
           onClick={() => {
-            DispatchActions.base_popup({ isOpen: false });
-            if (!!onClick) {
-              onClick();
-            }
+            BaseActions.base_popup({ type: 'dim' });
+            onClick();
           }}
           onCancel={() => {
-            DispatchActions.base_popup({ isOpen: false });
-            if (!!onCancel) {
-              onCancel();
-            }
+            BaseActions.base_popup({ type: 'dim' });
+            onCancel();
           }}
         />
       </PlainModal>

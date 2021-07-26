@@ -1,9 +1,8 @@
-import React from 'react';
 import { useShallowSelector } from 'lib/utils';
-import { useImmer } from 'use-immer';
-import { useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { DispatchActions } from 'store/actionCreators';
+import { TestActions } from 'store/actionCreators';
+import { useImmer } from 'use-immer';
 
 const TestListState = {
   data: null,
@@ -18,7 +17,7 @@ function TestList({ match }) {
   // console.log(match, 'match');
   // console.log(testsData, 'testsData');
   useEffect(() => {
-    DispatchActions.fetch_tests_request();
+    TestActions.fetch_tests_request();
   }, []);
 
   const data = testsData?.slice(0, 10);
@@ -27,7 +26,7 @@ function TestList({ match }) {
     const { type = '' } = config;
 
     if (type === 'data') {
-      DispatchActions.fetch_tests_request();
+      TestActions.fetch_tests_request();
 
       return;
     }

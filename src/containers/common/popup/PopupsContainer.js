@@ -1,8 +1,8 @@
-import React, { Fragment, useMemo } from 'react';
-import { DispatchActions } from 'store/actionCreators';
-import PlainModal from 'components/common/modal/PlainModal';
 import AppModal from 'components/common/modal/AppModal';
+import PlainModal from 'components/common/modal/PlainModal';
 import { useShallowSelector } from 'lib/utils';
+import React, { Fragment } from 'react';
+import { AppActions } from 'store/actionCreators';
 
 // basePopup.isOpen
 // basePopup.type
@@ -29,7 +29,8 @@ function PopupContainer() {
         const {
           isOpen = false,
           type = 'alert',
-          width = 350,
+          // width = 350,
+          width = 534,
           title = '',
           content = '',
           isTitleDefault = false,
@@ -39,8 +40,9 @@ function PopupContainer() {
           reverseButton = false,
           okText = '',
           okLink = '',
+          cancelText = '',
           cancelLink = '',
-          key = '',
+          // key = '',
           align = [],
           dim = true,
           paddingNone = false,
@@ -49,11 +51,12 @@ function PopupContainer() {
           onCancel = () => {},
           onExited = () => {},
         } = item.config;
+
         return (
           <Fragment key={index}>
             <PlainModal
               isOpen={isOpen}
-              onClick={() => DispatchActions.remove_popup({ id })}
+              onClick={() => AppActions.remove_popup_delay({ id, isOpen: false })}
               onExited={onExited}
               dim={dim}
               width={width}
@@ -70,20 +73,17 @@ function PopupContainer() {
                 reverseButton={reverseButton}
                 okText={okText || 'Ok'}
                 okLink={okLink}
+                cancelText={cancelText || 'Cancel'}
                 cancelLink={cancelLink}
                 align={align}
                 paddingNone={paddingNone}
                 onClick={() => {
-                  DispatchActions.remove_popup({ id });
-                  if (!!onClick) {
-                    onClick();
-                  }
+                  AppActions.remove_popup_delay({ id, isOpen: false });
+                  onClick();
                 }}
                 onCancel={() => {
-                  DispatchActions.remove_popup({ id });
-                  if (!!onCancel) {
-                    onCancel();
-                  }
+                  AppActions.remove_popup_delay({ id, isOpen: false });
+                  onCancel();
                 }}
               />
             </PlainModal>
