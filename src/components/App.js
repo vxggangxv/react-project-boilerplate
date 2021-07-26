@@ -8,7 +8,7 @@ import AppErrorBoundary from 'components/base/error/AppErrorBoundary';
 import LRoute from 'components/base/route/LRoute';
 import PrivateRoute from 'components/base/route/PrivateRoute';
 import './App.scss';
-import * as mapper from 'lib/mapper';
+import { pageUrl } from 'lib/mapper';
 
 function App() {
   return (
@@ -16,10 +16,11 @@ function App() {
       <GlobalAppStyle />
       <AppErrorBoundary>
         <Core />
+
         <Switch>
-          <Redirect exact path={mapper.pageUrl.index} to={mapper.pageUrl.home} />
-          <Route path={mapper.pageUrl.home} component={Home} />
-          <LRoute path={mapper.pageUrl.auth.index} component={Auth} />
+          <Redirect exact path={pageUrl.index} to={pageUrl.home} />
+          <Route path={pageUrl.home} component={Home} />
+          <LRoute path={pageUrl.auth.index} component={Auth} />
           <Route path="/error" component={Error} />
           <Route path="/user" component={User} />
           <PrivateRoute path="/about" component={About} />

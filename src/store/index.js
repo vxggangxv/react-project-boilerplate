@@ -33,9 +33,9 @@ if (ENV_MODE_DEV) {
 const composeEnhancers = composeWithDevTools({ trace: true, traceLimit: 25 });
 const enhancers = composeEnhancers(applyMiddleware(...middlewares));
 
-// const store = createStore(rootReducer, enhancers);
-const store = createStore(persistedReducer, enhancers);
-export const persistor = persistStore(store);
+const store = createStore(rootReducer, enhancers);
+// const store = createStore(persistedReducer, enhancers);
+// export const persistor = persistStore(store);
 sagaMiddleware.run(rootSaga);
 
 export default store;

@@ -4,12 +4,12 @@ import cx from 'classnames';
 import { NavLink, Link, useLocation } from 'react-router-dom';
 import { logo } from 'components/base/images';
 import * as mapper from 'lib/mapper';
-import { isAuthenticatedSelector } from 'store/modules/auth';
+import { isLogInSelector } from 'store/modules/auth';
 import { useShallowSelector } from 'lib/utils';
 
 function AppHeader() {
   const { isAuthenticated } = useShallowSelector(state => ({
-    isAuthenticated: isAuthenticatedSelector(state),
+    isAuthenticated: isLogInSelector(state),
   }));
   const { pathname } = useLocation();
 

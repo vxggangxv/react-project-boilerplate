@@ -1,8 +1,8 @@
-import { all } from 'redux-saga/effects';
-import { createAction, createSlice, createSelector } from '@reduxjs/toolkit';
-import { fetchInitialState } from 'store/utils';
+import { createAction, createSelector, createSlice } from '@reduxjs/toolkit';
 import { setAuthInHeader } from 'api/config/axiosUtils';
 import storage, { keys } from 'lib/storage';
+import { all } from 'redux-saga/effects';
+import { fetchInitialState } from 'store/utils';
 
 // actions
 export const set_token = createAction('set_token');
@@ -64,6 +64,13 @@ export const actions = slice.actions;
 // createSelector
 export const accessTokenSelector = state => state.auth.accessToken;
 export const isAuthenticatedSelector = createSelector(accessTokenSelector, item => !!item);
+export const logInSelector = state => ({
+  accessToken: state.auth.accessToken,
+  user: state.user.user,
+});
+export const isLogInSelector = createSelector(logInSelector, item => {
+  return !!item.accessToken && !!item.user;
+});
 
 // function* handleSignUp (action) {}
 

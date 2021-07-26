@@ -41,17 +41,21 @@ export const navigation = [
   {
     path: pageUrl.home,
     text: 'Home',
+    index: 0,
   },
   {
     path: '/about',
     text: 'About',
+    index: 1,
   },
   {
     path: '/user',
     text: 'User',
+    index: 2,
   },
   {
     path: '/test',
     text: 'Test',
+    index: 3,
   },
 ];

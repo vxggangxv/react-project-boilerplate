@@ -12,6 +12,11 @@
     <link rel="apple-touch-icon" href="%PUBLIC_URL%/logo192.png" />
     <link rel="manifest" href="%PUBLIC_URL%/manifest.json" /> -->
     <title>React App</title>
+    <script>
+      // See https://github.com/facebook/react/issues/20829#issuecomment-802088260
+      if (!crossOriginIsolated) SharedArrayBuffer = ArrayBuffer;
+    </script>
+    <script src="/evnconfig.js" type="text/javascript"></script>
   </head>
   <body>
     <noscript>You need to enable JavaScript to run this app.</noscript>

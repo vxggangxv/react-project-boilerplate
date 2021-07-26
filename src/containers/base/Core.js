@@ -2,8 +2,6 @@ import I18nLanguage from 'components/base/language/I18nLanguage';
 import FullScreenLoading from 'components/base/loading/FullScreenLoading';
 import ErrorContainer from 'containers/base/ErrorContainer';
 import ToastsContainer from 'containers/base/ToastsContainer';
-// import { NotifyToast } from 'components/base/notifications';
-import PopupContainer from 'containers/common/popup/PopupContainer';
 import PopupsContainer from 'containers/common/popup/PopupsContainer';
 import { useShallowSelector } from 'lib/utils';
 import React, { useEffect } from 'react';
@@ -71,7 +69,7 @@ function Core() {
       <FullScreenLoading visible={isVisibleLoading} type="linear" />
       <ErrorContainer />
       {/* 하위 호환용 차후 전체 변경 고려 */}
-      <PopupContainer />
+      {/* <PopupContainer /> */}
       <PopupsContainer />
       <ToastsContainer />
       {/* <NotifyToast /> */}

@@ -8,8 +8,7 @@ import SignOut from './SignOut';
 import NotFound from 'components/base/error/NotFound';
 import * as mapper from 'lib/mapper';
 
-function Auth({ match }) {
-  // console.log(match, 'match');
+function Auth() {
   return (
     <Switch>
       <Redirect exact path={`${mapper.pageUrl.auth.index}`} to={`${mapper.pageUrl.auth.signIn}`} />
@@ -23,4 +22,4 @@ function Auth({ match }) {
   );
 }
 
-export default withRouter(Auth);
+export default Auth;

@@ -1,39 +1,46 @@
-import React from 'react';
-import { Route, Redirect, useLocation } from 'react-router-dom';
-import * as mapper from 'lib/mapper';
-import { isAuthenticatedSelector } from 'store/modules/auth';
+import React, { useEffect } from 'react';
+import { Route, Redirect, useLocation, useHistory } from 'react-router-dom';
+import { pageUrl } from 'lib/mapper';
+import { isLogInSelector } from 'store/modules/auth';
 import { useShallowSelector } from 'lib/utils';
 import PropTypes from 'prop-types';
-
-// NOTE: propTypes 는 필요시 적용
-PrivateRoute.propTypes = {
-  component: PropTypes.func,
-};
+import { AppActions } from 'store/actionCreators';
 
 // 사용법: <PrivateRoute path="/project" component={Project} to="/auth/signup"/>
 function PrivateRoute({ component: Component, ...rest }) {
-  const { isAuthenticated } = useShallowSelector(state => ({
-    isAuthenticated: isAuthenticatedSelector(state),
+  const { isLogIn, responseStatus } = useShallowSelector(state => ({
+    isLogIn: isLogInSelector(state),
+    responseStatus: state.base.responseStatus,
   }));
-  const isRedirect = rest.redirect;
+  // const history = useHistory();
+  // isLogIn이 되고 redirect에 보내고 싶은 경로 입력, 없을 경우 signIn으로
+  // 사용X, 나중에 테스트
+  // const redirect = rest.redirect;
   const location = useLocation();
   // console.log(location, 'location');
+
+  useEffect(() => {
+    if (!isLogIn) {
+      AppActions.show_toast({
+        type: 'error',
+        message: `You don't have permission to access.`,
+      });
+    }
+  }, [isLogIn]);
 
   return (
     <Route
       {...rest}
       render={props => {
-        if (!isAuthenticated) {
+        if (!isLogIn) {
           return (
             <Redirect
               to={{
-                pathname: mapper.pageUrl.auth.signIn,
+                pathname: pageUrl.auth.signIn,
                 state: { from: location },
               }}
             />
           );
-        } else if (isRedirect) {
-          return <Redirect to={isRedirect} />;
         } else {
           return <Component {...props} />;
         }
@@ -42,4 +49,13 @@ function PrivateRoute({ component: Component, ...rest }) {
   );
 }
 
+// NOTE: propTypes 는 필요시 적용
+PrivateRoute.propTypes = {
+  component: PropTypes.func,
+};
+
 export default PrivateRoute;
+
+// } else if (redirect) {
+//   return <Redirect to={redirect} />;
+// } else {

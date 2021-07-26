@@ -1,9 +1,9 @@
+import { BASE_API_URL } from 'lib/setting';
 import { axs } from './config/axiosConfig';
-import { api_address } from 'lib/setting';
 import request from './config/axiosUtils';
 
 export const test = request({ path: '/todos', config: { timeout: false } });
-const todoPath = `${api_address}/todos`;
+const todoPath = `${BASE_API_URL}/todos`;
 // fetchPosts
 // fetchPostById
 // editPostById

@@ -4,11 +4,11 @@ import queryString from 'query-string';
 import React from 'react';
 import { useHistory, useLocation } from 'react-router-dom';
 import { AuthActions } from 'store/actionCreators';
-import { isAuthenticatedSelector } from 'store/modules/auth';
+import { isLogInSelector } from 'store/modules/auth';
 
 function SignIn(props) {
   const { isAuthenticated } = useShallowSelector(state => ({
-    isAuthenticated: isAuthenticatedSelector(state),
+    isAuthenticated: isLogInSelector(state),
   }));
   let history = useHistory();
   let location = useLocation();
