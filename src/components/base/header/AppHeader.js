@@ -22,11 +22,11 @@ function AppHeader() {
             <span className="sr-only">사이트 제목</span>
           </Link>
         </h1>
-        <nav className="header__nav">
+        <nav className="header__menu">
           <h1 className="sr-only">메인 메뉴</h1>
-          <ul className="header__nav_list">
+          <ul className="header__menu_list">
             {mapper.navigation.map((item, idx) => (
-              <li key={idx} className={cx('header__nav_item', { active: pathname === item.path })}>
+              <li key={idx} className={cx('header__menu_item', { active: pathname === item.path })}>
                 <NavLink to={item.path} className="header__link">
                   {item.text}
                 </NavLink>
@@ -35,10 +35,10 @@ function AppHeader() {
           </ul>
         </nav>
         <div className="header__auth_menu">
-          <ul className="header__nav_list auth">
+          <ul className="header__menu_list auth">
             {isAuthenticated ? (
               <li
-                className={cx('header__nav_item', {
+                className={cx('header__menu_item', {
                   active: pathname === mapper.pageUrl.auth.signOut,
                 })}
               >
@@ -48,7 +48,7 @@ function AppHeader() {
               </li>
             ) : (
               <li
-                className={cx('header__nav_item', {
+                className={cx('header__menu_item', {
                   active: pathname === mapper.pageUrl.auth.signIn,
                 })}
               >
@@ -85,13 +85,13 @@ const Styled = {
     .header__logo {
       width: 80px;
     }
-    .header__nav {
+    .header__menu {
       position: relative;
     }
-    .header__nav_list {
+    .header__menu_list {
       display: flex;
     }
-    .header__nav_item {
+    .header__menu_item {
       &:not(:first-of-type) {
         margin-left: 10px;
       }
