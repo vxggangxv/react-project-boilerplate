@@ -22,7 +22,7 @@ function AppHeader() {
             <span className="sr-only">사이트 제목</span>
           </Link>
         </h1>
-        <nav className="header__menu">
+        <nav className="header__main_menu">
           <h1 className="sr-only">메인 메뉴</h1>
           <ul className="header__menu_list">
             {mapper.navigation.map((item, idx) => (
@@ -84,9 +84,6 @@ const Styled = {
     }
     .header__logo {
       width: 80px;
-    }
-    .header__menu {
-      position: relative;
     }
     .header__menu_list {
       display: flex;
