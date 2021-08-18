@@ -3,24 +3,23 @@ import { composeWithDevTools } from 'redux-devtools-extension/developmentOnly';
 import createSagaMiddleware from 'redux-saga';
 import logger from 'redux-logger';
 import customLogger from 'store/customLogger';
-import { persistStore, persistReducer } from 'redux-persist';
+// import { persistStore, persistReducer } from 'redux-persist';
 // import storage from 'redux-persist/lib/storage';
-import storage from 'redux-persist/lib/storage/session';
-import { keys } from 'lib/storage';
+// import storage from 'redux-persist/lib/storage/session';
+// import { keys } from 'lib/storage';
 import rootReducer, { rootSaga } from 'store/modules';
-// import rootSaga from 'store/sagas';
 import { ENV_MODE_DEV, ENV_MODE_PROD } from 'lib/setting';
 
-const persistConfig = {
-  key: keys.persist,
-  storage,
-  // whitelist: [],
-  blacklist: ['app', 'base', 'auth', 'user'],
-};
+// const persistConfig = {
+//   key: keys.persist,
+//   storage,
+//   // whitelist: [],
+//   blacklist: ['app', 'base', 'auth', 'user'],
+// };
 
-const persistedReducer = persistReducer(persistConfig, rootReducer);
+// const persistedReducer = persistReducer(persistConfig, rootReducer);
 
-const sagaMiddleware = createSagaMiddleware();
+const sagaMiddleware: any = createSagaMiddleware();
 let middlewares = [sagaMiddleware];
 
 if (ENV_MODE_PROD) {
@@ -37,5 +36,8 @@ const store = createStore(rootReducer, enhancers);
 // const store = createStore(persistedReducer, enhancers);
 // export const persistor = persistStore(store);
 sagaMiddleware.run(rootSaga);
+
+export type RootState = ReturnType<typeof store.getState>;
+export type AppDispatch = typeof store.dispatch;
 
 export default store;

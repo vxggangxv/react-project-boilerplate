@@ -1,34 +1,15 @@
-import { createAction, createSlice } from '@reduxjs/toolkit';
+import { createAction, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { all, delay, put, takeEvery } from 'redux-saga/effects';
 
-export const exit_landing = createAction('exit_landing');
-export const set_api_calling_status = createAction('set_api_calling_status');
-export const clear_api_calling_status = createAction('clear_api_calling_status');
+interface InitialState {
+  landing: boolean;
+  apiCalling: boolean;
+  toasts: object[] | any[];
+  popups: object[] | any[];
+  fileProgress: object[] | any[];
+}
 
-export const show_toast = createAction('show_toast');
-export const add_toast = createAction('add_toast');
-export const remove_toast = createAction('remove_toast');
-
-export const add_popup = createAction('add_popup');
-export const remove_popup = createAction('remove_popup');
-export const remove_popup_config = createAction('remove_popup_config');
-export const remove_popup_delay = createAction('remove_popup_delay');
-
-// axios onUploadProgress
-export const set_upload_file_progress = createAction('set_upload_file_progress');
-export const upload_file_progress_success = createAction('upload_file_progress_success');
-export const upload_file_progress_failure = createAction('upload_file_progress_failure');
-
-// axios downloadFile
-// export const download_file_success = createAction('download_file_success');
-// export const download_file_failure = createAction('download_file_failure');
-
-// popups으로 대체
-// export const show_dialog = createAction('show_dialog');
-// export const confirm_dialog = createAction('confirm_dialog');
-// export const cancel_dialog = createAction('cancel_dialog');
-
-const initialState = {
+const initialState: InitialState = {
   // 초기 랜딩중일 경우 true, false일 경우 화면 랜딩 완료
   landing: true,
   // api통신 pending, success, failure에 따른 자동 loading show
@@ -61,7 +42,7 @@ const slice = createSlice({
     clear_api_calling_status: state => {
       state.apiCalling = false;
     },
-    show_toast: () => {},
+    show_toast: (state, action) => {},
     add_toast: (state, { payload }) => {
       state.toasts = state.toasts.concat(payload);
     },
@@ -74,7 +55,8 @@ const slice = createSlice({
     remove_toasts: (state, { payload }) => {
       state.toasts = [];
     },
-    add_popup: (state, { payload }) => {
+    // e.g. PayloadAction
+    add_popup: (state, { payload }: PayloadAction<object>) => {
       const nextId = _pid + 1;
       _pid = nextId;
       const config = payload;
@@ -131,17 +113,18 @@ const slice = createSlice({
 
 export const actions = slice.actions;
 
-function* handleRequest(action) {
+function* handleRequest(action: any) {
   // console.log('handleRequest');
   // yield put(actions.set_api_calling_status());
 }
 
-function* handleSuccess(action) {
+function* handleSuccess(action: any) {
   // yield put(actions.clear_api_calling_status());
   // yield put(actions.show_toast('Request Completed.'));
 }
 
-function* handleFailure({ payload }) {
+function* handleFailure(action: any) {
+  const { payload } = action;
   // yield put(actions.clear_api_calling_status());
   const isShow = payload?.isShow;
   const status = payload?.status;
@@ -164,7 +147,7 @@ let _tid = 0;
  * @param {?string} okText - eventType byProject 에서 사용, project용 알림에서만 적용
  * @param {?number} delay
  */
-function* handleShowToast(action) {
+function* handleShowToast(action: ReturnType<typeof actions.show_toast>) {
   // console.log('handleShowToast');
   const nextId = _tid + 1;
   _tid = nextId;
@@ -197,7 +180,7 @@ function* handleShowToast(action) {
 
 // onExited 사용을 위한 delay 및, isOpen 연결 설정
 // id, isOpen: false 필수
-function* handleRemovePopupDelay({ payload }) {
+function* handleRemovePopupDelay({ payload }: any) {
   const { id, isOpen } = payload;
 
   yield put(actions.set_popup({ id, isOpen }));
@@ -208,17 +191,17 @@ function* handleRemovePopupDelay({ payload }) {
 
 export function* appSaga() {
   yield all([
-    takeEvery(action => {
+    takeEvery((action: any) => {
       if (typeof action.type === 'string') {
         return action.type.endsWith('_request');
       }
     }, handleRequest),
-    takeEvery(action => {
+    takeEvery((action: any) => {
       if (typeof action.type === 'string') {
         return action.type.endsWith('_success');
       }
     }, handleSuccess),
-    takeEvery(action => {
+    takeEvery((action: any) => {
       if (typeof action.type === 'string') {
         return action.type.endsWith('_failure');
       }

@@ -1,4 +1,4 @@
-const cumstomLogger = store => next => action => {
+const cumstomLogger = (store: any) => (next: any) => (action: any) => {
   const actionType = action.type;
   const type = actionType.slice(actionType.lastIndexOf('_') + 1);
   // const isExceptList = ['_index'];

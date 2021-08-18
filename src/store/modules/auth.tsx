@@ -2,16 +2,24 @@ import { createAction, createSelector, createSlice } from '@reduxjs/toolkit';
 import { setAuthInHeader } from 'api/config/axiosUtils';
 import storage, { keys } from 'lib/storage';
 import { all } from 'redux-saga/effects';
+import { RootState } from 'store';
 import { fetchInitialState } from 'store/utils';
 
 // actions
-export const set_token = createAction('set_token');
+export const set_token = createAction<string>('set_token');
 // TODO: api연결 후 수정
-export const sign_up = createAction('sign_up');
-export const sign_in = createAction('sign_in');
-export const sign_out = createAction('sign_out');
+export const sign_up = createAction<object>('sign_up');
+export const sign_in = createAction<object>('sign_in');
+export const sign_out = createAction<object>('sign_out');
 
-const initialState = {
+interface InitialState {
+  accessToken: string | null;
+  signUp: object;
+  signIn: object;
+  signOut: object;
+}
+
+const initialState: InitialState = {
   // NOTE: 최초 랜딩시 storage값 유무 확인
   accessToken: storage.get(keys.token) || null,
   signUp: {
@@ -62,9 +70,9 @@ export const name = slice.name;
 export const actions = slice.actions;
 
 // createSelector
-export const accessTokenSelector = state => state.auth.accessToken;
+export const accessTokenSelector = (state: RootState) => state.auth.accessToken;
 export const isAuthenticatedSelector = createSelector(accessTokenSelector, item => !!item);
-export const logInSelector = state => ({
+export const logInSelector = (state: RootState) => ({
   accessToken: state.auth.accessToken,
   user: state.user.user,
 });

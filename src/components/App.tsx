@@ -15,8 +15,6 @@ function App() {
     <>
       <GlobalAppStyle />
       <AppErrorBoundary>
-        <Core />
-
         <Switch>
           <Redirect exact path={pageUrl.index} to={pageUrl.home} />
           <Route path={pageUrl.home} component={Home} />
@@ -28,6 +26,8 @@ function App() {
           <Route path="/test" component={Test} />
           <Route component={() => <Redirect to="/error/404" />} />
         </Switch>
+
+        <Core />
       </AppErrorBoundary>
     </>
   );

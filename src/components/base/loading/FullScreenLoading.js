@@ -8,7 +8,7 @@ FullScreenLoading.propTypes = {
   size: PropTypes.number,
 };
 
-function FullScreenLoading({ visible, size }) {
+function FullScreenLoading({ visible, size, type }) {
   if (visible === false) return null;
   return (
     <Styled.FullScreenLoading data-component-name="FullScreenLoading">

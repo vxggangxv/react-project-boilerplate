@@ -6,7 +6,13 @@ import * as api from 'api/test';
 export const fetch_tests = createFetchAction('fetch_tests');
 export const fetch_test = createFetchAction('fetch_test');
 
-const initialState = {
+interface InitialState {
+  tests: object;
+  test: object;
+  obj: object;
+}
+
+const initialState: InitialState = {
   tests: {
     ...fetchInitialState,
     data: null,
@@ -29,31 +35,31 @@ const slice = createSlice({
   name: 'test',
   initialState,
   reducers: {
-    ...new fetchReducerActions(fetch_tests, 'tests'),
-    ...new fetchReducerActions(fetch_test, 'test'),
+    ...fetchReducerActions(fetch_tests, 'fetch_tests'),
+    ...fetchReducerActions(fetch_test, 'fetch_test'),
   },
 });
 
-export const actions = slice.actions;
+export const actions: any = slice.actions;
 
 // saga
-function* handleFetchTests() {
-  try {
-    yield put(actions.fetch_tests_sucess());
-  } catch (err) {
-    yield put(actions.fetch_tests_failure());
-  } finally {
-    // yield put();
-  }
-}
+// function* handleFetchTests() {
+//   try {
+//     yield put(actions.fetch_tests_sucess());
+//   } catch (err) {
+//     yield put(actions.fetch_tests_failure());
+//   } finally {
+//     // yield put();
+//   }
+// }
 
-function* handleFetchTest() {
-  try {
-    yield put(actions.fetch_test_sucess());
-  } catch (err) {
-    yield put(actions.fetch_test_failure());
-  }
-}
+// function* handleFetchTest() {
+//   try {
+//     yield put(actions.fetch_test_sucess());
+//   } catch (err) {
+//     yield put(actions.fetch_test_failure());
+//   }
+// }
 
 export function* testSaga() {
   yield all([

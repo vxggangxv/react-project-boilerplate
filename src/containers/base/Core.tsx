@@ -5,21 +5,25 @@ import ToastsContainer from 'containers/base/ToastsContainer';
 import PopupsContainer from 'containers/common/popup/PopupsContainer';
 import { useShallowSelector } from 'lib/utils';
 import React, { useEffect } from 'react';
-import { useImmer } from 'use-immer';
-
-const CoreState = {};
+import { RootState } from 'store';
+import { AppActions } from 'store/actionCreators';
+import { useAppSelector, useShallowAppSelector } from 'store/hooks';
 
 // NOTE: 초기 landing, error, notifications, popup 등록
 // DEBUG: 차후 성능적인 문제 발생시 apiCalling분리
 function Core() {
-  const { apiCalling } = useShallowSelector(state => ({
+  // const { apiCalling } = useShallowSelector((state: RootState) => ({
+  //   apiCalling: state.app.apiCalling,
+  // }));
+  // const { apiCalling } = useAppSelector(state => ({
+  const { apiCalling } = useShallowAppSelector(state => ({
     apiCalling: state.app.apiCalling,
   }));
-  const [values, setValues] = useImmer(CoreState);
 
   // NOTE: 초기화 함수
   // user가 없는 경우 == login이 안된경우, autn_sign_out() 실행
   const initialize = async () => {
+    // AppActions.set_api_calling_status();
     // if (!user && ) {
     //   history.push(pageUrl.auth.signOut);
     // }
@@ -38,9 +42,9 @@ function Core() {
   //   console.log(popups, 'popups');
   // }, [apiCalling, landing, toasts, popups]);
 
-  // useEffect(() => {
-  //   console.log(selector, 'selector');
-  // }, [selector]);
+  useEffect(() => {
+    console.log(apiCalling, 'apiCalling');
+  }, [apiCalling]);
 
   useEffect(() => {
     // BaseActions.base_popup({
@@ -48,13 +52,13 @@ function Core() {
     //   title: 'Title',
     //   content: 'Cotnent',
     // });
-    // BaseActions.add_popup({
+    // AppActions.add_popup({
     //   isOpen: true,
     //   title: 'Title1',
     //   content: 'Cotnent1',
     //   hideBackdrop: true,
     // });
-    // BaseActions.add_popup({
+    // AppActions.add_popup({
     //   isOpen: true,
     //   title: 'Title2',
     //   content: 'Cotnent2',
