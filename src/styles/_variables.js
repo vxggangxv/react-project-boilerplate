@@ -5,7 +5,7 @@ const scannerBgGradient = `linear-gradient(0deg, rgba(255, 255, 255, 0) 11.49%, 
 const timeLineBgGradient = `linear-gradient(90deg, #00A6E2 0%, #5B86E5 100%);`;
 
 // NOTE: 새로 작업시 재설정
-const _color = {
+export const _color = {
   red: `#D20000`,
   white: `#ffffff`,
   black_hover: `#1F1E4F`,
@@ -61,25 +61,36 @@ const _color = {
   time_line_bg_gradient: timeLineBgGradient,
 };
 
-const _deviceSize = {
-  pc: '1920px',
-  mobile: '400px',
-  pad: '800px',
-  lg: '1280px',
-  md: '960px',
-  sm: '600px',
+export const _deviceSize = {
+  xl: 1920,
+  // lg: 1460,
+  lg: 1300,
+  lgPadding: 10,
+  md: 960,
+  sm: 600,
+  xs: 0,
 };
 
-const _sizes = {
-  desktop: 992,
-  tablet: 768,
-  phone: 600,
-  md: 900,
+export const _theme = {
+  color: {
+    primary: _color.blue, // 주 색상
+    // secondary: ,  // 부 색상
+    white: '#fff',
+    gray: '#ccc',
+    default: _color.black_font, // 기본 문자 색상
+    error: _color.red, // 오류 색상
+  },
 };
 
-const _font = {
+export const _font = {
   notoSans: `"Noto Sans KR", sans-serif`,
   mulish: `"Mulish"`,
+  roboto: `"Roboto"`,
+  opensans: `"Open Sans"`,
 };
 
-export { _color, _deviceSize, _font, _sizes };
+// TEST:
+export const responsive = {
+  lgMore: `@media (min-width: ${_deviceSize.lg}px)`,
+  mdMoreAndLess: `@media (min-width: ${_deviceSize.md}px) and (max-width: ${_deviceSize.lg - 1}px)`,
+};

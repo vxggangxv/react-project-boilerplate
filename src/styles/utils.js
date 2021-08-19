@@ -1,13 +1,18 @@
 import Color from 'color';
 import { css } from 'styled-components';
-import { _color, _font, _sizes, _deviceSize } from 'styles/_variables';
+import { _color, _font, _deviceSize, _theme } from 'styles/_variables';
 
 export const fontFamilyValue = `${_font.mulish}, ${_font.notoSans}`;
+// export const fontFamilyValue = `${_font.opensans}, ${_font.notoSans}`;
 export const fontFamily = css`
   font-family: ${fontFamilyValue};
 `;
+export const robotoFont = `${_font.roboto}, ${_font.notoSans}`;
+export const opensansFont = `${_font.opensans}, ${_font.notoSans}`;
+
 export const color = _color;
 export const device = _deviceSize;
+export const theme = _theme;
 
 export const floatClear = css`
   &:after {
@@ -43,6 +48,7 @@ export const positionWide = css`
   height: 100%;
 `;
 
+// font-size, color 두개 다 사용할 경우
 export const font = (size = 14, color = 'black') => {
   return css`
     color: ${color};
@@ -57,9 +63,25 @@ export const flexCenter = css`
   align-items: center;
   justify-content: center;
 `;
+export const flexAlignItemsCenter = css`
+  display: flex;
+  align-items: center;
+`;
+export const flexJustifyContentCenter = css`
+  display: flex;
+  justify-content: center;
+`;
 export const InlineflexCenter = css`
   display: inline-flex;
   align-items: center;
+  justify-content: center;
+`;
+export const InlineflexAlignItemsCenter = css`
+  display: inline-flex;
+  align-items: center;
+`;
+export const InlineflexJustifyContentCenter = css`
+  display: flex;
   justify-content: center;
 `;
 
@@ -92,7 +114,8 @@ export const outlinedButtonBlue = css`
   border: 1px solid ${color.blue};
   padding: 5px 15px;
   cursor: pointer;
-  ${font(16, color.blue)};
+  font-size: 16px;
+  color: ${color.blue};
 `;
 
 export const buttonGray = css`
@@ -193,15 +216,15 @@ export const checkboxBlueStyled = css`
   }
 `;
 
-export const _media = Object.keys(_sizes).reduce((acc, label) => {
-  acc[label] = (...args) => css`
-    @media (max-width: ${_sizes[label] / 16}em) {
-      ${css(...args)}
-    }
-  `;
+// export const _media = Object.keys(_sizes).reduce((acc, label) => {
+//   acc[label] = (...args) => css`
+//     @media (max-width: ${_sizes[label] / 16}em) {
+//       ${css(...args)}
+//     }
+//   `;
 
-  return acc;
-}, {});
+//   return acc;
+// }, {});
 
 // Mui Color Custom
 export const muiOutlinedInputFocus = (color = _color.blue) => {
@@ -273,3 +296,43 @@ export const animationMoveInfinite = config => {
     }
   `;
 };
+
+// default : width + marginRight = 60
+export const beforeDash = ({
+  width = 45,
+  height = 4,
+  marginRight = 15,
+  backgroundColor = _color.blue,
+  fontSize = 22,
+}) => {
+  return css`
+    display: flex;
+    align-items: center;
+    font-size: ${`${fontSize}px`};
+    &:before {
+      content: '';
+      width: ${`${width}px`};
+      height: ${`${height}px`};
+      margin-right: ${`${marginRight}px`};
+      background-color: ${backgroundColor};
+    }
+  `;
+};
+
+export const paper = css`
+  position: relative;
+  background-color: #fff;
+  border-radius: 10px;
+  /* box-shadow: 0px 0px 10px #000629; */
+  /* box-shadow: 0 0 10px rgba(0, 6, 41, 0.13); */
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.13);
+  padding: 40px 0;
+  &:not(:first-of-type) {
+    margin-top: 20px;
+  }
+`;
+
+export const paperSubtitle = css`
+  ${beforeDash({})};
+  padding-bottom: 40px;
+`;
