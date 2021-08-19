@@ -5,13 +5,6 @@ import { all } from 'redux-saga/effects';
 import { RootState } from 'store';
 import { fetchInitialState } from 'store/utils';
 
-// actions
-export const set_token = createAction<string>('set_token');
-// TODO: api연결 후 수정
-export const sign_up = createAction<object>('sign_up');
-export const sign_in = createAction<object>('sign_in');
-export const sign_out = createAction<object>('sign_out');
-
 interface InitialState {
   accessToken: string | null;
   signUp: object;

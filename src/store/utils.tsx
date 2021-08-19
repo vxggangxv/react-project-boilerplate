@@ -2,6 +2,14 @@ import { call, put } from 'redux-saga/effects';
 import { createAction } from '@reduxjs/toolkit';
 import { actions as appActions } from './modules/app';
 import { ENV_MODE_DEV } from 'lib/setting';
+import axios from 'axios';
+import { AppActions } from 'store/actionCreators';
+// import { AppActions, AuthActions, UserActions } from 'store/actionCreators';
+// import store from 'store';
+// import storage, { deleteCookie, getCookie, keys, setCookie, setSessionCookie } from 'lib/storage';
+// @ts-ignore
+import uuid from 'react-uuid';
+import fileDownload from 'js-file-download';
 
 export const fetchInitialState = {
   pending: null,
@@ -157,3 +165,115 @@ export function createSaga(
     }
   };
 }
+
+// 업로드 Progress 표시
+export async function uploadFileProgress({
+  file = null,
+  url = '',
+  formPayload = null,
+  config = {},
+  success = () => {},
+  failure = () => {},
+  finish = () => {},
+}) {
+  const id = uuid();
+  console.log('uploadFileProgress config', config);
+  console.log('uploadFileProgress formPayload', formPayload);
+
+  try {
+    AppActions.add_upload_file_progress({ id, file, progress: 0, status: 0 });
+    await axios({
+      url,
+      method: 'post',
+      ...config,
+      data: formPayload,
+      onUploadProgress: response => {
+        const { loaded, total } = response;
+        const progress = Math.floor((loaded / total) * 100);
+        // console.log(response, 'response');
+        // console.log(progress, 'progress');
+        AppActions.set_upload_file_progress({ id, progress });
+      },
+    });
+    AppActions.upload_file_progress_success({ id });
+    success();
+  } catch (error) {
+    const { response = {}, request = '', message = '' } = error;
+    const { data = null, status = null, headers = null } = response;
+
+    console.log('error', error);
+    AppActions.upload_file_progress_failure({
+      id,
+      isShow: true,
+      status,
+      message,
+    });
+    failure();
+  } finally {
+    console.log('finish');
+    finish();
+  }
+}
+
+// File stream download
+export async function downloadFile({
+  url = '',
+  name = '',
+  config = {},
+  success = () => {},
+  failure = () => {},
+  finish = () => {},
+}) {
+  try {
+    const response = await axios({
+      url,
+      method: 'get',
+      responseType: 'blob',
+      // responseType: 'stream',
+      ...config,
+      onDownloadProgress: response => {
+        // console.log(response.currentTarget.responseHeaders['Content-Length']);
+        // console.log(response.currentTarget.response.length);
+        // const total = parseFloat(progressEvent.currentTarget.responseHeaders['Content-Length'])
+        // const current = progressEvent.currentTarget.response.length
+        // onProgress: response => {
+        const { loaded, total } = response;
+        const progress = Math.floor((loaded / total) * 100);
+        console.log(response, 'response');
+        // 브라우저(사이트)에서 윈도우 시스템에 접근 할 수 없다.
+        console.log('onDownloadProgress', progress);
+        // AppActions.set_upload_file_progress({ id, progress });
+      },
+    });
+    console.log(response, 'response');
+    fileDownload(response.data, name);
+    success();
+  } catch (error) {
+    // console.log(error);
+    // console.log(error.message);
+    const { response = {}, request = '', message = '' } = error;
+    const { data = null, status = null, headers = null } = response;
+
+    // AppActions.download_file_failure({
+    //   isShow: true,
+    //   status,
+    //   message,
+    // });
+    AppActions.show_toast({ status, type: 'error', message });
+    failure();
+  } finally {
+    console.log('finish');
+    finish();
+  }
+}
+
+// export function signOutProccess() {
+//   deleteCookie(keys.sign_in_token);
+//   deleteCookie(keys.remember_user_token);
+//   storage.remove(keys.user);
+//   UserActions.set_user(null);
+//   AuthActions.set_access_token(null);
+//   // persist 삭제
+//   storage.remove(`persist:${keys.persist}`);
+//   sessionStorage.removeItem(`persist:${keys.persist}`);
+// }

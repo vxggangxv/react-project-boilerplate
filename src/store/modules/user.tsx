@@ -1,9 +1,11 @@
 import { createAction, createSlice } from '@reduxjs/toolkit';
 import storage, { keys } from 'lib/storage';
 
-export const set_user = createAction('set_user');
+type InitialState = {
+  user: string | null;
+};
 
-const initialState = {
+const initialState: InitialState = {
   // 최초 랜딩시 storage값 유무 확인
   user: storage.get(keys.user) || null,
 };
