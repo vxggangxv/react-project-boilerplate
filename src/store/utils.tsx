@@ -5,7 +5,6 @@ import { ENV_MODE_DEV } from 'lib/setting';
 import axios from 'axios';
 import { AppActions } from 'store/actionCreators';
 // import { AppActions, AuthActions, UserActions } from 'store/actionCreators';
-// import store from 'store';
 // import storage, { deleteCookie, getCookie, keys, setCookie, setSessionCookie } from 'lib/storage';
 // @ts-ignore
 import uuid from 'react-uuid';
