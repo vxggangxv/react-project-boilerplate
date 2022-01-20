@@ -1,19 +1,10 @@
 import produce from 'immer';
-import _ from 'lodash';
-import { dispatch } from 'store/actionCreators';
+import { ENV_MODE_DEV } from 'lib/setting';
 import { call } from 'redux-saga/effects';
+import { dispatch } from 'store/actionCreators';
 
 /**
- * makeActionCreator
- * @param {*} actionType
- * @param {*} payload
- */
-export function makeActionCreator(actionType, payload) {
-  return dispatch({ type: actionType, payload: payload });
-}
-
-/**
- * Actions Name
+ * makeAsyncActions: 액션 타입 생성
  * @param {*} actionName string
  */
 export function makeAsyncActions(actionName) {
@@ -37,7 +28,7 @@ export function makeAsyncActions(actionName) {
 }
 
 /**
- * makeAsyncActions
+ * makeAsyncCreateActions: 액션 타입과 dispatch 연결
  * @param {*} actions Object
  */
 export function makeAsyncCreateActions(actions) {
@@ -49,19 +40,19 @@ export function makeAsyncCreateActions(actions) {
 
     const request = data => api(data);
     const init = payload => {
-      console.log(`${actions.INIT}`);
+      // console.log(`${actions.INIT}`);
       makeActionCreator(actions.INIT, payload);
     };
     const pending = payload => {
-      console.log(`${actions.PENDING}`);
+      // console.log(`${actions.PENDING}`);
       makeActionCreator(actions.PENDING, payload);
     };
     const success = payload => {
-      console.log(`${actions.SUCCESS}`);
+      // console.log(`${actions.SUCCESS}`);
       makeActionCreator(actions.SUCCESS, payload);
     };
     const failure = payload => {
-      console.log(`${actions.FAILURE}`);
+      // console.log(`${actions.FAILURE}`);
       makeActionCreator(actions.FAILURE, payload);
     };
     ActionsFunction.index = actions.INDEX;
@@ -75,7 +66,16 @@ export function makeAsyncCreateActions(actions) {
 }
 
 /**
- *
+ * makeActionCreator: dispatch 연결
+ * @param {*} actionType
+ * @param {*} payload
+ */
+export function makeActionCreator(actionType, payload) {
+  return dispatch({ type: actionType, payload: payload });
+}
+
+/**
+ * createPromiseSaga: saga의 api 연결
  * @param {*} type
  * @param {*} promiseCreator
  */
@@ -90,11 +90,11 @@ export const createPromiseSaga = ({
     let currentState = null;
     let payload = null;
 
-    console.log(`
-    ==========================
-    >>> *${tag}
-    ==========================
-    `);
+    // console.log(`
+    // ==========================
+    // >>> *${tag}
+    // ==========================
+    // `);
 
     if (!type) {
       console.warn(`createPromiseSaga Need type`);
@@ -109,12 +109,14 @@ export const createPromiseSaga = ({
       currentState = 'pending';
       const { data, error, cancel } = yield call(type.request, payload);
       const viewPayload = error ? error.payload : data.payload;
-
       data.payload = viewPayload || {};
-      console.group(`--- ${tag} Redux saga`);
-      console.log(` %cRequest Data :\n`, 'color:red;padding:5px;font-weight:bold', viewPayload);
-      console.log(` %cResponse Data :\n`, 'color:red;padding:5px;font-weight:bold', data);
-      console.groupEnd();
+
+      if (ENV_MODE_DEV) {
+        console.group(`-- ${tag} Redux saga`);
+        console.log(` %cRequest Data :\n`, 'color:red;padding:5px;font-weight:bold', viewPayload);
+        console.log(` %cResponse Data :\n`, 'color:red;padding:5px;font-weight:bold', data);
+        console.groupEnd();
+      }
 
       // NOTE: 차후 추가개발
       if (cancel) {
@@ -143,7 +145,7 @@ export const createPromiseSaga = ({
       }
     } catch (err) {
       console.log('\n');
-      console.group(currentState + ' error');
+      console.group(`${tag} ${currentState}` + ' error');
       console.log(payload, 'payload');
       console.log(err);
       console.groupEnd();
@@ -152,7 +154,10 @@ export const createPromiseSaga = ({
   };
 };
 
-// SECTION: Redux Saga, Actions
+/**
+ * SpreadSagas: reducer 연결
+ * @param {*} config
+ */
 export function SpreadSagas(config) {
   const { state: defaultState } = config;
 
@@ -174,9 +179,12 @@ export function SpreadSagas(config) {
         if ([pending, success, failure].every(item => item === undefined)) return;
 
         if (type === 'init') {
-          _.forEach(initialState, (value, key, obj) => {
-            targetState[key] = value;
-          });
+          targetState.pending = false;
+          targetState.success = false;
+          targetState.failure = false;
+          // _.forEach(initialState, (value, key, obj) => {
+          //   targetState[key] = value;
+          // });
         } else {
           targetState.pending = false;
           targetState.success = false;

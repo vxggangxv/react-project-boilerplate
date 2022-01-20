@@ -1,22 +1,21 @@
-import moment from 'moment';
+import { pageUrl } from 'lib/mapper';
 import { ENV_MODE_DEV } from 'lib/setting';
+import { BRIDGE_NUMBERING, NOTATION_CONFIG } from 'lib/teeth/teethMapper';
 import _ from 'lodash';
+import moment from 'moment';
 import reactAttrconvert from 'react-attr-converter';
-import { numbering_config } from 'lib/teethMapper';
-import { mapper } from 'lib/mapper';
-
-export const NOTATION_CONFIG = mapper.model.teeth.config;
-export const FDI_TEETH_NUM = numbering_config.fdi;
-export const UNIVERSAL_TEETH_NUM = numbering_config.universal;
-export const PALMER_TEETH_NUM = numbering_config.palmer;
-export const BRIDGE_NUMBERING = numbering_config.bridge;
-export const NUMBERING_CONFIG = numbering_config;
 
 export function getIndexForTeethFDI(num) {
   return NOTATION_CONFIG.fdi.list.indexOf(num);
 }
 
+/**
+ *
+ * @param {number} num : teeth number
+ * @param {number} type : NOTATION_CONFIG index number
+ */
 export function getMapperTeethNumbering(num, type) {
+  // 0이면 기본값 그대로 리턴
   if (type === 0) return num;
   const index = NOTATION_CONFIG.fdi.list.indexOf(num);
   return (
@@ -24,6 +23,7 @@ export function getMapperTeethNumbering(num, type) {
       if (item.index === type) {
         return item.list[index];
       }
+      // console.log(acc, 'acc');
       return acc;
     }) || null
   );
@@ -63,6 +63,18 @@ export function checkSpace(value) {
 export function regPassword(value) {
   if (checkSpace(value)) return false;
   let regExp = /^.*(?=^.{8,16}$)(?=.*\d)(?=.*[a-zA-Z])(?=.*[!@#$%^&+=]).*$/;
+  return regExp.test(value);
+}
+
+/**
+ * 숫자만
+ * @param {number} value
+ */
+export function regNumber(value) {
+  if (typeof value !== 'number' && !value) return false;
+  if (checkSpace(value)) return false;
+  let regExp = /^[0-9]*$/g;
+  // let regExp = /^[\d]$/g;
   return regExp.test(value);
 }
 
@@ -114,6 +126,70 @@ export function regLength(len, value, bool) {
   }
   let regExp = bool ? new RegExp(`^.{${len},${len}}$`) : new RegExp(`^.{1,${len}}$`);
   return regExp.test(value);
+}
+
+/**
+ * 숫자만 입력
+ * @param {*} value
+ */
+export function inputNumber(value) {
+  return value.replace(/[^0-9]/g, '');
+}
+
+/**
+ * 3자리 단위마다 콤마 생성
+ * @param {number} x
+ */
+export function addCommas(x) {
+  // 숫자가 아니고 false일 경우(null, undefined)
+  if (typeof x !== 'number' && !x) return x;
+  return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+}
+
+/**
+ * 양수 확인
+ * @param {number} x
+ * @returns {boolean}
+ */
+export function isPositive(x) {
+  return Number(x) >= 0;
+}
+
+/**
+ * 정수 확인
+ * @param {number} n
+ * @returns {boolean}
+ */
+export function isInt(n) {
+  return Number(n) === n && n % 1 === 0;
+}
+
+/**
+ * 실수 확인
+ * @param {number} n
+ * @returns {boolean}
+ */
+export function isFloat(n) {
+  return Number(n) === n && n % 1 !== 0;
+}
+
+/**
+ * 정수 또는 실수 확인
+ * @param {number} n
+ * @returns {boolean}
+ */
+export function isIntOrFloat(n) {
+  if (typeof n !== 'number' && !n) return false;
+  return (Number(n) === n && n % 1 === 0) || (Number(n) === n && n % 1 !== 0);
+}
+
+/**
+ * 모든 콤마 제거
+ * @param {number} x
+ */
+export function removeCommas(x) {
+  if (!x || x.length == 0) return '';
+  else return x.split(',').join('');
 }
 
 /**
@@ -394,10 +470,14 @@ export function getElementSize(target) {
 export function setFormData(data) {
   const formData = new FormData();
   _.forOwn(data, (val, key, value) => {
+    // console.log(val, 'val');
+    // console.log(key, 'in_key');
     formData.append(key, val);
     if (key === 'files') {
       _.forOwn(val, (in_val, in_key) => {
         if (Array.isArray(in_val)) {
+          // console.log(in_val, 'in_val');
+          // console.log(in_key, 'in_key');
           in_val.forEach(item => formData.append(in_key, item));
         }
       });
@@ -421,14 +501,13 @@ export function extractFileName(name) {
 
 /**
  * 파일명에서 확장자명 추출
- * @param filename   파일명
- * @returns _fileExt 확장자명
+ * @param name   파일명
+ * @returns fileExtension 확장자명
  */
-export function getExtensionOfFilename(filename) {
-  const _fileLen = filename.length;
-  const _lastDot = filename.lastIndexOf('.');
-  const _fileExt = filename.substring(_lastDot, _fileLen).toLowerCase();
-  return _fileExt;
+export function extractExtension(name) {
+  // return name?.slice(name?.lastIndexOf('.') + 1).toLowerCase();
+  const fileExtension = name.substring(name.lastIndexOf('.') + 1, name.length).toLowerCase();
+  return fileExtension;
 }
 
 /**
@@ -637,8 +716,12 @@ export class FindElment {
     const isAccurate = this.accurate;
     const findType = isAccurate ? 'every' : 'some';
     const parent = target.parentNode;
+    // console.log('parent', parent);
     let targetAttrArray = Array.from(target.attributes).map(item => `${item.name}-${item.value}`);
     const hasAttr = this.findAttrArray[findType](item => targetAttrArray.indexOf(item) !== -1);
+    // console.log('target.attributes', target.attributes);
+    // console.log('targetAttrArray', targetAttrArray);
+    // console.log('this.findAttrArray', this.findAttrArray);
 
     if (attr === null || attr === undefined) {
       if (nodeName) {
@@ -796,12 +879,25 @@ export function removeQueryFromUrl(locationPathName) {
  */
 export const identity = item => item;
 
-/* moment를 이용한 timer
+/**
+ * moment를 이용한 timer
  * @param {*} config
+ * const timerStartData = {
+ *  time: '05:00',
+ *  interval: 1000,
+ *  format: 'mm:ss',
+ *  callback(val) {},
+ * }
  */
 function timerCapsule() {
   function timer(config) {
-    const { time = '', interval = 0, format = '', callback = () => {}, end = () => {} } = config;
+    const {
+      time = '00:00',
+      interval = 0,
+      format = 'mm:ss',
+      callback = () => {},
+      end = () => {},
+    } = config;
 
     let setTimeStamp = moment(time, format).valueOf();
 
@@ -923,10 +1019,14 @@ function settingTeethElementFn(config) {
   const { findTag, findAttr, changeId } = config;
   return function (conf) {
     const { teeth = [], list = [] } = conf;
-    const hasTeethIndexList = teeth.map(item => item.number);
+    // console.log('teeth', teeth);
+    // console.log('list', list);
+    const hasTeethIndexList = teeth.map(item => Number(item.number));
+    // console.log('hasTeethIndexList', hasTeethIndexList);
     // eslint-disable-next-line array-callback-return
     list.map(item => {
       const number = Number(item.number);
+      // console.log('number', number);
       // const findGtag = Array.from(
       //   document.querySelectorAll(`${findTag}[${findAttr}${item.number}"]`),
       // )[0];
@@ -936,8 +1036,8 @@ function settingTeethElementFn(config) {
       const getOriginAttrFill = findGtag.getAttribute('data-origin-url');
       // NOTE: path url swap 부분
       // NOTE: 데이터가 있을때
-      if (hasTeethIndexList.indexOf(number) !== -1) {
-        const findItemInfo = teeth.find(inItem => inItem.number === number);
+      if (hasTeethIndexList.includes(number)) {
+        const findItemInfo = teeth.find(inItem => Number(inItem.number) === number);
         const setChangeId = `${changeId}${findItemInfo?.indicationIdx}`;
         findFillPath.setAttribute('fill', `url(#${setChangeId})`);
         findGtag.classList.add('hasData');
@@ -957,6 +1057,45 @@ export const setTeethElement = settingTeethElementFn({
   findAttr: 'data-tooth-id="data-group-',
   changeId: 'swap-linear-',
 });
+
+/**
+ * NOTE: 처음 teeth의 이름을 붙혀줍니다.
+ * group핑하고 text 태그만 찾으면 댐, groupObj but, realDOM
+  const setTeethFormat = {
+    list: mergeTeethList,
+    defaultValue: propsTeeth,
+  };
+  setBasicTeeth(setTeethFormat);
+  처음에 class를 넣어주고 세팅해주는 함수. 재각각인 넘버링을 줄세워줍니다.
+ * @param {*} config 
+ */
+export function setBasicTeeth(config) {
+  const { list = [], defaultValue = [] } = config;
+  // g 태그를 찾고, attr을 붙혀줌
+  list.map((item, idx) => {
+    const defaultIndex = NOTATION_CONFIG.fdi.list[idx];
+    const findGtag = item.groupElement;
+
+    if (findGtag) {
+      const findFillPath = findGtag.querySelector('path[fill^="url"]');
+      const getOriginAttrFill = findGtag.getAttribute('data-origin-url');
+      const getAttiFill = findFillPath.getAttribute('fill');
+      if (!getOriginAttrFill) {
+        findGtag.setAttribute('data-origin-url', getAttiFill);
+      }
+      findGtag.setAttribute('data-name', 'tooth-g');
+      findGtag.setAttribute('data-tooth-id', `data-group-${defaultIndex}`);
+      findGtag.setAttribute('data-tooth-index', idx);
+      findGtag.setAttribute('class', 'teethSvg__tooth');
+    }
+  });
+
+  const setTeethFormat = { list, teeth: defaultValue };
+  setTeethElement(setTeethFormat);
+
+  return list;
+}
+
 /**
  * NOTE: 처음 tooth rendering 될떄 element 찾아서 넘버링순서 4분면으로 정렬
  * const convertFormat = {
@@ -1010,78 +1149,41 @@ export function setMergeSortTeethElement(config) {
   return mergeNewMap;
 }
 
-/**
- * NOTE: 처음 teeth의 이름을 붙혀줍니다.
- * group핑하고 text 태그만 찾으면 댐, groupObj but, realDOM
-  const setTeethFormat = {
-    list: mergeTeethList,
-    defaultValue: propsTeeth,
-  };
-  setBasicTeeth(setTeethFormat);
-  처음에 class를 넣어주고 세팅해주는 함수. 재각각인 넘버링을 줄세워줍니다.
- * @param {*} config 
- */
-export function setBasicTeeth(config) {
-  const { list = [], defaultValue = [] } = config;
-  // g 태그를 찾고, attr을 붙혀줌
-  list.map((item, idx) => {
-    const defaultIndex = NOTATION_CONFIG.fdi.list[idx];
-    const findGtag = item.groupElement;
-
-    if (findGtag) {
-      const findFillPath = findGtag.querySelector('path[fill^="url"]');
-      const getOriginAttrFill = findGtag.getAttribute('data-origin-url');
-      const getAttiFill = findFillPath.getAttribute('fill');
-      if (!getOriginAttrFill) {
-        findGtag.setAttribute('data-origin-url', getAttiFill);
-      }
-      findGtag.setAttribute('data-name', 'tooth-g');
-      findGtag.setAttribute('data-tooth-id', `data-group-${defaultIndex}`);
-      findGtag.setAttribute('data-tooth-index', idx);
-      findGtag.setAttribute('class', 'teethSvg__tooth');
-    }
-  });
-
-  const setTeethFormat = { list, teeth: defaultValue };
-  setTeethElement(setTeethFormat);
-
-  return list;
-}
-
 // DEBUG: set brdige 부분하기 리얼돔 건드리는중
 /**
  * NOTE: bridge의 색상을 칠하고 빼고 하는 함수입니다.
  * @param {*} config
  */
 export function setBridgeElement(config) {
-  let { bridge = [], bridgePathMnameList = [], teethIndexList = [] } = config;
+  let { element, bridge = [], teethIndexList = [] } = config;
+  // console.log(element, 'element');
 
   bridge = bridge.map(String);
   // console.log(bridge, 'bridgebridgebridge, !!!');
 
-  bridgePathMnameList.map((item, idx) => {
-    const findBridgePath = document.querySelectorAll(`g > path[d^=M${item}][d$="11z"]`)[0];
-    if (findBridgePath) {
-      const bridgeNubmer = BRIDGE_NUMBERING[idx];
-      const isPosibleClickBridge = bridgeNubmer
-        .split(/(\d{2})(?=\d)/)
-        .slice(1)
-        .map(Number)
-        .every(item => teethIndexList.indexOf(item) !== -1);
-      const hasBridge = bridge.indexOf(bridgeNubmer) !== -1;
-      if (hasBridge) {
-        findBridgePath.classList.add('bridge-active');
-        findBridgePath.classList.remove('hidden');
-        findBridgePath.removeAttribute('hidden');
-      } else {
-        findBridgePath.classList.remove('bridge-active');
-      }
-      if (isPosibleClickBridge) {
-        findBridgePath.classList.remove('bridge-disabled');
-      } else {
-        findBridgePath.classList.add('bridge-disabled');
-        findBridgePath.classList.remove('bridge-active');
-      }
+  // const findBridgePath = element.querySelectorAll(`g > path[d^=M${item}][d$="11z"]`)[0];
+  const findBridgePath = element.querySelectorAll(`g[data-role="bridge"] > path`);
+  // console.log(findBridgePath, 'findBridgePath');
+  Array.from(findBridgePath).map((item, idx) => {
+    const bridgeNubmer = BRIDGE_NUMBERING[idx];
+    const isPosibleClickBridge = bridgeNubmer
+      .split(/(\d{2})(?=\d)/)
+      .slice(1)
+      .map(Number)
+      .every(item => teethIndexList.indexOf(item) !== -1);
+    const hasBridge = bridge.indexOf(bridgeNubmer) !== -1;
+    if (hasBridge) {
+      item.classList.add('bridge-active');
+      item.classList.remove('hidden');
+      item.removeAttribute('hidden');
+    } else {
+      item.classList.remove('bridge-active');
+    }
+    if (isPosibleClickBridge) {
+      item.classList.remove('bridge-disabled');
+    } else {
+      item.classList.add('bridge-disabled');
+      item.classList.remove('bridge-active');
     }
   });
 }
@@ -1092,46 +1194,43 @@ export function setBridgeElement(config) {
  * NOTE: 처음에 bridge의 클래스와 세팅을 해주는 함수입니다.
  * @param {*} config
  */
-
-export function setBasicBrdige(config = {}) {
-  const { mappingList, defaultValue = [], isEdit = null, teethIndexList = [] } = config;
+export function setBasicBridge(config = {}) {
+  const { element, defaultValue = [], isEdit = null, teethIndexList = [] } = config;
   let bridgeList = [];
-  // console.log(isEdit, 'bridge isEdit');
-  // console.log(mappingList, 'mappingList');
-  mappingList.map((item, idx) => {
-    const findBridgePath = document.querySelectorAll(`g > path[d^=M${item}][d$="11z"]`)[0];
+  const findBridgePath = element.querySelectorAll(`g[data-role="bridge"] > path`);
+  // console.log(findBridgePath, 'findBridgePath');
 
-    if (findBridgePath) {
-      const bridgeNubmer = BRIDGE_NUMBERING[idx];
-      const hasBridge = defaultValue.indexOf(bridgeNubmer) !== -1;
+  Array.from(findBridgePath).map((item, idx) => {
+    // console.log(item, 'item');
+    const bridgeNubmer = BRIDGE_NUMBERING[idx];
+    const hasBridge = defaultValue.indexOf(bridgeNubmer) !== -1;
 
-      findBridgePath.setAttribute('class', 'teethSvg__brdige bridge-disabled');
-      findBridgePath.setAttribute('data-bridge-id', `data-bridge-${BRIDGE_NUMBERING[idx]}`);
-      findBridgePath.setAttribute('data-bridge-index', idx);
-      findBridgePath.setAttribute('data-name', 'tooth-bridge');
+    item.setAttribute('class', 'teethSvg__brdige bridge-disabled');
+    item.setAttribute('data-bridge-id', `data-bridge-${BRIDGE_NUMBERING[idx]}`);
+    item.setAttribute('data-bridge-index', idx);
+    item.setAttribute('data-name', 'tooth-bridge');
 
-      if (!isEdit) {
-        findBridgePath.classList.add('view');
-        if (!hasBridge) {
-          findBridgePath.classList.add('hidden');
-          findBridgePath.setAttribute('hidden', 'true');
-        } else {
-          findBridgePath.classList.remove('hidden');
-          findBridgePath.removeAttribute('hidden');
-        }
+    if (!isEdit) {
+      item.classList.add('view');
+      if (!hasBridge) {
+        item.classList.add('hidden');
+        item.setAttribute('hidden', 'true');
+      } else {
+        item.classList.remove('hidden');
+        item.removeAttribute('hidden');
       }
-
-      bridgeList.push({
-        element: findBridgePath,
-        number: Number(findBridgePath.getAttribute('data-bridge-id').replace(/\D/g, '')),
-        index: idx,
-      });
     }
+
+    bridgeList.push({
+      element: item,
+      number: Number(item.getAttribute('data-bridge-id').replace(/\D/g, '')),
+      index: idx,
+    });
   });
 
   const setBrdigeFormat = {
+    element,
     bridge: defaultValue,
-    bridgePathMnameList: mappingList,
     teethIndexList: teethIndexList,
   };
   setBridgeElement(setBrdigeFormat);
@@ -1145,8 +1244,11 @@ export function setBasicBrdige(config = {}) {
  * @param {*} value string, number
  */
 export function toggleArrayOverLab(list, value) {
+  // console.log(list, 'list');
+  // console.log(value, 'value');
   const _array = new Set(list);
   _array.has(value) ? _array.delete(value) : _array.add(value);
+  // console.log([..._array], '[..._array]');
   return [..._array];
 }
 
@@ -1174,7 +1276,7 @@ export function overlappingArrayElements(config) {
     _filterArray = new Set([...list].filter(x => x[condition] !== value[condition]).concat(value));
   }
 
-  return [..._filterArray];
+  return _.orderBy([..._filterArray], 'number');
 }
 
 /**
@@ -1212,9 +1314,13 @@ export const withZeroNum = num => (Number(num) < 10 ? `0${num}` : num);
 
 export const makeCaseIdFn = config => bool => {
   // console.log(config, 'config!!!??? make case id');
-  const { companyName = '', caseCount = 0, patientCode = '', caseIdPatient = '' } = config;
-  const patientName = caseIdPatient ? String(caseIdPatient).substr(0, 5) + '-' : '';
+  const { companyName = '', caseCount = 0, patientCode = '', caseIdValue = '' } = config;
+  const patientName = caseIdValue ? String(caseIdValue).substr(0, 5) + '-' : '';
   const subNickName = bool ? patientName : patientCode + '-';
+  // console.log('patientName', patientName);
+  // console.log('patientCode', patientCode);
+  // console.log('companyName', companyName);
+  // console.log('subNickName', subNickName);
 
   const makeCaseId = `${moment().format('YYYYMMDD')}-${companyName}-${subNickName}${fixedNumbering(
     caseCount,
@@ -1395,11 +1501,11 @@ export class Validation extends TypeChecker {
  */
 export const convertUrl = {
   projectDetailLoad: ({ caseCode = '' }) =>
-    `${mapper.pageUrl.project.detail}?caseCode=${caseCode}&status=load`,
+    `${pageUrl.project.detail}?caseCode=${caseCode}&status=load`,
   projectDetailModify: ({ caseCode }) =>
-    `${mapper.pageUrl.project.detail}?caseCode=${caseCode}&status=modify`,
-  projectList: () => mapper.pageUrl.project.list,
-  partnerList: ({ name = '' }) => `${mapper.pageUrl.mypage.partners}?name=${name}&page=1`,
+    `${pageUrl.project.detail}?caseCode=${caseCode}&status=modify`,
+  projectList: () => pageUrl.project.list,
+  partnerList: ({ name = '' }) => `${pageUrl.mypage.partners}?name=${name}&page=1`,
 };
 
 // export const makeCaseIdFn = config => {
@@ -1468,3 +1574,161 @@ export function setImmediateInterval(callback, delay) {
   callback();
   return setInterval(callback, delay);
 }
+
+/**
+ * To get a page of 1 depth
+ * @param {string} str
+ */
+export function cutUrl(str, depth = 0) {
+  return str.substr(1).split('/')[depth];
+}
+
+export function px2number(str) {
+  const re = /px/gi;
+  return String(str).includes('px') ? str.replace(re, '') : str;
+}
+
+// chart data converter
+// 1주: 1W, 1달: 1M, 1년: 1Y, 10년: 10Y
+export function projectChartItemConverter({ items = [], duration = '1W' }) {
+  // duration parsing
+  let durationStr = '';
+  if (duration === '1W') durationStr = 'W1';
+  if (duration === '1M') durationStr = 'M1';
+  if (duration === '1Y') durationStr = 'Y1';
+  if (duration === '10Y') durationStr = 'Y10';
+
+  // parsing된 durationStr 를 매핑하여 data length와 x의 format얻기
+  const durationConfig = {
+    W1: {
+      sliceNum: 5,
+      length: moment().diff(moment().subtract(7, 'd'), 'd'),
+      format(i) {
+        return moment().subtract(i, 'd').format('YYYY-MM-DD');
+      },
+    },
+    M1: {
+      sliceNum: 5,
+      length: moment().diff(moment().subtract(1, 'M'), 'd'),
+      format(i) {
+        return moment().subtract(i, 'd').format('YYYY-MM-DD');
+      },
+    },
+    Y1: {
+      sliceNum: 2,
+      length: moment().diff(moment().subtract(12, 'M'), 'M'),
+      format(i) {
+        return moment().subtract(i, 'M').format('YYYY-MM');
+      },
+    },
+    Y10: {
+      sliceNum: 0,
+      length: moment().diff(moment().subtract(10, 'y'), 'y'),
+      format(i) {
+        return moment().subtract(i, 'y').format('YYYY');
+      },
+    },
+  };
+
+  const data = [...Array(durationConfig[durationStr].length).keys()].map(i => {
+    const x = durationConfig[durationStr].format(i);
+    const y = items.filter(item => item.groupDate === x)[0]?.totalCount || 0;
+    // console.log('x', x);
+    // console.log('y', y);
+    return {
+      x: x.slice(durationConfig[durationStr].sliceNum),
+      y,
+    };
+  });
+
+  return _.orderBy(data, 'x', 'asc');
+}
+
+function sameNum(randomArray, n) {
+  for (let j = 0; j < randomArray.length; j++) {
+    if (n === randomArray[j]) {
+      return true;
+    }
+  }
+  return false;
+}
+
+/**
+ *
+ * @param {number} length
+ * @returns
+ */
+export function randomNumberArray(length) {
+  let randomArray = [];
+  let i = 0;
+  while (i < length) {
+    let n = Math.floor(Math.random() * length);
+    if (!sameNum(randomArray, n)) {
+      // console.log('n', n);
+      randomArray.push(n);
+
+      i++;
+    }
+  }
+
+  return randomArray;
+}
+
+/**
+ *
+ * @param {array} array
+ * @returns
+ */
+export function shuffleArray(array) {
+  let returnArray = [];
+  let randomArray = [];
+  let i = 0;
+  while (i < array.length) {
+    let n = Math.floor(Math.random() * array.length);
+    if (!sameNum(randomArray, n)) {
+      // console.log('n', n);
+      randomArray.push(n);
+      returnArray[i] = array[n];
+
+      i++;
+    }
+  }
+
+  return returnArray;
+}
+
+/**
+ * 키보드 입력
+ */
+// export const bindKeyboard = ({ key, type }) => {
+//   const [value, setValue] = useState(new Set());
+//   // console.log(value, 'value');
+
+//   if (type === 'keyup') {
+//     if (value.has(key.toUpperCase())) {
+//       setValue(draft => {
+//         draft.delete(key.toUpperCase());
+//       });
+//     }
+//   }
+
+//   if (type === 'keydown') {
+//     if (!value.has(key.toUpperCase())) {
+//       // value.add(key.toUpperCase());
+//       setValue(draft => {
+//         draft.add(key.toUpperCase());
+//       });
+//     }
+//   }
+
+//   return value;
+// };
+
+// 입력글자 byte 구하기
+//참고: https://velog.io/@shin-jaeheon/ES6%EB%A1%9C-%EB%AC%B8%EC%9E%90%EC%97%B4%EC%9D%98-%EB%B0%94%EC%9D%B4%ED%8A%B8Byte-%EC%88%98-%EA%B5%AC%ED%95%98%EA%B8%B0
+export const getStringByte = str => {
+  return str
+    .split('')
+    .map(s => s.charCodeAt(0))
+    .reduce((prev, c) => prev + (c === 10 ? 2 : c >> 7 ? 2 : 1), 0);
+};

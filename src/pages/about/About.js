@@ -1,13 +1,12 @@
 import React from 'react';
-import { PlainTemplate } from 'components/base/template';
-import { Header } from 'components/base/header';
-import { Page } from 'pages';
+import AboutContainer from 'containers/about/AboutContainer';
+import AppTemplate from 'components/base/template/AppTemplate';
 
 function About(props) {
   return (
-    <Page title={'About'}>
-      <PlainTemplate header={<Header />}>About</PlainTemplate>
-    </Page>
+    <AppTemplate title={'About'}>
+      <AboutContainer />
+    </AppTemplate>
   );
 }
 

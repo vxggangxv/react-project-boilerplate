@@ -1,5 +1,7 @@
 import axios from 'axios';
-import { ENV_MODE_DEV, ENV_MODE_PROD } from 'lib/setting';
+// import { ENV_MODE_DEV, ENV_MODE_PROD } from 'lib/setting';
+// import { useHistory } from 'react-router-dom';
+// import { render } from '@testing-library/react';
 
 // const domain = ENV_MODE_DEV ? 'http://localhost:3000' : 'http://localhost:3000';
 const domain = 'https://jsonplaceholder.typicode.com';
@@ -26,22 +28,5 @@ export function request({ path = '', config = {} }) {
 export const setAuthInHeader = token => {
   axios.defaults.headers.common['Authorization'] = token ? `Bearer ${token}` : null;
 };
-
-// NOTE: login, logut process
-// LOGIN (state, {accessToken}) {
-//   if (!accessToken) return
-//   state.accessToken = accessToken
-//   localStorage.accessToken = accessToken
-//   setAuthInHeader(accessToken)
-// },
-// LOGOUT (state) {
-//   state.accessToken = null
-//   delete localStorage.accessToken
-//   setAuthInHeader(null)
-// },
-// LOGIN({ commit }, { email, password }) {
-//   return auth.login(email, password)
-//     .then(({ accessToken }) => commit('LOGIN', { accessToken }))
-// },
 
 export default request;

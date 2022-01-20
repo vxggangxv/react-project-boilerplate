@@ -1,13 +1,18 @@
+import Color from 'color';
 import { css } from 'styled-components';
-import reset from 'styled-reset';
-import { _color, _deviceSize, _font, _sizes } from 'styles/common';
-import { ENV_MODE_PROD } from 'lib/setting';
+import { _color, _font, _deviceSize, _theme } from 'styles/_variables';
 
+export const fontFamilyValue = `${_font.mulish}, ${_font.notoSans}`;
+// export const fontFamilyValue = `${_font.opensans}, ${_font.notoSans}`;
 export const fontFamily = css`
-  font-family: ${_font.mulish}, ${_font.notoSans};
+  font-family: ${fontFamilyValue};
 `;
+export const robotoFont = `${_font.roboto}, ${_font.notoSans}`;
+export const opensansFont = `${_font.opensans}, ${_font.notoSans}`;
+
 export const color = _color;
 export const device = _deviceSize;
+export const theme = _theme;
 
 export const floatClear = css`
   &:after {
@@ -43,65 +48,134 @@ export const positionWide = css`
   height: 100%;
 `;
 
+// font-size, color 두개 다 사용할 경우
 export const font = (size = 14, color = 'black') => {
   return css`
     color: ${color};
     font-size: ${size}px;
-    ${fontFamily};
-    & :hover {
-      color: $clr;
-    }
+    /* ${fontFamily}; */
     /* @content; */
   `;
 };
 
+export const flexCenter = css`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`;
+export const flexAlignItemsCenter = css`
+  display: flex;
+  align-items: center;
+`;
+export const flexJustifyContentCenter = css`
+  display: flex;
+  justify-content: center;
+`;
+export const InlineflexCenter = css`
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+`;
+export const InlineflexAlignItemsCenter = css`
+  display: inline-flex;
+  align-items: center;
+`;
+export const InlineflexJustifyContentCenter = css`
+  display: flex;
+  justify-content: center;
+`;
+
+/* border-radius:3px; */
 export const buttonBlue = css`
+  ${InlineflexCenter};
   background: ${color.blue};
   transition: 0.3s;
   border: 1px solid ${color.blue};
   padding: 5px 15px;
-  /* border-radius:3px; */
   cursor: pointer;
-  ${font(16, color.white)};
+  font-size: 16px;
+  color: #fff;
+  transition: background-color 0.25s;
   &:hover {
-    background: ${color.blue_hover};
+    background: ${Color(color.blue).darken(0.12)};
+  }
+  &:disabled {
+    color: rgb(118, 118, 118, 0.5);
+    background: rgba(118, 118, 118, 0.2);
+    border-color: rgba(118, 118, 118, 0.1);
+    cursor: initial;
   }
 `;
 
 export const outlinedButtonBlue = css`
+  ${InlineflexCenter};
   background: ${color.white};
   transition: 0.3s;
   border: 1px solid ${color.blue};
   padding: 5px 15px;
-  /* border-radius:3px; */
   cursor: pointer;
-  ${font(16, color.blue)};
+  font-size: 16px;
+  color: ${color.blue};
+`;
+
+export const buttonGray = css`
+  ${InlineflexCenter};
+  background: ${color.btn_gray};
+  transition: 0.3s;
+  border: 1px solid ${color.btn_gray};
+  padding: 5px 15px;
+  cursor: pointer;
+  font-size: 16px;
+  color: #fff;
+  transition: background-color 0.25s;
+  &:hover {
+    background: ${color.btn_gray};
+  }
 `;
 
 export const buttonNavy = css`
+  ${InlineflexCenter};
   background: ${color.navy};
   transition: 0.3s;
   border: 1px solid ${color.navy};
   padding: 5px 15px;
-  /* border-radius:3px; */
   cursor: pointer;
-  ${font(16, color.white)};
+  font-size: 16px;
+  color: #fff;
+  transition: background-color 0.25s;
   &:hover {
-    background: ${color.navy_hover};
+    background: ${Color(color.navy).darken(0.12)};
+  }
+`;
+
+export const buttonLightPink = css`
+  ${InlineflexCenter};
+  background: ${color.lightPink};
+  transition: 0.3s;
+  border: 1px solid ${color.lightPink};
+  padding: 5px 15px;
+  cursor: pointer;
+  font-size: 16px;
+  color: #fff;
+  transition: background-color 0.25s;
+  &:hover {
+    background: ${Color(color.lightPink).darken(0.12)};
   }
 `;
 
 export const buttonWhite = css`
-  background:${color.white};
-  transition:.3s;
-  border:1px solid ${color.blue};
-  padding:5px 15px;
-  /* border-radius:3px; */
+  ${InlineflexCenter};
+  background: ${color.white};
+  transition: 0.3s;
+  border: 1px solid ${color.blue};
+  padding: 5px 15px;
   /* text-transform: uppercase; */
   cursor: pointer;
-  ${font(16, color.blue)};
-  &:hover{
-    /* background:${color.blue_hover}; */
+  font-size: 16px;
+  color: ${color.blue};
+  transition: background-color 0.25s;
+  &:hover {
+    background: ${Color(color.white).darken(0.12)};
   }
 `;
 
@@ -142,15 +216,15 @@ export const checkboxBlueStyled = css`
   }
 `;
 
-export const _media = Object.keys(_sizes).reduce((acc, label) => {
-  acc[label] = (...args) => css`
-    @media (max-width: ${_sizes[label] / 16}em) {
-      ${css(...args)}
-    }
-  `;
+// export const _media = Object.keys(_sizes).reduce((acc, label) => {
+//   acc[label] = (...args) => css`
+//     @media (max-width: ${_sizes[label] / 16}em) {
+//       ${css(...args)}
+//     }
+//   `;
 
-  return acc;
-}, {});
+//   return acc;
+// }, {});
 
 // Mui Color Custom
 export const muiOutlinedInputFocus = (color = _color.blue) => {
@@ -223,40 +297,42 @@ export const animationMoveInfinite = config => {
   `;
 };
 
-export const globalStyle = css`
-  ${reset};
-  a {
-    text-decoration: none;
-    color: inherit;
+// default : width + marginRight = 60
+export const beforeDash = ({
+  width = 45,
+  height = 4,
+  marginRight = 15,
+  backgroundColor = _color.blue,
+  fontSize = 22,
+}) => {
+  return css`
+    display: flex;
+    align-items: center;
+    font-size: ${`${fontSize}px`};
+    &:before {
+      content: '';
+      width: ${`${width}px`};
+      height: ${`${height}px`};
+      margin-right: ${`${marginRight}px`};
+      background-color: ${backgroundColor};
+    }
+  `;
+};
+
+export const paper = css`
+  position: relative;
+  background-color: #fff;
+  border-radius: 10px;
+  /* box-shadow: 0px 0px 10px #000629; */
+  /* box-shadow: 0 0 10px rgba(0, 6, 41, 0.13); */
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.13);
+  padding: 40px 0;
+  &:not(:first-of-type) {
+    margin-top: 20px;
   }
-  .hidden {
-    display: none;
-  }
-  input,
-  textarea,
-  select,
-  a,
-  button {
-    outline: none;
-    box-shadow: none;
-  }
-  * {
-    box-sizing: border-box !important;
-    ${ENV_MODE_PROD && disableDrag}
-  }
-  body {
-    ${fontFamily}
-    font-size: 14px;
-    color: #333;
-    min-width: 1900px;
-  }
-  .hidden {
-    display: none !important;
-  }
-  .padding-none {
-    padding: 0 !important;
-  }
-  .margin-none {
-    margin: 0 !important;
-  }
+`;
+
+export const paperSubtitle = css`
+  ${beforeDash({})};
+  padding-bottom: 40px;
 `;

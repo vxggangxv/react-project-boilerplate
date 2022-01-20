@@ -1,16 +1,12 @@
 import React from 'react';
 import MainHomeContainer from 'containers/home/MainHomeContainer';
-import { PlainTemplate } from 'components/base/template';
-import { Header } from 'components/base/header';
-import { Page } from 'pages';
+import AppTemplate from 'components/base/template/AppTemplate';
 
 function Home(props) {
   return (
-    <Page title={'Home'}>
-      <PlainTemplate header={<Header />}>
-        <MainHomeContainer />
-      </PlainTemplate>
-    </Page>
+    <AppTemplate title={'Home'}>
+      <MainHomeContainer />
+    </AppTemplate>
   );
 }
 
