@@ -1,1 +1,2 @@
-# React Project Boilerplate with Redux, Redux-saga, Redux-persist, Redux-toolkit
+# React Project Boilerplate 
+- with Redux, Redux-saga, Redux-toolkit
